@@ -1,0 +1,17 @@
+/home/guillermo/Projects/VGL/VGL/bin/VGL
+/home/guillermo/Projects/VGL/VGL/bin/VGL.deps.json
+/home/guillermo/Projects/VGL/VGL/bin/VGL.runtimeconfig.json
+/home/guillermo/Projects/VGL/VGL/bin/VGL.dll
+/home/guillermo/Projects/VGL/VGL/bin/VGL.pdb
+/home/guillermo/Projects/VGL/VGL/bin/DotNumerics.dll
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.vbproj.AssemblyReference.cache
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.GeneratedMSBuildEditorConfig.editorconfig
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.AssemblyInfoInputs.cache
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.AssemblyInfo.vb
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.vbproj.CoreCompileInputs.cache
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.vbproj.CopyComplete
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.dll
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/refint/VGL.dll
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.pdb
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/VGL.genruntimeconfig.cache
+/home/guillermo/Projects/VGL/VGL/obj/Release/net7.0/ref/VGL.dll
