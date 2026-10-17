@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -27,44 +27,44 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace DesignTools.Interface
 
-    ''' <summary>
-    ''' Interface that implements operations on objects.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Interface that implements operations on objects.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Interface IOperational
 
-        ''' <summary>
-        ''' Moves the object local origin to the given global position.
-        ''' </summary>
-        ''' <param name="Point">Position of the new origin.</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Moves the object local origin to the given global position.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Point">Position of the new origin.</param>
         Sub MoveTo(ByVal Point As Vector3)
 
-        ''' <summary>
-        ''' Sets the given orientation.
-        ''' </summary>
-        ''' <param name="Point">Center of rotation</param>
-        ''' <param name="Orientation">The orientation</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Sets the given orientation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Point">Center of rotation</param>
+        ' <param name="Orientation">The orientation</param>
         Sub Orientate(ByVal Point As Vector3, ByVal Orientation As OrientationAngles)
 
-        ''' <summary>
-        ''' Scales the object by the given factor.
-        ''' </summary>
-        ''' <param name="Scale">Factor by which all coordinates will be multiplied.</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Scales the object by the given factor.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Scale">Factor by which all coordinates will be multiplied.</param>
         Sub Scale(ByVal Scale As Double)
 
-        ''' <summary>
-        ''' Aligns the object.
-        ''' </summary>
-        ''' <param name="P1">First point.</param>
-        ''' <param name="P2">Second point.</param>
-        ''' <param name="P3">Fist point target.</param>
-        ''' <param name="P4">Second point inclusion.</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Aligns the object.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="P1">First point.</param>
+        ' <param name="P2">Second point.</param>
+        ' <param name="P3">Fist point target.</param>
+        ' <param name="P4">Second point inclusion.</param>
         Sub Align(ByVal P1 As Vector3, ByVal P2 As Vector3, ByVal P3 As Vector3, ByVal P4 As Vector3)
 
     End Interface
 
-    ''' <summary>
-    ''' Operation types
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Operation types
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Enum Operations As UInteger
 
         NoOperation = 0
@@ -75,9 +75,9 @@ Namespace DesignTools.Interface
 
     End Enum
 
-    ''' <summary>
-    ''' Provides methods to handle gometric operations such as translation and rotation of IOperational objects.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Provides methods to handle gometric operations such as translation and rotation of IOperational objects.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class OperationsTool
 
         Public Event OnTaskReady()
@@ -91,10 +91,10 @@ Namespace DesignTools.Interface
 
         Public Points As New List(Of Vector3)
 
-        ''' <summary>
-        ''' Specifies the desired geometric operation.
-        ''' </summary>
-        ''' <value></value>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Specifies the desired geometric operation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <value></value>
         Public Property Operation As Operations
             Set(ByVal value As Operations)
                 CancelOperation()
@@ -105,31 +105,32 @@ Namespace DesignTools.Interface
             End Get
         End Property
 
-        ''' <summary>
-        ''' Tells the user what the situation is inside the operations tool.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Tells the user what the situation is inside the operations tool.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property StatusFlag As String
             Get
                 Return _StatusFlag
             End Get
         End Property
 
-        ''' <summary>
-        ''' Loads a refference to the IOperational object that is going to be modified under the current task.
-        ''' It will only work if there is an active operation and no loaded object.
-        ''' </summary>
-        ''' <param name="Destination"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads a refference to the IOperational object that is going to be modified under the current task.
+        ' It will only work if there is an active operation and no loaded object.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Destination"></param>
         Public Sub SetDestinationObject(ByRef Destination As IOperational)
             If _Operation <> Operations.NoOperation And Not _SurfaceLoaded Then
                 _DestinationObject = Destination
                 _SurfaceLoaded = True
             End If
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds an item that might be used on the current operation.
-        ''' </summary>
-        ''' <param name="Entity"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Adds an item that might be used on the current operation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Entity"></param>
         Public Sub SetEntityToQueue(ByVal Entity As Object)
 
             If _Operation = Operations.NoOperation Or Not _SurfaceLoaded Then Return
@@ -149,11 +150,11 @@ Namespace DesignTools.Interface
             TryOperation()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Aborts the current operation.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Aborts the current operation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub CancelOperation()
 
             _Operation = Operations.NoOperation
@@ -164,10 +165,11 @@ Namespace DesignTools.Interface
             _StatusFlag = String.Format("Operation ""{0}"" has been cancelled", _Operation.ToString)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Attempts to excecute the current operation using the provided information.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Attempts to excecute the current operation using the provided information.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub TryOperation()
 
             If IsNothing(_DestinationObject) Then Return
@@ -218,10 +220,11 @@ Namespace DesignTools.Interface
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Clears the operation stack and announces task ready.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Clears the operation stack and announces task ready.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub RaiseTaskReady()
 
             CancelOperation()
@@ -229,6 +232,7 @@ Namespace DesignTools.Interface
             _StatusFlag = "Ready"
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

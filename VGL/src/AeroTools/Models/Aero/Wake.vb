@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -34,42 +34,33 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace AeroTools.Models.Aero
 
-    ''' <summary>
-    ''' Represents a free lattice.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a free lattice.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Wake
 
         Inherits Lattice
 
-        ''' <summary>
-        ''' Contains information about the sheding edge.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Contains information about the sheding edge.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Primitive As New Primitive
 
-        ''' <summary>
-        ''' Indicates when the wake has to be trimmed.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates when the wake has to be trimmed.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CuttingStep As Integer = 100
 
-        ''' <summary>
-        ''' Indicates if the inner circulation must be supressed in order to model
-        ''' an anchor line.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the inner circulation must be supressed in order to model
+        ' an anchor line.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SupressInnerCircuation As Boolean = False
 
-        ''' <summary>
-        ''' Convects the wake using the local nodal velocity
-        ''' </summary>
-        ''' <param name="Dt">The time interval</param>
+        '==========================================================================================
+        ' Convects the wake using the local nodal velocity
+        ' Dt is the time interval
+        '==========================================================================================
         Public Sub Convect(ByVal Dt As Double)
 
             Parallel.ForEach(Nodes,
@@ -80,10 +71,13 @@ Namespace AeroTools.Models.Aero
                              End Sub)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Caches the position of the nodes in the "OriginalPosition".
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Caches the position of the nodes in the "OriginalPosition".
+        '==========================================================================================
         Public Sub CachePosition()
 
             For Each Node In Nodes
@@ -97,11 +91,13 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Convects the wake using the local nodal velocity
-        ''' </summary>
-        ''' <param name="Dt">The time interval</param>
+
+
+        '==========================================================================================
+        ' Convects the wake using the local nodal velocity
+        '==========================================================================================
         Public Sub ReConvect(ByVal Dt As Double)
 
             Parallel.ForEach(Nodes,
@@ -114,11 +110,14 @@ Namespace AeroTools.Models.Aero
                              End Sub)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Extends the trailing part of the wake
-        ''' </summary>
-        ''' <param name="Vector">The vector used to extend the wake</param>
+
+
+        '==========================================================================================
+        ' Extends the trailing part of the wake
+        ' Vector is the vector used to extend the wake
+        '==========================================================================================
         Public Sub Extend(ByVal Vector As Vector3)
 
             For i = 0 To Primitive.Nodes.Count - 1
@@ -128,7 +127,13 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overloads Sub AddVortexRing4(ByVal N1 As Integer, ByVal N2 As Integer, ByVal N3 As Integer, ByVal N4 As Integer, ByVal G As Double)
 
             Dim VortexRing As New VortexRing4(Nodes(N1), Nodes(N2), Nodes(N3), Nodes(N4), G, VortexRings.Count, False, True)
@@ -136,50 +141,65 @@ Namespace AeroTools.Models.Aero
             VortexRings.Add(VortexRing)
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
 
 #Region "I/O"
 
-        Public Overrides Sub WriteBinary(ByRef w As BinaryWriter, Optional ByVal NodalVelocity As Boolean = False, Optional ByVal ReferencePosition As Boolean = False)
 
-            MyBase.WriteBinary(w, NodalVelocity)
+        '==========================================================================================
+        ' Writes the lattice nodes, rings and vortices into the binary file.
+        '==========================================================================================
+        Public Overrides Sub WriteBinary(ByRef Stream As BinaryWriter, Optional ByVal NodalVelocity As Boolean = False, Optional ByVal ReferencePosition As Boolean = False)
 
-            w.Write(Primitive.Nodes.Count)
+            MyBase.WriteBinary(Stream, NodalVelocity)
+
+            Stream.Write(Primitive.Nodes.Count)
 
             For i = 0 To Primitive.Nodes.Count - 1
-                w.Write(Primitive.Nodes(i))
+                Stream.Write(Primitive.Nodes(i))
             Next
 
-            w.Write(Primitive.Rings.Count)
+            Stream.Write(Primitive.Rings.Count)
 
             For i = 0 To Primitive.Rings.Count - 1
-                w.Write(Primitive.Rings(i))
+                Stream.Write(Primitive.Rings(i))
             Next
 
-            w.Write(CuttingStep)
+            Stream.Write(CuttingStep)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Overrides Sub ReadBinary(ByRef r As BinaryReader)
 
-            MyBase.ReadBinary(r)
+
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Overrides Sub ReadBinary(ByRef Stream As BinaryReader)
+
+            MyBase.ReadBinary(Stream)
 
             Primitive.Nodes.Clear()
             Primitive.Rings.Clear()
 
-            For i = 0 To r.ReadInt32 - 1
-                Primitive.Nodes.Add(r.ReadInt32)
+            For i = 0 To Stream.ReadInt32 - 1
+                Primitive.Nodes.Add(Stream.ReadInt32)
             Next
 
-            For i = 0 To r.ReadInt32 - 1
-                Primitive.Rings.Add(r.ReadInt32)
+            For i = 0 To Stream.ReadInt32 - 1
+                Primitive.Rings.Add(Stream.ReadInt32)
             Next
 
-            CuttingStep = r.ReadInt32
+            CuttingStep = Stream.ReadInt32
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

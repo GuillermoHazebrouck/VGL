@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -28,25 +28,24 @@ Imports DotNumerics.LinearAlgebra
 '#############################################################################
 Namespace AeroTools.Models.Structural.Library.Elements
 
-    ''' <summary>
-    ''' The interface of a generic finite element used for structural analisys.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The interface of a generic finite element used for structural analisys.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Interface IFiniteElement
 
-        ''' <summary>
-        ''' The nodes of the element.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The nodes of the element.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Property Nodes As StructuralNode()
 
-        ''' <summary>
-        ''' The mass matrix
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The mass matrix
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Property M As SymmetricMatrix
 
-        ''' <summary>
-        ''' The stiffness matrix
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The stiffness matrix
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Property K As SymmetricMatrix
 
         Sub GenerateLocalMass()
@@ -54,5 +53,7 @@ Namespace AeroTools.Models.Structural.Library.Elements
         Sub GenerateGlobalMatrices()
 
     End Interface
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

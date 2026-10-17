@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -27,121 +27,116 @@ Imports VGL.AeroTools.Models.Structural.Library.Nodes
 '#############################################################################
 Namespace AeroTools.Models.Structural.Library
 
-    ''' <summary>
-    ''' Represents a modal shape.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a modal shape.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Mode
 
-        ''' <summary>
-        ''' The displacements of the shape at each node.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The displacements of the shape at each node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Shape As List(Of NodalDisplacement)
 
-        ''' <summary>
-        ''' The angular frequency
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The angular frequency
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public W As Double
 
-        ''' <summary>
-        ''' The modal stiffness.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The modal stiffness.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public K As Double
 
-        ''' <summary>
-        ''' The modal mass.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The modal mass.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public M As Double
 
-        ''' <summary>
-        ''' The modal damping (absolute)
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The modal damping (absolute)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public C As Double
 
-        ''' <summary>
-        ''' The critical modal damping
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The critical modal damping
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Cc As Double
 
-        ''' <summary>
-        ''' The mode index
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The mode index
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Index As Integer
 
-        ''' <summary>
-        ''' Generates a new mode with the given index.
-        ''' </summary>
-        ''' <param name="Index">Index of the mode in the external stack.</param>
+        '==========================================================================================
+        ' Generates a new mode with the given index.
+        ' Index is the index of the mode in the external stack.
+        '==========================================================================================
         Public Sub New(ByVal Index As Integer)
             Shape = New List(Of NodalDisplacement)
             _Index = Index
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 
-    ''' <summary>
-    ''' Represents an instantaneous state of the modal shape.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents an instantaneous state of the modal shape.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ModalCoordinate
 
-        ''' <summary>
-        ''' Position
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Position
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public P As Double
 
-        ''' <summary>
-        ''' Velocity
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Velocity
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public V As Double
 
-        ''' <summary>
-        ''' Acceleration
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Acceleration
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public A As Double
 
-        ''' <summary>
-        ''' The virtual work
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The virtual work
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public W As Double
 
     End Class
 
-    ''' <summary>
-    ''' Represents a set of modal coordinates (one for each mode at a given time step).
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a set of modal coordinates (one for each mode at a given time step).
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ModalCoordinates
 
         Private _ModalCoordinates As List(Of ModalCoordinate)
-
-        ''' <summary>
-        ''' Modal coordinates for mode a given mode.
-        ''' </summary>
-        ''' <param name="Size">The number of modes</param>
-        Default Public Property Item(ByVal Size As Integer) As ModalCoordinate
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Modal coordinates for a given mode.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Default Public Property Item(ByVal Index As Integer) As ModalCoordinate
             Get
-                Return _ModalCoordinates(Size)
+                Return _ModalCoordinates(Index)
             End Get
             Set(ByVal value As ModalCoordinate)
-                _ModalCoordinates(Size) = value
+                _ModalCoordinates(Index) = value
             End Set
         End Property
 
-        ''' <summary>
-        ''' Returns the size of the stack (the number of tracked modes).
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the size of the stack (the number of tracked modes).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Count As Integer
             Get
                 Return _ModalCoordinates.Count
             End Get
         End Property
 
-        ''' <summary>
-        ''' Generates a stack of modal coordinates (one for each mode)
-        ''' </summary>
-        ''' <param name="Size">The number of modes</param>
+        '==========================================================================================
+        ' Generates a stack of modal coordinates (one for each mode)
+        ' Size is the number of modes.
+        '==========================================================================================
         Public Sub New(ByVal Size As Integer)
 
             _ModalCoordinates = New List(Of ModalCoordinate)(Size)
@@ -151,7 +146,10 @@ Namespace AeroTools.Models.Structural.Library
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

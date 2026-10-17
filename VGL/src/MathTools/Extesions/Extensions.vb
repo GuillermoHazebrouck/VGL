@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -59,6 +59,7 @@ Namespace MathTools.Extensions
             FileClose(FileId)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Module
 

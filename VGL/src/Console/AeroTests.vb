@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -24,9 +24,9 @@ Imports VGL.MathTools.Integration
 
 Public Module AeroTests
 
-    ''' <summary>
-    ''' Performs some tests to check the consistency of the solver
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Performs some tests to check the consistency of the solver
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Sub TestAerodynamicSolver()
 
         TestPanelOrientation()
@@ -35,11 +35,12 @@ Public Module AeroTests
         TestFarFieldEquations()
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' This test verifies that the source and doublet potentials are the same
-    ''' when for a non flat 4-nodes panel only the order of the nodes is modified.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' This test verifies that the source and doublet potentials are the same
+    ' when for a non flat 4-nodes panel only the order of the nodes is modified.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private Sub TestPanelOrientation()
 
         System.Console.WriteLine("Testing influence coeficients in non flat panel")
@@ -121,11 +122,12 @@ Public Module AeroTests
         End If
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' This test verifies that the source and doublet potentials derivatives
-    ''' are equivalent to their induced velocity.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' This test verifies that the source and doublet potentials derivatives
+    ' are equivalent to their induced velocity.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private Sub TestPanelVelocity()
 
         System.Console.WriteLine("Testing influence velocity against potential derivative in quad panel")
@@ -222,11 +224,12 @@ Public Module AeroTests
         Next
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' This test checks that the source and doublet potentials are the same when 
-    ''' using a single 4-nodes panels as when using two 3-nodes panels.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' This test checks that the source and doublet potentials are the same when 
+    ' using a single 4-nodes panels as when using two 3-nodes panels.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private Sub TestTriangularPanels()
 
         System.Console.WriteLine("Testing consistency of triangular and quadrilateral panels")
@@ -413,10 +416,11 @@ Public Module AeroTests
         End If
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Tests the Hamming ODES solver
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Tests the Hamming ODES solver
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Sub TestHammingSolver()
 
         System.Console.WriteLine("Testing Hamming ODEs solver")
@@ -426,10 +430,11 @@ Public Module AeroTests
         TestHarmonicOscillator()
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Tests the Hamming ODES solver
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Tests the Hamming ODES solver
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private Sub TestParabolicShot()
 
         '' Simple 2D parabolic shot
@@ -495,10 +500,11 @@ Public Module AeroTests
         System.Console.WriteLine("TEST PASSED")
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Tests the Hamming ODES solver
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Tests the Hamming ODES solver
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private Sub TestHarmonicOscillator()
 
         '' Simple 1D harmonic oscillator
@@ -589,11 +595,12 @@ Public Module AeroTests
         System.Console.WriteLine("TEST PASSED")
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' This test verifies that the source and doublet potentials derivatives
-    ''' are equivalent to their induced velocity.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' This test verifies that the source and doublet potentials derivatives
+    ' are equivalent to their induced velocity.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private Sub TestFarFieldEquations()
 
         System.Console.WriteLine("Testing far field equations in quad panels")
@@ -690,6 +697,7 @@ Public Module AeroTests
         Next
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
 End Module
 

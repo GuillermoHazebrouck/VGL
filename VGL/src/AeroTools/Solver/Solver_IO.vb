@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -40,18 +40,17 @@ Namespace AeroTools.Solver
 
     Partial Public Class Solver
 
-        ''' <summary>
-        ''' The version of the solver.
-        ''' The first number is increased when functionality changes are introduced.
-        ''' The second number is increased when there are fixes without touching the basic features.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The version of the solver.
+        ' The first number is increased when functionality changes are introduced.
+        ' The second number is increased when there are fixes without touching the basic features.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Shared ReadOnly Property Version As String = "5.0-2021.08"
 
-        ''' <summary>
-        ''' Read a written snapshot
-        ''' </summary>
-        ''' <param name="FilePath"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Read a written snapshot
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="FilePath"></param>
         Public Sub ReadFromXML(ByVal FilePath As String)
 
             If Not File.Exists(FilePath) Then
@@ -149,12 +148,12 @@ Namespace AeroTools.Solver
             CalculateAirloads()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes a snapshot of the current solver
-        ''' </summary>
-        ''' <param name="FilePath"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes a snapshot of the current solver
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="FilePath"></param>
         Public Sub WriteToXML(ByVal FilePath As String, Optional ByVal WakesNodalVelocity As Boolean = False)
 
             Dim Writer As XmlWriter = XmlWriter.Create(FilePath)
@@ -204,12 +203,13 @@ Namespace AeroTools.Solver
             Writer.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes all lattices to the given directory using the FrameIndex for the name
-        ''' </summary>
-        ''' <param name="DirectoryPath"></param>
-        ''' <param name="FrameIndex"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes all lattices to the given directory using the FrameIndex for the name
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DirectoryPath"></param>
+        ' <param name="FrameIndex"></param>
         Public Sub WriteLattices(ByVal DirectoryPath As String, FrameIndex As Integer)
 
             For I = 0 To Lattices.Count - 1
@@ -217,12 +217,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads all the lattices named for the given FrameIndex in the given directory.
-        ''' </summary>
-        ''' <param name="DirectoryPath"></param>
-        ''' <param name="FrameIndex"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads all the lattices named for the given FrameIndex in the given directory.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DirectoryPath"></param>
+        ' <param name="FrameIndex"></param>
         Public Shared Sub ReadLattices(ByVal DirectoryPath As String,
                                        ByVal FrameIndex As Integer,
                                        ByRef Lattices As List(Of BoundedLattice),
@@ -254,12 +255,13 @@ Namespace AeroTools.Solver
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads all the lattices named for the given FrameIndex in the given directory.
-        ''' </summary>
-        ''' <param name="DirectoryPath"></param>
-        ''' <param name="FrameIndex"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads all the lattices named for the given FrameIndex in the given directory.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DirectoryPath"></param>
+        ' <param name="FrameIndex"></param>
         Public Sub LoadLattices(ByVal DirectoryPath As String, FrameIndex As Integer)
 
             ReadLattices(DirectoryPath,
@@ -267,11 +269,12 @@ Namespace AeroTools.Solver
                          Lattices,
                          PolarDataBase)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the structural links to the given directory
-        ''' </summary>
-        ''' <param name="DirectoryPath"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the structural links to the given directory
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DirectoryPath"></param>
         Public Sub WriteStructuralLinks(ByVal DirectoryPath As String)
 
             For i = 0 To StructuralLinks.Count - 1
@@ -281,11 +284,12 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the structural links from the given directory
-        ''' </summary>
-        ''' <param name="DirectoryPath"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the structural links from the given directory
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DirectoryPath"></param>
         Public Shared Sub ReadStructuralLinks(ByVal DirectoryPath As String,
                                               ByRef Lattices As List(Of BoundedLattice),
                                               ByRef StructuralLinks As List(Of StructuralLink))
@@ -346,11 +350,12 @@ Namespace AeroTools.Solver
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads the structural links from the given directory
-        ''' </summary>
-        ''' <param name="DirectoryPath"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the structural links from the given directory
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DirectoryPath"></param>
         Public Sub LoadStructuralLinks(ByVal DirectoryPath As String)
 
             ReadStructuralLinks(DirectoryPath,
@@ -358,11 +363,12 @@ Namespace AeroTools.Solver
                                 StructuralLinks)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes a file for the information of the data
-        ''' </summary>
-        ''' <param name="DirectoryPath"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes a file for the information of the data
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DirectoryPath"></param>
         Private Sub WriteInfoFile(DirectoryPath As String,
                                   CalculationMode As CalculationType)
 
@@ -378,6 +384,7 @@ Namespace AeroTools.Solver
             FileClose(FileId)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region "Sub folders"
 
@@ -385,16 +392,16 @@ Namespace AeroTools.Solver
         Const DirectoryNameAeroelastic = "_Aeroelastic"
         Const DirectoryNameFreeFlight = "_FreeFlight"
 
-        ''' <summary>
-        ''' The working directory
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The working directory
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property BaseDirectoryPath As String
 
-        ''' <summary>
-        ''' Creates the subfolder for the results
-        ''' </summary>
-        ''' <param name="DataBaseSection"></param>
-        ''' <param name="ReferenceFilePath"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates the subfolder for the results
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="DataBaseSection"></param>
+        ' <param name="ReferenceFilePath"></param>
         Private Sub CreateSubFolder(ByVal DataBaseSection As CalculationType, ByVal ReferenceFilePath As String)
 
             Try
@@ -427,10 +434,11 @@ Namespace AeroTools.Solver
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Removes all calculation files from the selected path
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Removes all calculation files from the selected path
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CleanDirectory()
 
             Try
@@ -449,13 +457,14 @@ Namespace AeroTools.Solver
 
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
-        ''' <summary>
-        ''' Generates an standard output providing data on the current solver state.
-        ''' To get the data connect a handler to the "PushResultLine" event.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates an standard output providing data on the current solver state.
+        ' To get the data connect a handler to the "PushResultLine" event.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ReportResults()
 
             RaiseEvent PushResultLine("RESULS OF THE AERODYNAMIC ANALYSIS")
@@ -589,6 +598,7 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

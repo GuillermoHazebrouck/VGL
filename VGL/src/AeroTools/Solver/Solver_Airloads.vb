@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -32,20 +32,19 @@ Namespace AeroTools.Solver
 
         'This part constains several methods used to calculate the total airloads
 
-        ''' <summary>
-        ''' A snapshot on the total airloads (summed from all lattices)
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' A snapshot on the total airloads (summed from all lattices)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property GlobalAirloads As New Models.Aero.AirLoads
 
 #Region " Total aerodynamic force "
 
-        ''' <summary>
-        ''' Computes the total aerodynamic loads on each bounded lattice.
-        ''' The prerequisite is to have calculated the total velocity and the
-        ''' pressure coefficients.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Computes the total aerodynamic loads on each bounded lattice.
+        ' The prerequisite is to have calculated the total velocity and the
+        ' pressure coefficients.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub CalculateAirloads()
 
             If Settings.IncludeInducedDrag Then
@@ -57,11 +56,11 @@ Namespace AeroTools.Solver
             ComputeForcesAndMoments()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Computes the induced drag on vortex rings through surface integral (only for slender panels)
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Computes the induced drag on vortex rings through surface integral (only for slender panels)
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub ComputeInducedDrag()
 
             Dim StreamDirection As New Vector3
@@ -138,12 +137,12 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Computes all forces and moments. If chordwise stripes are defined, parasitic drag is calculated
-        ''' based on the local lift and polar curve.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Computes all forces and moments. If chordwise stripes are defined, parasitic drag is calculated
+        ' based on the local lift and polar curve.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub ComputeForcesAndMoments()
 
             GlobalAirloads.Clear()
@@ -272,6 +271,7 @@ Namespace AeroTools.Solver
             GlobalAirloads.Beta = Math.Asin(StreamVelocity.Y / StreamVelocity.Norm2)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 

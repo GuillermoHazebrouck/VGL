@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
+'Copyright (C) 2026 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -34,15 +34,16 @@ Imports VGL.DesignTools
 '#############################################################################
 Public Module Server
 
-    ''' <summary>
-    ''' Sends back a message to the client
-    ''' </summary>
-    ''' <param name="Message"></param>
-    ''' <param name="Address"></param>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Sends back a message to the client
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Message"></param>
+    ' <param name="Address"></param>
     Private Sub Squeak(Squeaker As UdpClient, Message As String)
         Dim Bytes As Byte() = Text.Encoding.ASCII.GetBytes(Message)
         Squeaker.Send(Bytes, Bytes.Count)
     End Sub
+        '------------------------------------------------------------------------------------------
 
     Public Sub RunServer()
 
@@ -110,6 +111,7 @@ Public Module Server
         Receiver.Close()
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
     Private Sub RunCalculation(Type As AeroTools.Settings.CalculationType)
 
@@ -135,13 +137,16 @@ Public Module Server
         End Try
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
     Private Sub OutputConsoleMessage(Message As String)
         System.Console.WriteLine(Message)
     End Sub
+        '------------------------------------------------------------------------------------------
 
     Private Sub OutputConsoleProgress(Title As String, Value As Integer)
         System.Console.WriteLine(Title)
     End Sub
+        '------------------------------------------------------------------------------------------
 
 End Module

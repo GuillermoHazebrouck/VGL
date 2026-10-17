@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -19,20 +19,28 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 
 Namespace MathTools.Algebra.CustomMatrices
 
-    ''' <summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
     ''' A generic n x m matrix
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Structure Matrix
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New(ByVal n As Integer, ByVal m As Integer)
             ReDim _Elements(n - 1, m - 1)
             Me._Rows = n
             Me._Columns = m
             _Transponse = False
         End Sub
+        '------------------------------------------------------------------------------------------
+
+
 
         Private _Elements(,) As Double
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Element(ByVal i As Integer, ByVal j As Integer) As Double
             Get
                 If Not _Transponse Then
@@ -49,9 +57,14 @@ Namespace MathTools.Algebra.CustomMatrices
                 End If
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
+
+
 
         Private _Rows As Integer
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Rows As Integer
             Get
                 If Not _Transponse Then
@@ -61,9 +74,14 @@ Namespace MathTools.Algebra.CustomMatrices
                 End If
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
+
+
 
         Private _Columns As Integer
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Columns As Integer
             Get
                 If Not _Transponse Then
@@ -73,13 +91,24 @@ Namespace MathTools.Algebra.CustomMatrices
                 End If
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        Private _Transponse As Boolean
 
+        
+        Private _Transponse As Boolean        
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Transponse()
             _Transponse = Not _Transponse
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Clear()
             For i = 1 To Me.Rows
                 For j = 1 To Me.Columns
@@ -87,7 +116,13 @@ Namespace MathTools.Algebra.CustomMatrices
                 Next
             Next
         End Sub
+        '------------------------------------------------------------------------------------------
+        
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Assign(ByVal Matrix As Matrix)
             If Matrix.Rows = Me.Rows And Matrix.Columns = Me.Columns Then
                 For i = 1 To Me.Rows
@@ -97,10 +132,14 @@ Namespace MathTools.Algebra.CustomMatrices
                 Next
             End If
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region " Matrix operators "
+        
 
-        'Sum:
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator +(ByVal M1 As Matrix, ByVal M2 As Matrix) As Matrix
 
             If M1.Rows = M2.Rows And M1.Columns = M2.Columns Then
@@ -121,8 +160,13 @@ Namespace MathTools.Algebra.CustomMatrices
             End If
 
         End Operator
+        '------------------------------------------------------------------------------------------
 
-        'Scalar multiplication:
+
+
+        '==========================================================================================
+        ' Scalar multiplication
+        '==========================================================================================
         Public Shared Operator *(ByVal Escalar As Double, ByVal M As Matrix) As Matrix
             Dim Product As New Matrix(M.Rows, M.Columns)
 
@@ -137,8 +181,13 @@ Namespace MathTools.Algebra.CustomMatrices
             Return Product
 
         End Operator
+        '------------------------------------------------------------------------------------------
 
-        'Matrix multiplication:
+
+
+        '==========================================================================================
+        ' Matrix multiplication
+        '==========================================================================================
         Public Shared Operator ^(ByVal M1 As Matrix, ByVal M2 As Matrix) As Matrix
 
             If M1.Columns = M2.Rows Then
@@ -160,21 +209,27 @@ Namespace MathTools.Algebra.CustomMatrices
             End If
 
         End Operator
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Structure
+    '------------------------------------------------------------------------------------------
 
+
+
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Matrix3x3
 
         Private Elements(2, 2) As Double
 
-        ''' <summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         ''' Sets and gets the value of an item. Indices are 1-based (from 1 to 3)
-        ''' </summary>
-        ''' <param name="i">1-based row index</param>
-        ''' <param name="j">1-based column index</param>
-        ''' <returns></returns>
+        ''' i: 1-based row index.
+        ''' j: 1-based column index.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Item(ByVal i As Integer, ByVal j As Integer) As Double
             Get
                 If 1 < i < 3 And 1 < i < 3 Then
@@ -189,7 +244,13 @@ Namespace MathTools.Algebra.CustomMatrices
                 End If
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Determinant As Double
             Get
                 Return Item(1, 1) * (Item(2, 2) * Item(3, 3) - Item(3, 2) * Item(2, 3)) -
@@ -197,7 +258,13 @@ Namespace MathTools.Algebra.CustomMatrices
                 Item(1, 3) * (Item(2, 1) * Item(3, 2) - Item(3, 1) * Item(2, 2))
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Transpose()
             Dim Matriz As New Matrix3x3
             Matriz.Elements = Me.Elements
@@ -207,7 +274,13 @@ Namespace MathTools.Algebra.CustomMatrices
                 Next
             Next
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Invert()
 
             Dim m As New DotNumerics.LinearAlgebra.Matrix(3)
@@ -239,17 +312,23 @@ Namespace MathTools.Algebra.CustomMatrices
             Item(2, 2) = m.Item(2, 2)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
+
+
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class RotationMatrix
 
         Inherits Matrix3x3
 
-        ''' <summary>
+        '==========================================================================================
         ''' Generates the rotation matrix from a sequence of rotations
-        ''' </summary>
-        ''' <param name="Orientation"></param>
+        '==========================================================================================
         Public Sub Generate(ByVal Angle1 As Double, ByVal Angle2 As Double, ByVal Angle3 As Double)
 
             Item(1, 1) = Math.Cos(Angle1) * Math.Cos(Angle2)
@@ -263,11 +342,13 @@ Namespace MathTools.Algebra.CustomMatrices
             Item(3, 3) = Math.Cos(Angle2) * Math.Cos(Angle3)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
+
+
+        '==========================================================================================
         ''' Generates the rotation matrix from a sequence of rotations
-        ''' </summary>
-        ''' <param name="Orientation"></param>
+        '==========================================================================================
         Public Sub Generate(ByVal Orientation As OrientationAngles)
 
             Dim c1 As Double = Math.Cos(Orientation.Angle1)
@@ -308,11 +389,13 @@ Namespace MathTools.Algebra.CustomMatrices
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
+
+
+        '==========================================================================================
         ''' Generates the rotation matrix from a quaternion
-        ''' </summary>
-        ''' <param name="Orientation"></param>
+        '==========================================================================================
         Public Sub Generate(ByVal Qr As Double, ByVal Qi As Double, ByVal Qj As Double, ByVal Qk As Double)
 
             Dim S As Double = 1 / (Qr * Qr + Qi * Qi + Qj * Qj + Qk * Qk)
@@ -328,7 +411,10 @@ Namespace MathTools.Algebra.CustomMatrices
             Item(3, 3) = 1.0# - 2.0# * S * (Qi * Qi + Qj * Qj)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
 End Namespace
+'------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 George Lazarou (george.sp.lazarou@gmail.com)
+'Copyright (C) 2026 George Lazarou (george.sp.lazarou@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -25,64 +25,71 @@
 '#############################################################################
 Namespace AeroTools.Settings
 
-    ''' <summary>
-    ''' The standard atmosphere
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The standard atmosphere
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class StandardAtmosphere
 
-        ''' <summary>
-        ''' The temperature [K]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The temperature [K]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Temperature As Double
 
-        ''' <summary>
-        ''' The static pressure [Pa]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The static pressure [Pa]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Pressure As Double
 
-        ''' <summary>
-        ''' The density [kg/m³]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The density [kg/m³]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Density As Double
 
-        ''' <summary>
-        ''' The dynamic viscosity [N/m.s]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The dynamic viscosity [N/m.s]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property DynamicVisc As Double
 
-        ''' <summary>
-        '''  The dynamic viscosity [m²/s]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '  The dynamic viscosity [m²/s]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property KinematicVisc As Double
 
-        ''' <summary>
-        ''' The speed of sound [m/s]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The speed of sound [m/s]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property SoundSpeed As Double
 
-        ''' <summary>
-        ''' The altitude [m]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The altitude [m]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Altitude As Double
 
-        ''' <summary>
-        ''' Generates the properties at sea level (altitude = 0m).
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Generates the properties at sea level (altitude = 0m).
+        '==========================================================================================
         Public Sub New()
             CalculateAirProperties(0.0#)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates the properties at the given altitude
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Generates the properties at the given altitude
+        '==========================================================================================
         Public Sub New(Altitude As Double)
             CalculateAirProperties(Altitude)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates the properties for a given altitude
-        ''' </summary>
-        ''' <param name="Altitude"></param>
+
+
+        '==========================================================================================
+        ' Calculates the properties for a given altitude
+        '==========================================================================================
         Public Sub CalculateAirProperties(Altitude As Double)
 
             _Altitude = Altitude
@@ -94,7 +101,10 @@ Namespace AeroTools.Settings
             _SoundSpeed = Math.Sqrt(401.874018 * _Temperature) 'Unit: [m/s]
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
-
+    '----------------------------------------------------------------------------------------------
+    
 End Namespace
+'--------------------------------------------------------------------------------------------------

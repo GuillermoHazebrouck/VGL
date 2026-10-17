@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -33,9 +33,9 @@ Imports VGL.AeroTools.IoHelper
 '#############################################################################
 Namespace AeroTools.Settings
 
-    ''' <summary>
-    ''' Represents a stream gust
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a stream gust
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class UnsteadyPerturbation
 
         Private _Start As Integer
@@ -45,12 +45,21 @@ Namespace AeroTools.Settings
         Public Property Intensity As Double
         Public Property FinalDrop As Double
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New()
             _Start = 1
             _PeakInstant = 2
             _ElapsedTime = 3
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Start As Integer
             Set(ByVal value As Integer)
                 _Start = value
@@ -65,7 +74,13 @@ Namespace AeroTools.Settings
                 Return _Start
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property ElapsedTime As Integer
             Set(ByVal value As Integer)
                 _ElapsedTime = value
@@ -77,7 +92,13 @@ Namespace AeroTools.Settings
                 Return _ElapsedTime
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property PeakInstant As Integer
             Set(ByVal value As Integer)
                 If value > _Start Then
@@ -93,7 +114,13 @@ Namespace AeroTools.Settings
                 Return _PeakInstant
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Assign(ByRef Perturbacion As UnsteadyPerturbation)
 
             _Start = Perturbacion.Start
@@ -103,38 +130,50 @@ Namespace AeroTools.Settings
             FinalDrop = Perturbacion.FinalDrop
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Sub SaveToXML(ByRef writer As XmlWriter)
 
-            writer.WriteStartElement("Time")
-            writer.WriteAttributeString("Start", String.Format("{0}", _Start))
-            writer.WriteAttributeString("TimeSpan", String.Format("{0}", _ElapsedTime))
-            writer.WriteAttributeString("PeakAt", String.Format("{0}", _PeakInstant))
-            writer.WriteEndElement()
 
-            writer.WriteStartElement("Amplitude")
-            writer.WriteAttributeString("Intensity", String.Format("{0}", Intensity))
-            writer.WriteAttributeString("FinalDrop", String.Format("{0}", FinalDrop))
-            writer.WriteEndElement()
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Sub SaveToXML(ByRef Stream As XmlWriter)
+
+            Stream.WriteStartElement("Time")
+            Stream.WriteAttributeString("Start", String.Format("{0}", _Start))
+            Stream.WriteAttributeString("TimeSpan", String.Format("{0}", _ElapsedTime))
+            Stream.WriteAttributeString("PeakAt", String.Format("{0}", _PeakInstant))
+            Stream.WriteEndElement()
+
+            Stream.WriteStartElement("Amplitude")
+            Stream.WriteAttributeString("Intensity", String.Format("{0}", Intensity))
+            Stream.WriteAttributeString("FinalDrop", String.Format("{0}", FinalDrop))
+            Stream.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Sub ReadFromXML(ByRef reader As XmlReader)
 
-            While reader.Read
 
-                If reader.NodeType = XmlNodeType.Element Then
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Sub ReadFromXML(ByRef Stream As XmlReader)
 
-                    Select Case reader.Name
+            While Stream.Read
+
+                If Stream.NodeType = XmlNodeType.Element Then
+
+                    Select Case Stream.Name
 
                         Case "Time"
-                            _Start = CInt(reader.GetAttribute("Start"))
-                            _ElapsedTime = CInt(reader.GetAttribute("TimeSpan"))
-                            _PeakInstant = CInt(reader.GetAttribute("PeakAt"))
+                            _Start = CInt(Stream.GetAttribute("Start"))
+                            _ElapsedTime = CInt(Stream.GetAttribute("TimeSpan"))
+                            _PeakInstant = CInt(Stream.GetAttribute("PeakAt"))
 
                         Case "Amplitude"
-                            Intensity = CDbl(reader.GetAttribute("Intensity"))
-                            FinalDrop = CDbl(reader.GetAttribute("FinalDrop"))
+                            Intensity = CDbl(Stream.GetAttribute("Intensity"))
+                            FinalDrop = CDbl(Stream.GetAttribute("FinalDrop"))
 
                     End Select
 
@@ -143,79 +182,92 @@ Namespace AeroTools.Settings
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 
-    ''' <summary>
-    ''' Different axes for the perturbation
-    ''' </summary>
+    '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ' Different axes for the perturbation
+    '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Public Enum Axes As Integer
         X = 0
         Y = 1
         Z = 2
     End Enum
 
-    ''' <summary>
-    ''' Different types of velocity profiles
-    ''' </summary>
+    '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ' Different types of velocity profiles
+    '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Public Enum ProfileType As Integer
         Impulsive = 0
         Perturbation = 1
     End Enum
 
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class UnsteadyVelocity
 
-        ''' <summary>
-        ''' Base velocity.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Base velocity.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property BaseVelocity As New Vector3(0, 0, 0)
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private _Velocity As New List(Of Vector3)
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private _Intensity As New List(Of Vector3)
 
-        ''' <summary>
-        ''' Profile type.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Profile type.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Type As ProfileType = ProfileType.Impulsive
 
-        Private _Perturbation(2) As UnsteadyPerturbation ' Representa una perturbación en cada eje de coordenadas.
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Representa una perturbación en cada eje de coordenadas.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Private _Perturbation(2) As UnsteadyPerturbation
+    
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
             _Perturbation(Axes.X) = New UnsteadyPerturbation
             _Perturbation(Axes.Y) = New UnsteadyPerturbation
             _Perturbation(Axes.Z) = New UnsteadyPerturbation
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Gets the velocity at a given time step
-        ''' </summary>
-        ''' <param name="TimeStep">Time step (1-based)</param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Gets the velocity at a given time step
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Velocity(ByVal TimeStep As Integer) As Vector3
             Get
                 Return _Velocity(TimeStep - 1)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Gets the intensity at a given time step
-        ''' </summary>
-        ''' <param name="TimeStep">Time step (1-based)</param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Gets the intensity at a given time step
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Intensity(ByVal TimeStep As Integer) As Vector3
             Get
                 Return _Intensity(TimeStep - 1)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Perturbation(ByVal Eje As Axes) As UnsteadyPerturbation
             Set(ByVal value As UnsteadyPerturbation)
                 _Perturbation(Eje) = value
@@ -224,19 +276,23 @@ Namespace AeroTools.Settings
                 Return _Perturbation(Eje)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of steps.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of steps.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property nSteps As Integer
             Get
                 Return _Velocity.Count
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub GeneratePerturbation(ByVal NumberOfSteps As Integer)
 
             _Velocity.Clear()
@@ -276,13 +332,17 @@ Namespace AeroTools.Settings
 
                     LIntensity = 0
                     If i >= Perturbation(Axes.Y).Start And i <= Perturbation(Axes.Y).PeakInstant Then
+
                         Parametro = (i - Perturbation(Axes.Y).Start) / (Perturbation(Axes.Y).PeakInstant - Perturbation(Axes.Y).Start)
                         Tita = Math.PI * (Parametro - 0.5)
                         LIntensity = Perturbation(Axes.Y).Intensity * 0.5 * (1 + Math.Sin(Tita))
+
                     ElseIf i > Perturbation(Axes.Y).PeakInstant And i <= InstanteFinalY Then
+
                         Parametro = (i - Perturbation(Axes.Y).PeakInstant) / (InstanteFinalY - Perturbation(Axes.Y).PeakInstant)
                         Tita = Math.PI * (0.5 - Parametro)
                         LIntensity = Perturbation(Axes.Y).Intensity * 0.5 * (1 + Math.Sin(Tita))
+
                     End If
 
                     _Velocity(i).Y = BaseVelocity.Y + LVelocity * LIntensity
@@ -290,13 +350,17 @@ Namespace AeroTools.Settings
 
                     LIntensity = 0
                     If i >= Perturbation(Axes.Z).Start And i <= Perturbation(Axes.Z).PeakInstant Then
+
                         Parametro = (i - Perturbation(Axes.Z).Start) / (Perturbation(Axes.Z).PeakInstant - Perturbation(Axes.Z).Start)
                         Tita = Math.PI * (Parametro - 0.5)
                         LIntensity = Perturbation(Axes.Z).Intensity * 0.5 * (1 + Math.Sin(Tita))
+
                     ElseIf i > Perturbation(Axes.Z).PeakInstant And i <= InstanteFinalZ Then
+
                         Parametro = (i - Perturbation(Axes.Z).PeakInstant) / (InstanteFinalZ - Perturbation(Axes.Z).PeakInstant)
                         Tita = Math.PI * (0.5 - Parametro)
                         LIntensity = Perturbation(Axes.Z).Intensity * 0.5 * (1 + Math.Sin(Tita))
+
                     End If
 
                     _Velocity(i).Z = BaseVelocity.Z + LVelocity * LIntensity
@@ -319,7 +383,13 @@ Namespace AeroTools.Settings
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
+        
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Assign(ByRef Profile As UnsteadyVelocity)
 
             Type = Profile.Type
@@ -329,46 +399,58 @@ Namespace AeroTools.Settings
             Perturbation(Axes.Z).Assign(Profile.Perturbation(Axes.Z))
 
         End Sub
+        '------------------------------------------------------------------------------------------
+        
+        
+        
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Sub SaveToXML(ByRef Stream As XmlWriter)
 
-        Public Sub SaveToXML(ByRef writer As XmlWriter)
+            Stream.WriteStartElement("Properties")
+            Stream.WriteAttributeString("Type", CInt(Type))
+            Stream.WriteEndElement()
 
-            writer.WriteStartElement("Properties")
-            writer.WriteAttributeString("Type", CInt(Type))
-            writer.WriteEndElement()
+            Stream.WriteStartElement("X")
+            Perturbation(Axes.X).SaveToXML(Stream)
+            Stream.WriteEndElement()
 
-            writer.WriteStartElement("X")
-            Perturbation(Axes.X).SaveToXML(writer)
-            writer.WriteEndElement()
+            Stream.WriteStartElement("Y")
+            Perturbation(Axes.Y).SaveToXML(Stream)
+            Stream.WriteEndElement()
 
-            writer.WriteStartElement("Y")
-            Perturbation(Axes.Y).SaveToXML(writer)
-            writer.WriteEndElement()
-
-            writer.WriteStartElement("Z")
-            Perturbation(Axes.Z).SaveToXML(writer)
-            writer.WriteEndElement()
+            Stream.WriteStartElement("Z")
+            Perturbation(Axes.Z).SaveToXML(Stream)
+            Stream.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Sub ReadFromXML(ByRef reader As XmlReader)
 
-            While reader.Read
 
-                If reader.NodeType = XmlNodeType.Element Then
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Sub ReadFromXML(ByRef Stream As XmlReader)
 
-                    Select Case reader.Name
+            While Stream.Read
+
+                If Stream.NodeType = XmlNodeType.Element Then
+
+                    Select Case Stream.Name
 
                         Case "X"
-                            Perturbation(Axes.X).ReadFromXML(reader.ReadSubtree)
+                            Perturbation(Axes.X).ReadFromXML(Stream.ReadSubtree)
 
                         Case "Y"
-                            Perturbation(Axes.Y).ReadFromXML(reader.ReadSubtree)
+                            Perturbation(Axes.Y).ReadFromXML(Stream.ReadSubtree)
 
                         Case "Z"
-                            Perturbation(Axes.Z).ReadFromXML(reader.ReadSubtree)
+                            Perturbation(Axes.Z).ReadFromXML(Stream.ReadSubtree)
 
                         Case "Properties"
-                            Type = IOXML.ReadInteger(reader, "Type", ProfileType.Impulsive)
+                            Type = IOXML.ReadInteger(Stream, "Type", ProfileType.Impulsive)
 
                     End Select
 
@@ -377,7 +459,10 @@ Namespace AeroTools.Settings
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

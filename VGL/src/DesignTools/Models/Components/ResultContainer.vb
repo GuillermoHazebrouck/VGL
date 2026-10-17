@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -36,61 +36,61 @@ Imports VGL.MathTools
 '#############################################################################
 Namespace DesignTools.Models.Components
 
-    ''' <summary>
-    ''' A vector that is attached to a point
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' A vector that is attached to a point
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class FixedVector
 
-        ''' <summary>
-        ''' The associated point
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The associated point
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Point As New Vector3
 
-        ''' <summary>
-        ''' The associated vector
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The associated vector
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Vector As New Vector3
 
     End Class
 
-    ''' <summary>
-    ''' Represents a multi-purpose surface for post-processing.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a multi-purpose surface for post-processing.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ResultContainer
 
         Inherits Surface
 
-        ''' <summary>
-        ''' The different kind of results
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The different kind of results
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum ResultKinds
 
-            ''' <summary>
-            ''' No results
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' No results
+            '//////////////////////////////////////////////////////////////////////////////////////////
             None
 
-            ''' <summary>
-            ''' The mean pressure over a panel
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' The mean pressure over a panel
+            '//////////////////////////////////////////////////////////////////////////////////////////
             PanelPressure
 
-            ''' <summary>
-            ''' The velocity computed at the panel control point
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' The velocity computed at the panel control point
+            '//////////////////////////////////////////////////////////////////////////////////////////
             PanelVelocity
 
-            ''' <summary>
-            ''' The nodal displacements (for dynamic modes and aeroelasticity)
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' The nodal displacements (for dynamic modes and aeroelasticity)
+            '//////////////////////////////////////////////////////////////////////////////////////////
             NodalDisplacement
 
         End Enum
 
-        ''' <summary>
-        ''' The active result
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The active result
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property ActiveResult As ResultKinds
 
         Public Sub New(Visuals As VisualProperties)
@@ -100,6 +100,7 @@ Namespace DesignTools.Models.Components
             VisualProperties = Visuals
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub New()
 
@@ -108,10 +109,11 @@ Namespace DesignTools.Models.Components
             VisualProperties = New VisualProperties(ComponentTypes.etResultContainer)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Clears the mesh.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Clears the mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub Clear()
 
             Mesh.Nodes.Clear()
@@ -121,29 +123,30 @@ Namespace DesignTools.Models.Components
             _GeometryLoaded = False
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Location of this lattice in the database.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Location of this lattice in the database.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property AccessPath As String
 
-        ''' <summary>
-        ''' Extreme values of the local pressure.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Extreme values of the local pressure.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property PressureDeltaRange As New LimitValues
 
-        ''' <summary>
-        ''' Extreme values of the local pressure.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Extreme values of the local pressure.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property PressureRange As New LimitValues
 
-        ''' <summary>
-        ''' Maximum and minimum displacements.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Maximum and minimum displacements.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property DisplacementRange As New LimitValues
 
         Private _GeometryLoaded As Boolean = False
@@ -174,6 +177,7 @@ Namespace DesignTools.Models.Components
             Me.Mesh.Nodes.Add(NodalPoint)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Overloads Sub AddNodalPoint(ByVal Punto As Vector3, Optional ByVal Displacement As Vector3 = Nothing)
 
@@ -188,6 +192,7 @@ Namespace DesignTools.Models.Components
             Me.Mesh.Nodes.Add(NodalPoint)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Function AddPanel(ByVal N1 As Integer, ByVal N2 As Integer, ByVal N3 As Integer, ByVal N4 As Integer) As Integer
 
@@ -210,10 +215,10 @@ Namespace DesignTools.Models.Components
 
         End Function
 
-        ''' <summary>
-        ''' Loads the geometry from a calculation model lattice.
-        ''' </summary>
-        ''' <param name="Lattice"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the geometry from a calculation model lattice.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Lattice"></param>
         Public Sub LoadFromLattice(ByVal Lattice As Lattice)
 
             For i = 0 To Lattice.Nodes.Count - 1
@@ -227,15 +232,15 @@ Namespace DesignTools.Models.Components
             _GeometryLoaded = True
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " 3D Functions "
 
-        ''' <summary>
-        ''' Updates the position based on the reference nodal position and displacement.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Updates the position based on the reference nodal position and displacement.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub UpdateDisplacement(Optional ByVal Scale As Double = 1.0)
 
             If NumberOfNodes > 0 Then
@@ -254,16 +259,18 @@ Namespace DesignTools.Models.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Overrides Sub GenerateMesh()
 
             Throw New Exception("Cannot generate the mesh of a general surface.")
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates control points and normal vectors for each panel.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates control points and normal vectors for each panel.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub GenerateControlPointsAndNormalVectors()
 
             Dim Nodo1 As Vector3
@@ -344,15 +351,16 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Posprocess UVLM "
 
-        ''' <summary>
-        ''' Finds the ragne of pressure over the surface.
-        ''' </summary>
-        ''' <param name="AbsoluteValue"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Finds the ragne of pressure over the surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="AbsoluteValue"></param>
         Public Sub FindPressureRange(Optional ByVal AbsoluteValue As Boolean = True)
 
             Dim FirstWing As Boolean = True
@@ -397,10 +405,11 @@ Namespace DesignTools.Models.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Updates the map with pressure.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Updates the map with pressure.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub UpdatePressureColormap()
 
             For Each Panel In Mesh.Panels
@@ -417,6 +426,7 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub FindDisplacementsRange()
 
@@ -438,6 +448,7 @@ Namespace DesignTools.Models.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub UpdateColormapWithDisplacements()
 
@@ -448,6 +459,7 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub FindBestVelocityScale()
 
@@ -467,6 +479,7 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
@@ -475,10 +488,12 @@ Namespace DesignTools.Models.Components
         Public Overrides Sub WriteToXML(ByRef writes As XmlWriter)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Overrides Sub ReadFromXML(ByRef reader As XmlReader)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub WriteToBinary()
 
@@ -509,6 +524,7 @@ Namespace DesignTools.Models.Components
             bw.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub ReadFromBinary()
 
@@ -544,11 +560,12 @@ Namespace DesignTools.Models.Components
             Mesh.GenerateLattice()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads the data from a text file (using the access path).
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the data from a text file (using the access path).
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Function LoadFromTextFile() As Boolean
 
             Try

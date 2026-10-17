@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -32,10 +32,10 @@ Namespace AeroTools.Solver
 
     Partial Public Class Solver
 
-        ''' <summary>
-        ''' Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
-        ''' The implicit Nemark algorithm is used.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates the unsteady aeroelastic transit provided a velocity profile and a structural model.
+        ' The implicit Nemark algorithm is used.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub AeroelasticTransit(ByVal ReferenceFilePath As String)
 
             If WithSources Then
@@ -357,6 +357,7 @@ Namespace AeroTools.Solver
             RaiseEvent CalculationDone()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

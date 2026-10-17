@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -27,76 +27,104 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace AeroTools.Models.Aero.Components
 
-    ''' <summary>
-    ''' Represents a node on a wake or a bounded lattice.
-    ''' This class does not only hold the position, but also the substantial velocity.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a node on a wake or a bounded lattice.
+    ' This class does not only hold the position, but also the substantial velocity.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Node
 
-        ''' <summary>
-        ''' Position used as reference for translating or rotating (not always used)
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Position used as reference for translating or rotating (not always used)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public OriginalPosition As Vector3
 
-        ''' <summary>
-        ''' Current position
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Current position
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Position As Vector3
 
-        ''' <summary>
-        ''' Represents a displacement (used on aeroelastic calculation)
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Represents a displacement (used on aeroelastic calculation)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Displacement As Vector3
 
-        ''' <summary>
-        ''' Absolute velocity
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Absolute velocity
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Velocity As Vector3
 
-        ''' <summary>
-        ''' Local index.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Local index.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public IndexL As Integer
 
-        ''' <summary>
-        ''' Global index.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Global index.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public IndexG As Integer
 
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
             Position = New Vector3
             Velocity = New Vector3
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New(ByVal IndexL As Integer, ByVal Position As Vector3)
             Me.Position = New Vector3(Position)
             Velocity = New Vector3
             Me.IndexL = IndexL
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New(ByVal NodeToCopy As Node)
             Position = New Vector3
             Velocity = New Vector3
             Me.Assign(NodeToCopy)
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub Assign(ByVal Node As Node)
             Me.Position.Assign(Node.Position)
             Me.Velocity.Assign(Node.Velocity)
             Me.IndexL = Node.IndexL
             Me.IndexG = Node.IndexG
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub IntegratePosition(ByVal Dt As Double)
             Me.Position.X += Dt * Velocity.X
             Me.Position.Y += Dt * Velocity.Y
             Me.Position.Z += Dt * Velocity.Z
         End Sub
+        '------------------------------------------------------------------------------------------
+
 
     End Class
+    '------------------------------------------------------------------------------------------
 
 End Namespace

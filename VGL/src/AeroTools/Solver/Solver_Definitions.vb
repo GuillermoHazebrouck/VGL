@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -42,118 +42,116 @@ Namespace AeroTools.Solver
         Private Const DebugSolver = False
 #End If
 
-        ''' <summary>
-        ''' Initializes the class.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Initializes the class.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
             Lattices = New List(Of BoundedLattice)
             Settings = New SimulationSettings
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Contains all parameters required to run a complete simulation.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Contains all parameters required to run a complete simulation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Settings As SimulationSettings
 
-        ''' <summary>
-        ''' Contains all bounded lattices. This includes thick and slender surfaces.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Contains all bounded lattices. This includes thick and slender surfaces.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Lattices As List(Of BoundedLattice)
 
-        ''' <summary>
-        ''' Stores the links between the structure and the aerodynamic lattices when there is an
-        ''' aeroelastic interaction.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Stores the links between the structure and the aerodynamic lattices when there is an
+        ' aeroelastic interaction.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property StructuralLinks As List(Of StructuralLink)
 
-        ''' <summary>
-        ''' Stores the dynamic response of the model when there is rigid body motion.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Stores the dynamic response of the model when there is rigid body motion.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property Motion As MotionIntegrator
 
-        ''' <summary>
-        ''' Gathers all polar curves necessary for the calculation.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gathers all polar curves necessary for the calculation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property PolarDataBase As PolarDatabase
 
 #Region "Private calculation variables"
 
-        ''' <summary>
-        ''' The matrix for the Dirichlet boundary conditions (slender surfaces).
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The matrix for the Dirichlet boundary conditions (slender surfaces).
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private MatrixDoublets As Matrix
 
-        ''' <summary>
-        ''' The matrix for the Neumman boundary conditions (thick surfaces).
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The matrix for the Neumman boundary conditions (thick surfaces).
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private MatrixSources As Matrix
 
-        ''' <summary>
-        ''' The vector containing the circulation of vortex rings.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The vector containing the circulation of vortex rings.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private G As Vector
 
-        ''' <summary>
-        ''' The vector containing the intensity of the sources in the thick surfaces.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The vector containing the intensity of the sources in the thick surfaces.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private S As Vector
 
-        ''' <summary>
-        '''  The right hand side of the linear system, containing the known cross flow.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '  The right hand side of the linear system, containing the known cross flow.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private RHS As Vector
 
-        ''' <summary>
-        ''' The dimension of the system
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The dimension of the system
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Dimension As Integer
 
-        ''' <summary>
-        ''' Indicates if source panels are present in the model. 
-        ''' This is automatically detected and determines how the system is built.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if source panels are present in the model. 
+        ' This is automatically detected and determines how the system is built.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private WithSources As Boolean = False
 
-        ''' <summary>
-        ''' Indicates if the stream rotates.
-        ''' This is automatically detected .
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the stream rotates.
+        ' This is automatically detected .
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Private WithStreamRotation As Boolean = False
 
-        ''' <summary>
-        ''' Gathers the instantaneus stream properties
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gathers the instantaneus stream properties
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Class StreamProperties
 
-            ''' <summary>
-            ''' The uniform component of the stream velocity.
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' The uniform component of the stream velocity.
+            '//////////////////////////////////////////////////////////////////////////////////////////
             Public Velocity As New Vector3
 
-            ''' <summary>
-            ''' The stream rotation about the origin. This could be either imposed
-            ''' or a result of the body motion.
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' The stream rotation about the origin. This could be either imposed
+            ' or a result of the body motion.
+            '//////////////////////////////////////////////////////////////////////////////////////////
             Public Rotation As New Vector3
 
-            ''' <summary>
-            ''' The dynamic pressure used to compute dimensionless coefficients.
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' The dynamic pressure used to compute dimensionless coefficients.
+            '//////////////////////////////////////////////////////////////////////////////////////////
             Public DynamicPressure As Double
 
-            ''' <summary>
-            ''' Cached value of V.V, used for internal computation of coefficients.
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' Cached value of V.V, used for internal computation of coefficients.
+            '//////////////////////////////////////////////////////////////////////////////////////////
             Public SquareVelocity As Double
 
-            ''' <summary>
-            ''' The stream density.
-            ''' </summary>
+            '//////////////////////////////////////////////////////////////////////////////////////////
+            ' The stream density.
+            '//////////////////////////////////////////////////////////////////////////////////////////
             Public Density As Double
 
         End Class
@@ -162,35 +160,34 @@ Namespace AeroTools.Solver
 
 #Region "Public state variables"
 
-        ''' <summary>
-        ''' The instantaneus stream properties
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The instantaneus stream properties
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Stream As New StreamProperties
 
-        ''' <summary>
-        ''' Base stream velocity [m/s]
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Base stream velocity [m/s]
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <value></value>
+        ' <returns></returns>
         Public ReadOnly Property StreamVelocity As Vector3
             Get
                 Return Stream.Velocity
             End Get
         End Property
 
-        ''' <summary>
-        ''' Stream density [kg/m³]
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Stream density [kg/m³]
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property StreamDensity As Double
             Get
                 Return Stream.Density
             End Get
         End Property
 
-        ''' <summary>
-        ''' Stream density [Pa]
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Stream density [Pa]
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property StreamDynamicPressure As Double
             Get
                 Return Stream.DynamicPressure
@@ -201,32 +198,32 @@ Namespace AeroTools.Solver
 
 #Region "Public events"
 
-        ''' <summary>
-        ''' Occurs when a progress is made.
-        ''' </summary>
-        ''' <param name="Title"></param>
-        ''' <param name="Value"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Occurs when a progress is made.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Title"></param>
+        ' <param name="Value"></param>
         Public Event PushProgress(ByVal Title As String, ByVal Value As Integer)
 
-        ''' <summary>
-        ''' Occurs when a progress is made.
-        ''' </summary>
-        ''' <param name="Title"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Occurs when a progress is made.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Title"></param>
         Public Event PushMessage(ByVal Title As String)
 
-        ''' <summary>
-        ''' Forwards a result line to the connected handler. The event is triggered when calling "ReportResults".
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Forwards a result line to the connected handler. The event is triggered when calling "ReportResults".
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Event PushResultLine(ByVal Line As String)
 
-        ''' <summary>
-        ''' Occurs when the calculation finishes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Occurs when the calculation finishes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Event CalculationDone()
 
-        ''' <summary>
-        ''' Occurs when the calculation is automatically aborted.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Occurs when the calculation is automatically aborted.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Event CalculationAborted()
 
 #End Region

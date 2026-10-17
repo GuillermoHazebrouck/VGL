@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -32,78 +32,67 @@ Imports DotNumerics.LinearAlgebra
 '#############################################################################
 Namespace AeroTools.Settings
 
-    ''' <summary>
-    ''' Represent the inertial properties of a body.
-    ''' The axes are assumed to cross the body CG.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represent the inertial properties of a body.
+    ' The axes are assumed to cross the body CG.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Structure InertialProperties
 
-        ''' <summary>
-        ''' Center of uniform force field.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Center of uniform force field.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Xcg As Double
 
-        ''' <summary>
-        ''' Center of uniform force field.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Center of uniform force field.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Ycg As Double
 
-        ''' <summary>
-        ''' Center of uniform force field.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Center of uniform force field.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Zcg As Double
 
-        ''' <summary>
-        ''' The mass of the system.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The mass of the system.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Mass As Double
 
-        ''' <summary>
-        ''' Moment of ineratia about the X axis.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Moment of ineratia about the X axis.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Ixx As Double
 
-        ''' <summary>
-        ''' Moment of ineratia about the Y axis.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Moment of ineratia about the Y axis.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Iyy As Double
 
-        ''' <summary>
-        ''' Moment of ineratia about the Z axis.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Moment of ineratia about the Z axis.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Izz As Double
 
-        ''' <summary>
-        ''' Cross moment of ineratia about the XY axes.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Cross moment of ineratia about the XY axes.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Ixy As Double
 
-        ''' <summary>
-        ''' Cross moment of ineratia about the XZ axes.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Cross moment of ineratia about the XZ axes.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Ixz As Double
 
-        ''' <summary>
-        ''' Cross moment of ineratia about the YZ axes.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Cross moment of ineratia about the YZ axes.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Iyz As Double
 
-        ''' <summary>
-        ''' Adds the two inertial properties using the transport theorem.
-        ''' </summary>
-        ''' <param name="I1"></param>
-        ''' <param name="I2"></param>
-        ''' <returns></returns>
+
+
+        '==========================================================================================
+        ' Adds the two inertial properties using the transport theorem.
+        '==========================================================================================
         Public Shared Operator +(I1 As InertialProperties, I2 As InertialProperties)
 
             Dim I As InertialProperties
@@ -155,13 +144,14 @@ Namespace AeroTools.Settings
             Return I
 
         End Operator
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Transforms the inertial properties to the given axes. This also will align the CG 
-        ''' coordinates and add the CG offset.
-        ''' </summary>
-        ''' <param name="Inertia"></param>
-        ''' <param name="Basis"></param>
+
+
+        '==========================================================================================
+        ' Transforms the inertial properties to the given axes. This also will align the CG 
+        ' coordinates and add the CG offset.
+        '==========================================================================================
         Public Sub Transform(Offset As Vector3, ByVal Basis As Base3)
 
             Dim X As Double = Xcg
@@ -197,14 +187,13 @@ Namespace AeroTools.Settings
             Izz = I.Ixz * Basis.W.X + I.Ixz * Basis.W.Y + I.Izz * Basis.W.Z
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Convertes the general tensor of inertia to a the main axes of inertia
-        ''' </summary>
-        ''' <param name="Basis"></param>
-        ''' <param name="I_xx"></param>
-        ''' <param name="I_yy"></param>
-        ''' <param name="I_zz"></param>
+
+
+        '==========================================================================================
+        ' Convertes the general tensor of inertia to a the main axes of inertia
+        '==========================================================================================
         Public Sub ToMainInertia(ByRef Basis As Base3,
                                  ByRef I_xx As Double,
                                  ByRef I_yy As Double,
@@ -268,7 +257,13 @@ Namespace AeroTools.Settings
             Basis.W.FromVectorProduct(Basis.U, Basis.V)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub SetToZero()
 
             Mass = 0.0#
@@ -285,8 +280,10 @@ Namespace AeroTools.Settings
             Iyz = 0.0#
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Structure
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
-
+'--------------------------------------------------------------------------------------------------

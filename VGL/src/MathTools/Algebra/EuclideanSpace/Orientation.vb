@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -17,10 +17,10 @@
 
 Namespace MathTools.Algebra.EuclideanSpace
 
-    ''' <summary>
-    ''' The available rotation sequences.
-    ''' Other secuences can be added here, but you have to add the transformation matrix.
-    ''' </summary>
+    '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    ' The available rotation sequences.
+    ' Other secuences can be added here, but you have to add the transformation matrix.
+    '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Public Enum RotationSequence As Byte
 
         'Euler sequence
@@ -31,51 +31,51 @@ Namespace MathTools.Algebra.EuclideanSpace
 
     End Enum
 
-    ''' <summary>
-    ''' Represents an orientation in Euler angles
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents an orientation in Euler angles
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class OrientationAngles
 
-        ''' <summary>
-        ''' Pi divided by 180.0#
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Pi divided by 180.0#
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Const PiDiv180 As Double = Math.PI / 180.0#
 
-        ''' <summary>
-        ''' Yaw angle
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Yaw angle
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Angle1 As Double
 
-        ''' <summary>
-        ''' Pitch angle
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Pitch angle
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Angle2 As Double
 
-        ''' <summary>
-        ''' Roll angle
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Roll angle
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Angle3 As Double
 
-        ''' <summary>
-        ''' The rotation sequence
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The rotation sequence
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Sequence As RotationSequence = RotationSequence.ZYX
 
-        ''' <summary>
-        ''' Resets the orientation to zero.
-        ''' </summary>
+        '=========================================================================================
+        ' Resets the orientation to zero.
+        '=========================================================================================
         Public Sub SetToZero()
             Angle1 = 0
             Angle2 = 0
             Angle3 = 0
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Converts the angles to radians (assuming they are in degrees)
-        ''' </summary>
-        ''' <returns></returns>
+
+
+        '=========================================================================================
+        ' Converts the angles to radians (assuming they are in degrees)
+        '=========================================================================================
         Public Sub ToRadians()
 
             Angle1 *= PiDiv180
@@ -83,11 +83,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Angle3 *= PiDiv180
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Converts the angles to radians (assuming they are in degrees)
-        ''' </summary>
-        ''' <returns></returns>
+
+
+        '=========================================================================================
+        ' Converts the angles to radians (assuming they are in degrees)
+        '=========================================================================================
         Public Function InRadians() As OrientationAngles
 
             Dim NewOrientation As New OrientationAngles
@@ -97,10 +99,9 @@ Namespace MathTools.Algebra.EuclideanSpace
 
         End Function
 
-        ''' <summary>
-        ''' Converts the angles to degrees (assuming they are in radians)
-        ''' </summary>
-        ''' <returns></returns>
+        '=========================================================================================
+        ' Converts the angles to degrees (assuming they are in radians)
+        '=========================================================================================
         Public Sub ToDegrees()
 
             Angle1 /= PiDiv180
@@ -108,11 +109,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Angle3 /= PiDiv180
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Assigns the same value.
-        ''' </summary>
-        ''' <param name="Orientation"></param>
+
+
+        '=========================================================================================
+        ' Assigns the same value.
+        '=========================================================================================
         Public Sub Assign(ByVal Orientation As OrientationAngles)
 
             Angle1 = Orientation.Angle1
@@ -122,7 +125,10 @@ Namespace MathTools.Algebra.EuclideanSpace
             Sequence = Orientation.Sequence
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

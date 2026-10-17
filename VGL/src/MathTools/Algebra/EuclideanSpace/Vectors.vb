@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -19,51 +19,89 @@ Imports VGL.MathTools.Algebra.CustomMatrices
 
 Namespace MathTools.Algebra.EuclideanSpace
 
-    ''' <summary>
-    ''' Represents an euclidean vector of two coordinates.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents an euclidean vector of two coordinates.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Vector2
 
         Public Property X As Double
         Public Property Y As Double
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New(ByVal x As Double, ByVal y As Double)
             Me.X = x
             Me.Y = y
         End Sub
+        '------------------------------------------------------------------------------------------
 
-#Region " Operaciones aritméticos "
 
+#Region " Arithmetic operators "
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator +(ByVal V1 As Vector2, ByVal V2 As Vector2) As Vector2
             Dim Suma As New Vector2
             Suma.X = V1.X + V2.X
             Suma.Y = V1.Y + V2.Y
             Return Suma
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator -(ByVal V1 As Vector2, ByVal V2 As Vector2) As Vector2
             Dim Resta As New Vector2
             Resta.X = V1.X - V2.X
             Resta.Y = V1.Y - V2.Y
             Return Resta
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator -(ByVal V As Vector2) As Vector2
             Dim Opuesto As New Vector2
             Opuesto.X = -V.X
             Opuesto.Y = -V.Y
             Return Opuesto
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overloads Shared Operator *(ByVal V1 As Vector2, ByVal V2 As Vector2) As Double
             Return V1.X * V2.X + V1.Y * V2.Y
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overloads Shared Operator *(ByVal Escalar As Double, ByVal V As Vector2) As Vector2
             Dim Producto As New Vector2
 
@@ -72,73 +110,139 @@ Namespace MathTools.Algebra.EuclideanSpace
 
             Return Producto
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator ^(ByVal V1 As Vector2, ByVal V2 As Vector2) As Double
 
             Return V1.X * V2.Y - V1.Y * V2.X
 
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Oppose()
             Me.X = -Me.X
             Me.Y = -Me.Y
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Scale(ByVal Scalar As Double)
             Me.X = Scalar * Me.X
             Me.Y = Scalar * Me.Y
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function PinCrossProduct(ByVal V1 As Vector2, ByVal V2 As Vector2) As Double
 
-            Dim x1 As Double = V1.X - X
-            Dim y1 As Double = V1.Y - Y
+            Dim X1 As Double = V1.X - X
+            Dim Y1 As Double = V1.Y - Y
 
-            Dim x2 As Double = V2.X - X
-            Dim y2 As Double = V2.Y - Y
+            Dim X2 As Double = V2.X - X
+            Dim Y2 As Double = V2.Y - Y
 
-            Return x1 * y2 - y1 * x2
+            Return X1 * Y2 - Y1 * X2
 
         End Function
+        '------------------------------------------------------------------------------------------
+
 
 #End Region
 
 #Region " Metric operations "
 
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Norm2 As Double
             Get
                 Return Math.Sqrt(Me * Me)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property SqrNorm2 As Double
             Get
                 Return X * X + Y * Y
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        Public Function RelativePosition(ByVal Punto As Vector2) As Vector2
-            Return New Vector2(Punto.X - X, Punto.Y - Y)
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Function RelativePosition(ByVal Point As Vector2) As Vector2
+            Return New Vector2(Point.X - X, Point.Y - Y)
         End Function
+        '------------------------------------------------------------------------------------------
 
-        Public Function DistanceTo(ByVal Punto As Vector2) As Double
-            Dim dx As Double = X - Punto.X
-            Dim dy As Double = Y - Punto.Y
-            Return Math.Sqrt(dx * dx + dy * dy)
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Function DistanceTo(ByVal Point As Vector2) As Double
+            Dim Dx As Double = X - Point.X
+            Dim Dy As Double = Y - Point.Y
+            Return Math.Sqrt(Dx * Dx + Dy * Dy)
         End Function
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public ReadOnly Property ProjectionVector(ByVal Vector As Vector2) As Vector2
             Get
                 Return (Me * Vector) / (Vector * Vector) * Vector
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public ReadOnly Property OrthogonalVector(ByVal Vector As Vector2) As Vector2
             Get
                 Return Me - Me.ProjectionVector(Vector)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Ortogonalize()
 
             Dim Xo As Double = Me.X
@@ -147,76 +251,114 @@ Namespace MathTools.Algebra.EuclideanSpace
             Me.Y = Xo
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Normalize()
             Dim Norm As Double = Me.Norm2
             Me.X = Me.X / Norm
             Me.Y = Me.Y / Norm
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function DotProduct(ByVal v As Vector2) As Double
             Return X * v.X + Y * v.Y
         End Function
+        '------------------------------------------------------------------------------------------
+
 
 #End Region
 
-#Region " Otras operaciones "
+#Region " Other operations "
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub SetToCero()
             Me.X = 0
             Me.Y = 0
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub ReadFromString(ByVal Line As String, Optional ByVal Margen As Integer = 1)
             Me.X = CDbl(Mid(Line, Margen, 25))
             Me.Y = CDbl(Mid(Line, Margen + 25, 25))
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub SetCoordinates(ByVal X As Double, ByVal Y As Double)
             Me.X = X
             Me.Y = Y
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Rotates the vector an angle a [rad]
-        ''' </summary>
-        ''' <param name="a"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Rotates the vector an angle a [rad]
+        '==========================================================================================
         Public Overloads Sub Rotate(ByVal a As Double)
 
-            Dim rotX = X * Math.Cos(a) - Y * Math.Sin(a)
-            Dim rotY = X * Math.Sin(a) + Y * Math.Cos(a)
-            Me.X = rotX
-            Me.Y = rotY
+            Dim RotX = X * Math.Cos(a) - Y * Math.Sin(a)
+            Dim RotY = X * Math.Sin(a) + Y * Math.Cos(a)
+            Me.X = RotX
+            Me.Y = RotY
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Rotates the vector an angle a [rad]
-        ''' </summary>
-        ''' <param name="a"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Rotates the vector an angle a [rad]
+        '==========================================================================================
         Public Overloads Sub Rotate(ByVal a As Double, ByVal x As Double, ByVal y As Double)
             Me.X -= x
             Me.Y -= y
-            Dim rotX As Double = Me.X * Math.Cos(a) - Me.Y * Math.Sin(a)
-            Dim rotY As Double = Me.X * Math.Sin(a) + Me.Y * Math.Cos(a)
-            Me.X = rotX + x
-            Me.Y = rotY + y
+            Dim RotX As Double = Me.X * Math.Cos(a) - Me.Y * Math.Sin(a)
+            Dim RotY As Double = Me.X * Math.Sin(a) + Me.Y * Math.Cos(a)
+            Me.X = RotX + x
+            Me.Y = RotY + y
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Function ParametricIntersection(ByVal p1 As Vector2, ByVal v1 As Vector2, ByVal p2 As Vector2, ByVal v2 As Vector2) As Vector2
 
-            Dim det As Double = v2.X * v1.Y - v1.X * v2.Y
+            Dim Det As Double = v2.X * v1.Y - v1.X * v2.Y
 
-            If det <> 0 Then
+            If Det <> 0 Then
 
                 Dim intersection As New Vector2
                 Dim bx As Double = p2.X - p1.X
                 Dim by As Double = p2.Y - p1.Y
 
-                intersection.X = (-v2.Y * bx + v2.X * by) / det
-                intersection.Y = (-v1.Y * bx + v1.X * by) / det
+                intersection.X = (-v2.Y * bx + v2.X * by) / Det
+                intersection.Y = (-v1.Y * bx + v1.X * by) / Det
 
                 Return intersection
 
@@ -227,16 +369,14 @@ Namespace MathTools.Algebra.EuclideanSpace
             End If
 
         End Function
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates the intersection between line {p, v} with segment {a, b} as a coordinate relative to point a.
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="v"></param>
-        ''' <param name="a"></param>
-        ''' <param name="b"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Calculates the intersection between line {p, v} with segment {a, b} as a coordinate 
+        ' relative to point a.
+        '==========================================================================================
         Public Shared Function IntersectionCoordinate(ByVal p As Vector2, ByVal v As Vector2, ByVal a As Vector2, ByVal b As Vector2) As Double
 
             Dim u As New Vector2(b.X - a.X, b.Y - a.Y)
@@ -257,15 +397,18 @@ Namespace MathTools.Algebra.EuclideanSpace
             End If
 
         End Function
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Represents an euclidean vector of three coordinates.
-    ''' </summary>
-    ''' <remarks></remarks>
+
+
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents an euclidean vector of three coordinates.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Vector3
 
         Public X As Double
@@ -276,50 +419,75 @@ Namespace MathTools.Algebra.EuclideanSpace
         Public Sub New()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New(ByVal Vector As Vector3)
             Me.X = Vector.X
             Me.Y = Vector.Y
             Me.Z = Vector.Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New(ByVal Vector As Vector3, ByVal Factor As Double)
             Me.X = Factor * Vector.X
             Me.Y = Factor * Vector.Y
             Me.Z = Factor * Vector.Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New(ByVal X As Double, ByVal Y As Double, ByVal Z As Double)
             Me.X = X
             Me.Y = Y
             Me.Z = Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overrides Function ToString() As String
 
             Return String.Format("{0:F14}, {1:F14}, {2:F14}", X, Y, Z)
 
         End Function
+        '------------------------------------------------------------------------------------------
 
-#Region " Operaciones aritméticas "
 
-        ''' <summary>
-        ''' Adds the given vector
-        ''' </summary>
-        ''' <param name="Vector"></param>
-        ''' <remarks></remarks>
+#Region " Arithmetic operators "
+
+
+        '==========================================================================================
+        ' Adds the given vector
+        '==========================================================================================
         Public Sub Add(ByVal Vector As Vector3)
             Me.X += Vector.X
             Me.Y += Vector.Y
             Me.Z += Vector.Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds the given vector premltiplied by the given scalar
-        ''' </summary>
-        ''' <param name="Vector"></param>
-        ''' <param name="Scalar"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds the given vector premltiplied by the given scalar
+        '==========================================================================================
         Public Sub Add(ByVal Vector As Vector3, ByVal Scalar As Double)
 
             Me.X += Vector.X * Scalar
@@ -327,22 +495,25 @@ Namespace MathTools.Algebra.EuclideanSpace
             Me.Z += Vector.Z * Scalar
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds the given vector coordinates
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds the given vector coordinates
+        '==========================================================================================
         Public Sub Add(ByVal X As Double, ByVal Y As Double, ByVal Z As Double)
             Me.X += X
             Me.Y += Y
             Me.Z += Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Substracts the given vector
-        ''' </summary>
-        ''' <param name="Vector"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Substracts the given vector
+        '==========================================================================================
         Public Sub Substract(ByVal Vector As Vector3)
 
             Me.X -= Vector.X
@@ -350,31 +521,37 @@ Namespace MathTools.Algebra.EuclideanSpace
             Me.Z -= Vector.Z
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds the cross product between two vectors
-        ''' </summary>
-        ''' <param name="V1"></param>
-        ''' <param name="V2"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds the cross product between two vectors
+        '==========================================================================================
         Public Sub AddCrossProduct(ByVal V1 As Vector3, ByVal V2 As Vector3)
             X += V1.Y * V2.Z - V1.Z * V2.Y
             Y += V1.Z * V2.X - V1.X * V2.Z
             Z += V1.X * V2.Y - V1.Y * V2.X
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds the cross product between two vectors multiplied by a scalar
-        ''' </summary>
-        ''' <param name="V1"></param>
-        ''' <param name="V2"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds the cross product between two vectors multiplied by a scalar
+        '==========================================================================================
         Public Sub AddCrossProduct(ByVal V1 As Vector3, ByVal V2 As Vector3, Scalar As Double)
             X += Scalar * (V1.Y * V2.Z - V1.Z * V2.Y)
             Y += Scalar * (V1.Z * V2.X - V1.X * V2.Z)
             Z += Scalar * (V1.X * V2.Y - V1.Y * V2.X)
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator +(ByVal V1 As Vector3, ByVal V2 As Vector3) As Vector3
             Dim Suma As New Vector3
             Suma.X = V1.X + V2.X
@@ -382,7 +559,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Suma.Z = V1.Z + V2.Z
             Return Suma
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator -(ByVal V1 As Vector3, ByVal V2 As Vector3) As Vector3
             Dim Resta As New Vector3
             Resta.X = V1.X - V2.X
@@ -390,7 +573,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Resta.Z = V1.Z - V2.Z
             Return Resta
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator -(ByVal V As Vector3) As Vector3
             Dim Opuesto As New Vector3
             Opuesto.X = -V.X
@@ -398,11 +587,23 @@ Namespace MathTools.Algebra.EuclideanSpace
             Opuesto.Z = -V.Z
             Return Opuesto
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overloads Shared Operator *(ByVal V1 As Vector3, ByVal V2 As Vector3) As Double
             Return V1.X * V2.X + V1.Y * V2.Y + V1.Z * V2.Z
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overloads Shared Operator *(ByVal Escalar As Double, ByVal V As Vector3) As Vector3
             Dim Producto As New Vector3
 
@@ -412,7 +613,13 @@ Namespace MathTools.Algebra.EuclideanSpace
 
             Return Producto
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Shared Operator ^(ByVal V1 As Vector3, ByVal V2 As Vector3) As Vector3
             Dim Producto As New Vector3
 
@@ -422,21 +629,39 @@ Namespace MathTools.Algebra.EuclideanSpace
 
             Return Producto
         End Operator
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Oppose()
             Me.X = -Me.X
             Me.Y = -Me.Y
             Me.Z = -Me.Z
         End Sub
+        '------------------------------------------------------------------------------------------
+
 
 #End Region
 
-#Region " Operaciones métricas "
+#Region " Metric operations "
 
-        Public Function InnerProduct(ByVal Punto As Vector3) As Double
-            Return X * Punto.X + Y * Punto.Y + Z * Punto.Z
+
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Function InnerProduct(ByVal Point As Vector3) As Double
+            Return X * Point.X + Y * Point.Y + Z * Point.Z
         End Function
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public ReadOnly Property Norm2 As Double
             Get
                 ' In the .NET frameworks X * X is much more effective than X ^ 2.
@@ -451,19 +676,35 @@ Namespace MathTools.Algebra.EuclideanSpace
                 Return Value
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
         ' Review these properties. They might work much slower than they should!!
-
-        Public Function RelativePosition(ByVal Punto As Vector3) As Vector3
-            Dim Posicion As New Vector3(Punto)
+        '==========================================================================================
+        Public Function RelativePosition(ByVal Point As Vector3) As Vector3
+            Dim Posicion As New Vector3(Point)
             Posicion.Substract(Me)
             Return Posicion
         End Function
+        '------------------------------------------------------------------------------------------
 
-        Public Function DistanceTo(ByVal Punto As Vector3) As Double
-            Return Me.RelativePosition(Punto).Norm2
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Function DistanceTo(ByVal Point As Vector3) As Double
+            Return Me.RelativePosition(Point).Norm2
         End Function
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property ProjectedVector(ByVal Vector As Vector3) As Vector3
             Get
                 Dim Projection As Double = Algebra.InnerProduct(Me, Vector)
@@ -471,14 +712,26 @@ Namespace MathTools.Algebra.EuclideanSpace
                 Return Algebra.ScalarProduct(Projection / SqrNorm, Vector)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property OrthogonalVector(ByVal Vector As Vector3) As Vector3
             Get
                 Dim Projection As Vector3 = ProjectedVector(Vector)
                 Return Algebra.SubstractVectors(Me, Projection)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property NormalizedDirection As Vector3
             Get
                 Dim Norma As Double = Me.Norm2
@@ -489,34 +742,40 @@ Namespace MathTools.Algebra.EuclideanSpace
                 'Return New EVector3(Nm1 * X, Nm1 * Y, Nm1 * Z)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Normalize()
             Dim Nm1 As Double = 1 / Math.Sqrt(X * X + Y * Y + Z * Z)
             Scale(Nm1)
         End Sub
+        '------------------------------------------------------------------------------------------
+
 
 #End Region
 
 #Region " Linear operations "
 
-        ''' <summary>
-        ''' Multiplies the vector by a given scalar factor.
-        ''' </summary>
-        ''' <param name="Factor"></param>
-        ''' <remarks></remarks>
+
+        '==========================================================================================
+        ' Multiplies the vector by a given scalar factor.
+        '==========================================================================================
         Public Sub Scale(ByVal Factor As Double)
             X = X * Factor
             Y = Y * Factor
             Z = Z * Factor
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Rotatets the vector in euler angles.
-        ''' </summary>
-        ''' <param name="Psi"></param>
-        ''' <param name="Tita"></param>
-        ''' <param name="Fi"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Rotatets the vector in euler angles.
+        '==========================================================================================
         Public Sub Rotate(ByVal Psi As Double, ByVal Tita As Double, ByVal Fi As Double)
 
             Dim RotM As New RotationMatrix
@@ -535,12 +794,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Me.Z = Px * RotM.Item(3, 1) + Py * RotM.Item(3, 2) + Pz * RotM.Item(3, 3)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Rotatets the vector with a given rotation matrix.
-        ''' </summary>
-        ''' <param name="RotM"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Rotatets the vector with a given rotation matrix.
+        '==========================================================================================
         Public Sub Rotate(ByVal RotM As RotationMatrix)
 
             Dim Px As Double
@@ -556,28 +816,36 @@ Namespace MathTools.Algebra.EuclideanSpace
             Z = Px * RotM.Item(3, 1) + Py * RotM.Item(3, 2) + Pz * RotM.Item(3, 3)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Rotate(ByVal ReferencePoint As Vector3, ByVal RotM As RotationMatrix)
             Substract(ReferencePoint)
             Rotate(RotM)
             Add(ReferencePoint)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Projects the vector on a given direction.
-        ''' </summary>
-        ''' <param name="Direction"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Projects the vector on a given direction.
+        '==========================================================================================
         Public Sub ProjectOnVector(ByVal Direction As Vector3)
             Dim Proyección As Double = InnerProduct(Direction)
             Me.Assign(Direction, Proyección)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Projects the vector on a given plane.
-        ''' </summary>
-        ''' <param name="NormalDirection"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Projects the vector on a given plane.
+        '==========================================================================================
         Public Sub ProjectOnPlane(ByVal NormalDirection As Vector3)
             Dim Proyección As New Vector3
             Dim dp As Double = Me.X * NormalDirection.X + Me.Y * NormalDirection.Y + Me.Z * NormalDirection.Z
@@ -588,13 +856,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Me.Y -= Proyección.Y
             Me.Z -= Proyección.Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the projection of the vector on a given direction.
-        ''' </summary>
-        ''' <param name="Direction"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Returns the projection of the vector on a given direction.
+        '==========================================================================================
         Public Function GetProjection(ByVal Direction As Vector3) As Vector3
             Dim NuevoVector As New Vector3
             Direction.Normalize()
@@ -604,7 +872,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Return NuevoVector
 
         End Function
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Transform(M As Matrix3x3)
 
             Dim _X As Double = X
@@ -617,7 +891,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Z = _X * M.Item(3, 1) + _Y * M.Item(3, 2) + _Z * M.Item(3, 3)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Transform(Base As Base3)
 
             Dim _X As Double = X
@@ -629,7 +909,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Z = _X * Base.W.X + _Y * Base.W.Y + _Z * Base.W.Z
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub AntiTransform(Base As Base3)
 
             Dim _X As Double = X
@@ -641,11 +927,17 @@ Namespace MathTools.Algebra.EuclideanSpace
             Z = _X * Base.U.Z + _Y * Base.V.Z + _Z * Base.W.Z
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
 
 #End Region
 
-#Region " Operaciones vectoriales "
+#Region " Vector operations "
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function VectorProduct(ByVal Vector As Vector3) As Vector3
             Dim Producto As New Vector3
             Producto.X = Y * Vector.Z - Z * Vector.Y
@@ -653,7 +945,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Producto.Z = X * Vector.Y - Y * Vector.X
             Return Producto
         End Function
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub VectorMultiplication(ByVal Vector As Vector3)
             Dim Producto As New Vector3(Me)
             Dim Xo As Double = X
@@ -663,76 +961,124 @@ Namespace MathTools.Algebra.EuclideanSpace
             Y = Zo * Vector.X - Xo * Vector.Z
             Z = Xo * Vector.Y - Yo * Vector.X
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub FromVectorProduct(ByVal V1 As Vector3, ByVal V2 As Vector3)
             X = V1.Y * V2.Z - V1.Z * V2.Y
             Y = V1.Z * V2.X - V1.X * V2.Z
             Z = V1.X * V2.Y - V1.Y * V2.X
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub FromSubstraction(ByVal V1 As Vector3, ByVal V2 As Vector3)
             X = V1.X - V2.X
             Y = V1.Y - V2.Y
             Z = V1.Z - V2.Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Function GetVectorToPoint(ByVal Punto As Vector3) As Vector3
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Function GetVectorToPoint(ByVal Point As Vector3) As Vector3
             Dim Diferencia As New Vector3
-            Diferencia.X = Punto.X - Me.X
-            Diferencia.Y = Punto.Y - Me.Y
-            Diferencia.Z = Punto.Z - Me.Z
+            Diferencia.X = Point.X - Me.X
+            Diferencia.Y = Point.Y - Me.Y
+            Diferencia.Z = Point.Z - Me.Z
             Return Diferencia
         End Function
+        '------------------------------------------------------------------------------------------
+
 
 #End Region
 
 #Region " Other operations "
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub SetToCero()
             X = 0
             Y = 0
             Z = 0
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overloads Sub Assign(ByVal Vector As Vector3)
             X = Vector.X
             Y = Vector.Y
             Z = Vector.Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Overloads Sub Assign(ByVal Vector As Vector3, ByVal Factor As Double)
             X = Factor * Vector.X
             Y = Factor * Vector.Y
             Z = Factor * Vector.Z
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub ReadFromString(ByVal Line As String, Optional ByVal Margen As Integer = 1)
             X = CDbl(Mid(Line, Margen, 25))
             Y = CDbl(Mid(Line, Margen + 25, 25))
             Z = CDbl(Right(Line, 25))
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function Clone() As Vector3
             Return New Vector3(Me)
         End Function
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
 
-    ''' <summary>
-    ''' Represents a basis of orthonormal vectors on the euclidean space.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a basis of orthonormal vectors on the euclidean space.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Base3
 
         Public U As New Vector3
         Public V As New Vector3
         Public W As New Vector3
 
-        ''' <summary>
-        ''' Sets the standard vectors.
-        ''' </summary>
+        '==========================================================================================
+        ' Sets the standard vectors.
+        '==========================================================================================
         Public Sub CanonicalBase()
 
             U.X = 1.0
@@ -748,25 +1094,34 @@ Namespace MathTools.Algebra.EuclideanSpace
             W.Z = 1.0
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Represents a line in space.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a line in space.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Line3
 
         Public Property Point As New Vector3
         Public Property Direction As New Vector3
 
     End Class
+    '------------------------------------------------------------------------------------------
 
 End Namespace
+'----------------------------------------------------------------------------------------------
 
+
+
+'//////////////////////////////////////////////////////////////////////////////////////////
+'
+'//////////////////////////////////////////////////////////////////////////////////////////
 Public Class LimitValues
 
     Public Property Maximum As Double
     Public Property Minimum As Double
 
 End Class
+'------------------------------------------------------------------------------------------

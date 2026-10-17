@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -30,60 +30,58 @@ Imports DotNumerics.LinearAlgebra
 '#############################################################################
 Namespace AeroTools.Models.Structural.Library.Elements
 
-    ''' <summary>
-    ''' Gathers the global section porperties for a beam element.
-    ''' Some of the propertis are elastic and other inertial. The information is used to generate
-    ''' the mass and stiffness matrices.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Gathers the global section porperties for a beam element.
+    ' Some of the propertis are elastic and other inertial. The information is used to generate
+    ' the mass and stiffness matrices.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Section
 
-        ''' <summary>
-        ''' Longitudinal stiffness [N/m]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Longitudinal stiffness [N/m]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public AE As Double = 1
 
-        ''' <summary>
-        ''' Torsional rigidity [N.m/rad]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Torsional rigidity [N.m/rad]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public GJ As Double = 10
 
-        ''' <summary>
-        ''' Flexional rigidity of inertia around local axis y [N.m/rad]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Flexional rigidity of inertia around local axis y [N.m/rad]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public EIy As Double = 10
 
-        ''' <summary>
-        ''' Flexional rigidity of inertia around local axis z [N.m/rad]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Flexional rigidity of inertia around local axis z [N.m/rad]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public EIz As Double = 10
 
-        ''' <summary>
-        ''' Torsional moment of inertia [kg.m]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Torsional moment of inertia [kg.m]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Ip As Double = 1.0
 
-        ''' <summary>
-        ''' Mass per unit length [kg/m]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Mass per unit length [kg/m]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public M As Double = 1.0
 
-        ''' <summary>
-        ''' Y coordinate of center of mass in relation to the beam axis (center of shear) [m]
-        ''' The local Y direction follows the basis vector V.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Y coordinate of center of mass in relation to the beam axis (center of shear) [m]
+        ' The local Y direction follows the basis vector V.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Cmy As Double = 0.0
 
-        ''' <summary>
-        ''' Z coordinate of center of mass in relation to the beam axis (center of shear) [m]
-        ''' The local Z direction follows the basis vector W.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Z coordinate of center of mass in relation to the beam axis (center of shear) [m]
+        ' The local Z direction follows the basis vector W.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Cmz As Double = 0.0
 
-        ''' <summary>
-        ''' Copies the section properties from another object.
-        ''' </summary>
-        ''' <param name="Section"></param>
+        '==========================================================================================
+        ' Copies the section properties from another object.
+        '==========================================================================================
         Public Sub Assign(ByVal Section As Section)
 
             AE = Section.AE
@@ -96,12 +94,13 @@ Namespace AeroTools.Models.Structural.Library.Elements
             Cmz = Section.Cmz
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Obtains the mean properties of two sections.
-        ''' </summary>
-        ''' <param name="Section1"></param>
-        ''' <param name="Section2"></param>
+
+
+        '==========================================================================================
+        ' Obtains the mean properties of two sections.
+        '==========================================================================================
         Public Sub Combine(Section1 As Section, Section2 As Section)
 
             AE = 0.5 * (Section1.AE + Section2.AE)
@@ -114,86 +113,77 @@ Namespace AeroTools.Models.Structural.Library.Elements
             Cmz = 0.5 * (Section1.Cmz + Section2.Cmz)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 
-    ''' <summary>
-    ''' Represents the internal loads in a beam element
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents the internal loads in a beam element
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class InternalLoads
 
-        ''' <summary>
-        ''' The force along axis X
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The force along axis X
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Fx As Double
 
-        ''' <summary>
-        ''' The shear force along axis Y
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The shear force along axis Y
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Fy As Double
 
-        ''' <summary>
-        ''' The shear force along axis X
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The shear force along axis X
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Fz As Double
 
-        ''' <summary>
-        ''' The torsional moment along axis X at node A
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The torsional moment along axis X at node A
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property MAx As Double
 
-        ''' <summary>
-        ''' The bending moment along axis Y at node A
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The bending moment along axis Y at node A
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property MAy As Double
 
-        ''' <summary>
-        ''' The bending moment along axis Z at node A
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The bending moment along axis Z at node A
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property MAz As Double
 
-        ''' <summary>
-        ''' The torsional moment along axis X at node B
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The torsional moment along axis X at node B
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property MBx As Double
 
-        ''' <summary>
-        ''' The bending moment along axis Y at node B
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The bending moment along axis Y at node B
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property MBy As Double
 
-        ''' <summary>
-        ''' The bending moment along axis Z at node B
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The bending moment along axis Z at node B
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property MBz As Double
 
     End Class
 
-    ''' <summary>
-    ''' Represents a generic beam element.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a generic beam element.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public MustInherit Class BeamElement
 
         Implements IFiniteElement
 
-        ''' <summary>
-        ''' A given structural node.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' A given structural node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Nodes As StructuralNode() Implements IFiniteElement.Nodes
 
-        ''' <summary>
-        ''' The first node.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The first node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property NodeA As StructuralNode
             Set(value As StructuralNode)
                 Nodes(0) = value
@@ -202,10 +192,13 @@ Namespace AeroTools.Models.Structural.Library.Elements
                 Return Nodes(0)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The second node.
-        ''' </summary>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The second node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property NodeB As StructuralNode
             Set(value As StructuralNode)
                 Nodes(1) = value
@@ -214,89 +207,99 @@ Namespace AeroTools.Models.Structural.Library.Elements
                 Return Nodes(1)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The beam section properties.
-        ''' </summary>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The beam section properties.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Section As Section
 
-        ''' <summary>
-        ''' The basis providing the local directions as follows:
-        ''' X -> U
-        ''' Y -> V
-        ''' Z -> W
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The basis providing the local directions as follows:
+        ' X -> U
+        ' Y -> V
+        ' Z -> W
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Basis As Base3
 
-        ''' <summary>
-        ''' The index of the element.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The index of the element.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Index As Integer
 
-        ''' <summary>
-        ''' The mass matrix.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The mass matrix.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property M As SymmetricMatrix Implements IFiniteElement.M
 
-        ''' <summary>
-        ''' The stiffness matrix.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The stiffness matrix.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property K As SymmetricMatrix Implements IFiniteElement.K
 
-        ''' <summary>
-        ''' The generic procedure that generates the local mass matrix.
-        ''' </summary>
+        '==========================================================================================
+        ' The generic procedure that generates the local mass matrix.
+        '==========================================================================================
         Public MustOverride Sub GenerateLocalMass() Implements IFiniteElement.GenerateLocalMass
 
-        ''' <summary>
-        ''' The generic procedure that generates the local stiffness matrix.
-        ''' </summary>
+        '==========================================================================================
+        ' The generic procedure that generates the local stiffness matrix.
+        '==========================================================================================
         Public MustOverride Sub GenerateLocalStiffness() Implements IFiniteElement.GenerateLocalStiffness
 
-        ''' <summary>
-        ''' The generic procedure that generates the global mass and stiffness matrices.
-        ''' </summary>
+        '==========================================================================================
+        ' The generic procedure that generates the global mass and stiffness matrices.
+        '==========================================================================================
         Public MustOverride Sub GenerateGlobalMatrices() Implements IFiniteElement.GenerateGlobalMatrices
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New()
 
             ReDim Nodes(1)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 
-    ''' <summary>
-    ''' Represents a hing (a rigid connection between two nodes with no rotational stiffness)
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a hing (a rigid connection between two nodes with no rotational stiffness)
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class HingedLink
 
         Inherits BeamElement
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New()
             M = New SymmetricMatrix(12)
             K = New SymmetricMatrix(12)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The normal stiffness of the connection
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The normal stiffness of the connection
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Stiffness As Double = 1000000000.0 ' [N/m]
 
-        ''' <summary>
-        ''' This does nothing because this element has no mass
-        ''' </summary>
+        '==========================================================================================
+        ' This does nothing because this element has no mass
+        '==========================================================================================
         Public Overrides Sub GenerateLocalMass()
 
             ' This element has no mass
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' This does nothing because this element has no mass
-        ''' </summary>
+        '==========================================================================================
+        ' This does nothing because this element has no mass
+        '==========================================================================================
         Public Overrides Sub GenerateLocalStiffness()
 
             K(0, 0) = Stiffness
@@ -312,24 +315,33 @@ Namespace AeroTools.Models.Structural.Library.Elements
             K(8, 8) = Stiffness
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Sub GenerateGlobalMatrices()
 
             GenerateLocalMass()
             GenerateLocalStiffness()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 
-    ''' <summary>
-    ''' Models a structural beam element of constant section
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Models a structural beam element of constant section
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ConstantBeamElement
 
         Inherits BeamElement
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New(ByVal Index As Integer)
             Me.Index = Index
             M = New SymmetricMatrix(12)
@@ -338,17 +350,18 @@ Namespace AeroTools.Models.Structural.Library.Elements
             Basis = New Base3()
             InternalLoads = New InternalLoads
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The internal loads
-        ''' </summary>
-        ''' <returns></returns>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The internal loads
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property InternalLoads As InternalLoads
 
-        ''' <summary>
-        ''' Returns the length of the beam
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the length of the beam
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         ReadOnly Property Length As Double
             Get
                 If NodeA IsNot Nothing And NodeB IsNot Nothing Then
@@ -358,10 +371,13 @@ Namespace AeroTools.Models.Structural.Library.Elements
                 End If
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a standard basis for this element (not enforced)
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Generates a standard basis for this element (not enforced)
+        '==========================================================================================
         Public Sub GenerateStandardBasis()
 
             If NodeA IsNot Nothing And NodeB IsNot Nothing Then
@@ -389,15 +405,20 @@ Namespace AeroTools.Models.Structural.Library.Elements
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates the element mass matrix in local coordinates.
-        ''' The model is consistent (not lumped), which means that the kinematics of the beam is described by the shape functions. 
-        ''' The second moment of inertia in flexion are disregarded (Izz=Iyy=Iyz=0). Because Iyz does not participate, the main
-        ''' elastic and inertial directions always coincide. Iyy and Izz might be added in the future if necessary.
-        ''' The eccentricty of the center of mass in relation to the beam axis (center of shear) is taken into account by the
-        ''' Cmy and Cmz coordinates.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Generates the element mass matrix in local coordinates.
+        ' The model is consistent (not lumped), which means that the kinematics of the beam is 
+        ' described by the shape functions. 
+        ' The second moment of inertia in flexion are disregarded (Izz=Iyy=Iyz=0). Because Iyz does
+        ' not participate, the main elastic and inertial directions always coincide. Iyy and Izz
+        ' might be added in the future if necessary.
+        ' The eccentricty of the center of mass in relation to the beam axis (center of shear) is 
+        ' taken into account by the Cmy and Cmz coordinates.
+        '==========================================================================================
         Public Overrides Sub GenerateLocalMass()
 
             ' Concentrical component
@@ -504,13 +525,18 @@ Namespace AeroTools.Models.Structural.Library.Elements
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates the element stiffness matrix in local coordinates.
-        ''' The kinematics of the beam is described using the standard shape functions.
-        ''' The second cross-moments of inertia are disregarded, which means that the local axes coincide with the main elastic directions.
-        ''' The first moments of inertia are also disregarded, which means that the beam axis is at the center of shear.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Generates the element stiffness matrix in local coordinates.
+        ' The kinematics of the beam is described using the standard shape functions.
+        ' The second cross-moments of inertia are disregarded, which means that the local axes 
+        ' coincide with the main elastic directions.
+        ' The first moments of inertia are also disregarded, which means that the beam axis is at 
+        ' the center of shear.
+        '==========================================================================================
         Public Overrides Sub GenerateLocalStiffness()
 
             Dim L As Double = NodeA.Position.DistanceTo(NodeB.Position)
@@ -574,12 +600,15 @@ Namespace AeroTools.Models.Structural.Library.Elements
             K(10, 10) = 4 * EIv_L1
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates the glbal mass and stiffness matrices.
-        ''' This procedure first generates the local matrices and immediatly after converts them to global
-        ''' by means of a linear transformation using the local basis.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Generates the glbal mass and stiffness matrices.
+        ' This procedure first generates the local matrices and immediatly after converts them to global
+        ' by means of a linear transformation using the local basis.
+        '==========================================================================================
         Public Overrides Sub GenerateGlobalMatrices()
 
             ' The local basis has been loaded before starting the calculation
@@ -615,7 +644,10 @@ Namespace AeroTools.Models.Structural.Library.Elements
             M = M.SymmetricTransformation(T)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

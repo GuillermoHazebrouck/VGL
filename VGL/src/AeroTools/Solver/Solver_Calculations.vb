@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -36,19 +36,19 @@ Imports VGL.AeroTools.Models.Aero.Components
 '#############################################################################
 Namespace AeroTools.Solver
 
-    ''' <summary>
-    ''' This is the VGL kernel class. This class contains the whole
-    ''' calculation model and is able of doing several simulation types.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' This is the VGL kernel class. This class contains the whole
+    ' calculation model and is able of doing several simulation types.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Partial Public Class Solver
 
         ' This is the main part containing the UVLM method algorithm.
 
 #Region " General calculations "
 
-        ''' <summary>
-        ''' Checks if the model contains sources
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Checks if the model contains sources
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub CheckForSources()
 
             WithSources = False
@@ -62,10 +62,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Gives to each vortex its corresponding global index on vectors and matrices and returns the number of bounded vortex rings.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gives to each vortex its corresponding global index on vectors and matrices and returns the number of bounded vortex rings.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function IndexateLattices() As Integer
 
             Dim NodeIndex As Integer = 0
@@ -85,11 +88,15 @@ Namespace AeroTools.Solver
             Return RingIndex
 
         End Function
+        '------------------------------------------------------------------------------------------
+        
 
-        ''' <summary>
-        ''' Assign surrounding rings to each panel by scanning all lattices.
-        ''' Additionally, it marks primitive panels as such.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Assign surrounding rings to each panel by scanning all lattices.
+        ' Additionally, it marks primitive panels as such.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub FindSurroundingRingsGlobally()
 
             RaiseEvent PushMessage("Finding all adjacent panels")
@@ -279,12 +286,15 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Constructs the matrix of mutual influence coeficients.
-        ''' </summary>
-        ''' <param name="Indexate">Indicates if nodes should be globaly indexated (this is only required once).
-        ''' In that case indexation will occur and matrix and RHS vector will be created.</param>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Constructs the matrix of mutual influence coeficients.
+        ' Indexate indicates if nodes should be globaly indexated (this is only required once).
+        ' In that case indexation will occur and matrix and RHS vector will be created.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub BuildMatrixForDoublets(Optional ByVal Indexate As Boolean = True)
 
             If Indexate Then
@@ -355,10 +365,13 @@ Namespace AeroTools.Solver
 #End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Constructs the matrix of source influence.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Constructs the matrix of source influence.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub BuildMatrixForSources()
 
             Dim n As Double = 0
@@ -439,10 +452,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates the right hand side without influence of the wake and without surface motion.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates the right hand side without influence of the wake and without surface motion.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub BuildRightHandSide1()
 
             For Each Lattice As Lattice In Lattices
@@ -486,10 +502,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates the right hand side considering the influence of the wake and the surface motion.
-        ''' </summary> 
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates the right hand side considering the influence of the wake and the surface motion.
+        '////////////////////////////////////////////////////////////////////////////////////////// 
         Private Sub BuildRightHandSide2()
 
             For Each Lattice As Lattice In Lattices
@@ -540,10 +559,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Sets starting nodes at each wake.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Sets starting nodes at each wake.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub InitializeWakes()
 
             For Each Lattice As BoundedLattice In Lattices
@@ -553,10 +575,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Gives to each vortex ring its corresponding circulation.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gives to each vortex ring its corresponding circulation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub AssignDoublets()
 
             For Each Lattice In Lattices
@@ -595,10 +620,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Gives to each non-slender vortex ring its corresponding source intensity based on the current stream velocity.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gives to each non-slender vortex ring its corresponding source intensity based on the current stream velocity.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub AssignSources()
 
             Dim i As Integer = -1
@@ -636,14 +664,15 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Calculation of velocities "
 
-        ''' <summary>
-        ''' Calculates rings VelocityW by adding to the local stream velocity the velocity induced by the wakes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates rings VelocityW by adding to the local stream velocity the velocity induced by the wakes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CalculateVelocityInducedByTheWakesOnBoundedLattices(Optional ByVal SlenderRingsOnly As Boolean = True)
 
             Dim CutOff As Double = Settings.Cutoff
@@ -676,11 +705,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates rings PotentialW by adding the influence of the wakes doublets. Only non-slender rings are accepted.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates rings PotentialW by adding the influence of the wakes doublets. Only non-slender rings are accepted.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CalculatePotentialInducedByTheWakeOnThickBoundedLattices()
 
             ' Warning! If this is done, we have to convect wake rings appart from vortices.
@@ -730,10 +761,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates rings VelocityT (total local velocity) by adding the StreamVelocity, VelocityW and the velocity induced by the bounded lattices.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates rings VelocityT (total local velocity) by adding the StreamVelocity, VelocityW and the velocity induced by the bounded lattices.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CalculateTotalVelocityOnBoundedLattices()
 
             Dim CutOff As Double = Settings.Cutoff
@@ -789,10 +823,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates the total local velocity at each wake nodal point.
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates the total local velocity at each wake nodal point.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CalculateVelocityOnWakes()
 
             ' Compute stream rotation matrix if necessary
@@ -868,10 +905,13 @@ Namespace AeroTools.Solver
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the total induced velocity at the given point (serial computation).
-        ''' </summary>
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns the total induced velocity at the given point (serial computation).
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function CalculateVelocityAtPoint(ByVal Point As Vector3, ByVal Total As Boolean) As Vector3
 
             Dim CutOff As Double = Settings.Cutoff
@@ -911,18 +951,22 @@ Namespace AeroTools.Solver
 
         Public Property CancellationPending As Boolean = False
 
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub RequestCancellation()
 
             CancellationPending = True
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub CancelProcess()
 
             RaiseEvent PushMessage("Calculation canceled")
             RaiseEvent CalculationDone()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 

@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -36,45 +36,45 @@ Namespace DesignTools.DataStore
 
     Public Module ProjectRoot
 
-        ''' <summary>
-        ''' The name of the project
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The name of the project
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Name As String = "Aircraft"
 
-        ''' <summary>
-        ''' The main project file
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The main project file
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property FilePath As String = ""
 
-        ''' <summary>
-        ''' The settings used to run the simulation
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The settings used to run the simulation
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property SimulationSettings As New SimulationSettings
 
-        ''' <summary>
-        ''' The complete design model made of high level components
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The complete design model made of high level components
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Model As DesignModel = New DesignModel
 
-        ''' <summary>
-        ''' The result model
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The result model
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Results As New ResultModel
 
         Private _Initialized As Boolean = False
 
-        ''' <summary>
-        ''' Indicates if the project has been initialized
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the project has been initialized
+        '//////////////////////////////////////////////////////////////////////////////////////////
         ReadOnly Property Initialized As Boolean
             Get
                 Return _Initialized
             End Get
         End Property
 
-        ''' <summary>
-        ''' Initializes the module
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Initializes the module
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub Initialize()
 
             SimulationSettings.InitializeParameters()
@@ -82,10 +82,11 @@ Namespace DesignTools.DataStore
             _Initialized = True
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Restarts the project by reseting the model an clearing the results
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Restarts the project by reseting the model an clearing the results
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub RestartProject()
 
             Name = "New aircraft"
@@ -94,10 +95,11 @@ Namespace DesignTools.DataStore
             Results.Clear()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates if the current file path exist
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the current file path exist
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property ExistsOnDatabase As Boolean
             Get
                 Return System.IO.File.Exists(FilePath)
@@ -106,11 +108,11 @@ Namespace DesignTools.DataStore
 
 #Region " Basic calculation launcher "
 
-        ''' <summary>
-        ''' Starts a synchronous calculation process.
-        ''' This call is used for the console, but is less sutable for an animated GUI.
-        ''' </summary>
-        ''' <param name="Type"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Starts a synchronous calculation process.
+        ' This call is used for the console, but is less sutable for an animated GUI.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Type"></param>
         Public Sub StartCalculation(ByVal Type As CalculationType, ByRef CalculationCore As Solver)
 
             SimulationSettings.AnalysisType = Type
@@ -153,10 +155,11 @@ Namespace DesignTools.DataStore
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Handles the calculation finished of the solver
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Handles the calculation finished of the solver
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CalculationFinished()
 
             RaiseEvent PushMessage("Ready")
@@ -164,57 +167,61 @@ Namespace DesignTools.DataStore
             RaiseEvent CalculationDone()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Handles the calculation aborted of the solver
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Handles the calculation aborted of the solver
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CalculationAborted()
 
             RaiseEvent PushMessage("Calculation aborted")
             RaiseEvent CalculationDone()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Occurs when the calculation finishes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Occurs when the calculation finishes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Event CalculationDone()
 
-        ''' <summary>
-        ''' Occurs when the calculation finishes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Occurs when the calculation finishes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Event PushProgress(Title As String, Value As Integer)
 
-        ''' <summary>
-        ''' Occurs when the calculation finishes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Occurs when the calculation finishes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Event PushMessage(Message As String)
 
-        ''' <summary>
-        ''' Handles the progress of the solver
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Handles the progress of the solver
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub HandleProgress(Title As String, Value As Integer)
 
             RaiseEvent PushProgress(Title, Value)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Handles the messages of the solver
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Handles the messages of the solver
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub HandleMessage(Message As String)
 
             RaiseEvent PushMessage(Message)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Input/Output "
 
-        ''' <summary>
-        ''' Reads a full project from XML file
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads a full project from XML file
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ReadFromXML()
 
             If Not ExistsOnDatabase Then Exit Sub
@@ -230,10 +237,11 @@ Namespace DesignTools.DataStore
             Reader.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads a full project from XML subtree
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads a full project from XML subtree
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ReadFromXML(Reader As XmlReader)
 
             Name = Reader.GetAttribute("Name")
@@ -253,10 +261,11 @@ Namespace DesignTools.DataStore
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the full project to an XML file
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the full project to an XML file
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub WriteToXML()
 
             Dim Writer As XmlWriter = XmlWriter.Create(FilePath)
@@ -272,10 +281,11 @@ Namespace DesignTools.DataStore
             Writer.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the full project to an XML subtree
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the full project to an XML subtree
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub WriteToXML(Writer As XmlWriter)
 
             Writer.WriteAttributeString("Name", Name)
@@ -289,16 +299,18 @@ Namespace DesignTools.DataStore
             Writer.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads the results from an XML results file
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the results from an XML results file
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ReadResults(ByVal ReferenceFilePath As String)
 
             Results.Clear()
             Results.LoadFromDirectory(IO.Path.GetDirectoryName(ReferenceFilePath))
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Enum ExportTypes As Integer
             ExportStl
@@ -306,9 +318,9 @@ Namespace DesignTools.DataStore
             ExportScilab
         End Enum
 
-        ''' <summary>
-        ''' Exports the model geometry in the given format.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Exports the model geometry in the given format.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ExportDesignModel(Type As ExportTypes, OneFile As Boolean)
 
             Dim FileName As String = Strings.Left(FilePath, FilePath.Length - 4)
@@ -392,6 +404,7 @@ Namespace DesignTools.DataStore
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 

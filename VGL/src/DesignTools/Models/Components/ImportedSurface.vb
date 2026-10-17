@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -50,10 +50,11 @@ Namespace DesignTools.Models.Components
 
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The different kinds of import formats
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The different kinds of import formats
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum ImportFormats As Integer
 
             ConnectivityFile
@@ -61,10 +62,9 @@ Namespace DesignTools.Models.Components
 
         End Enum
 
-        ''' <summary>
-        ''' Loads the mesh from a file
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the mesh from a file
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub Load(FilePath As String, Format As ImportFormats)
 
             Select Case Format
@@ -78,10 +78,11 @@ Namespace DesignTools.Models.Components
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The current entity
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The current entity
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Enum EntityType As Integer
 
             EntitySurface
@@ -92,10 +93,9 @@ Namespace DesignTools.Models.Components
 
         End Enum
 
-        ''' <summary>
-        ''' Loads the mesh from a connectivity file in native VGL format.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the mesh from a connectivity file in native VGL format.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub LoadNativeFile(FilePath As String)
 
             Dim Section As EntityType = EntityType.EntitySurface
@@ -245,11 +245,11 @@ NextLine:
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads the mesh from a connectivity file.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the mesh from a connectivity file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub LoadStlFile(FilePath As String)
 
             Dim FileId As Integer = FreeFile()
@@ -404,11 +404,11 @@ CheckInvalid:
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a triangular or quadrilateral mesh.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a triangular or quadrilateral mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Sub GenerateMesh()
 
             For Each Node In Mesh.Nodes
@@ -430,14 +430,14 @@ CheckInvalid:
             MyBase.GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region " IO "
 
-        ''' <summary>
-        ''' Reads the wing from an XML file.
-        ''' </summary>
-        ''' <param name="reader"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the wing from an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="reader"></param>
         Public Overrides Sub ReadFromXML(ByRef reader As XmlReader)
 
             Mesh.Nodes.Clear()
@@ -530,12 +530,12 @@ CheckInvalid:
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the wing to an XML file.
-        ''' </summary>
-        ''' <param name="writer"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the wing to an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="writer"></param>
         Public Overrides Sub WriteToXML(ByRef writer As XmlWriter)
 
             ' Identity:
@@ -612,6 +612,7 @@ CheckInvalid:
             writer.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub CopyFrom(Surface As ImportedSurface)
 
@@ -650,6 +651,7 @@ CheckInvalid:
             IncludeInCalculation = True
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Overrides Function Clone() As Surface
 

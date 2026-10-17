@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -59,50 +59,51 @@ Namespace DesignTools.Models.Components
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The total length of the duct
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total length of the duct
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Length As Double
 
-        ''' <summary>
-        ''' The front diameter
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The front diameter
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property FrontDiameter As Double
 
-        ''' <summary>
-        ''' The back diameter
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The back diameter
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property BackDiameter As Double
 
-        ''' <summary>
-        ''' The length of the frontal portion
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The length of the frontal portion
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property FrontLength As Double
 
-        ''' <summary>
-        ''' The length of the rear portion
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The length of the rear portion
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property BackLength As Double
 
-        ''' <summary>
-        ''' Indicates if the wake must be shed from the rear edge
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the wake must be shed from the rear edge
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ConvectWake As Boolean = True
 
-        ''' <summary>
-        ''' The cutting step for the wake shedding
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The cutting step for the wake shedding
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property CuttingStep As Integer = 40
 
-        ''' <summary>
-        ''' The number of panels in radial direction
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The number of panels in radial direction
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Resolution As Integer
 
-        ''' <summary>
-        ''' Generates a triangular or quadrilateral mesh
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a triangular or quadrilateral mesh
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Sub GenerateMesh()
 
             Mesh.Nodes.Clear()
@@ -210,14 +211,14 @@ Namespace DesignTools.Models.Components
             MyBase.GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region " IO "
 
-        ''' <summary>
-        ''' Reads the wing from an XML file.
-        ''' </summary>
-        ''' <param name="Reader"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the wing from an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Reader"></param>
         Public Overrides Sub ReadFromXML(ByRef Reader As XmlReader)
 
             While Reader.Read
@@ -283,12 +284,12 @@ Namespace DesignTools.Models.Components
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the wing to an XML file.
-        ''' </summary>
-        ''' <param name="Writer"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the wing to an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Writer"></param>
         Public Overrides Sub WriteToXML(ByRef Writer As XmlWriter)
 
             ' Identity
@@ -352,6 +353,7 @@ Namespace DesignTools.Models.Components
             Writer.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub CopyFrom(Engine As JetEngine)
 
@@ -378,6 +380,7 @@ Namespace DesignTools.Models.Components
             IncludeInCalculation = True
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Overrides Function Clone() As Surface
 

@@ -1,4 +1,3 @@
+#NOTE: this is a conveniet scrip only valid for a specific path.
 #!/bin/bash
-export DOTNET_ROOT=$HOME/Toolchains/dotnet
-export PATH=$PATH:$HOME/Toolchains/dotnet
-$HOME/Projects/VGL/VGL/VGL/bin/VGL
+$HOME/Projects/VGL/VGL/bin/VGL

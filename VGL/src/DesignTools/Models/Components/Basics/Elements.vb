@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -28,15 +28,14 @@ Imports VGL.DesignTools.Tools.Colormaping
 '#############################################################################
 Namespace DesignTools.Models.Components.Basics
 
-    ''' <summary>
-    ''' Represents a panel (both, triangular or quadrialteral) on the model.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a panel (both, triangular or quadrialteral) on the model.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Panel
 
-        ''' <summary>
-        '''  Creates a new panel
-        ''' </summary>
+        '==========================================================================================
+        '  Creates a new panel
+        '==========================================================================================
         Public Sub New()
             ControlPoint = New Vector3
             NormalVector = New Vector3
@@ -48,134 +47,113 @@ Namespace DesignTools.Models.Components.Basics
             IsReversed = False
             IsPrimitive = False
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The index of the first node
-        ''' </summary>
-        ''' <returns></returns>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The index of the first node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property N1 As Integer
 
-        ''' <summary>
-        ''' The index of the second node
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The index of the second node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property N2 As Integer
 
-        ''' <summary>
-        ''' The index of the third node
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The index of the third node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property N3 As Integer
 
-        ''' <summary>
-        ''' The index of the fourth node (only for quadrilateral panels)
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The index of the fourth node (only for quadrilateral panels)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property N4 As Integer
 
-        ''' <summary>
-        ''' The global index in the model
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The global index in the model
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property GlobalIndex As Integer
 
-        ''' <summary>
-        ''' The control point
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The control point
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property ControlPoint As Vector3
 
-        ''' <summary>
-        ''' The normal vector
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The normal vector
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property NormalVector As Vector3
 
-        ''' <summary>
-        ''' The area of the panel
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The area of the panel
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Area As Double
 
-        ''' <summary>
-        ''' Indicates if this panel has a reversed singularity behavior
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if this panel has a reversed singularity behavior
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property IsReversed As Boolean
 
-        ''' <summary>
-        ''' The local velocity vector at the control point
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The local velocity vector at the control point
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property LocalVelocity As Vector3
 
-        ''' <summary>
-        ''' The local circulation
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The local circulation
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Circulation As Double
 
-        ''' <summary>
-        ''' The local sink/source strenght
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The local sink/source strenght
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SourceStrength As Double
 
-        ''' <summary>
-        ''' The panel pressure coefficient
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The panel pressure coefficient
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Cp As Double
 
-        ''' <summary>
-        ''' The color associated to te pressure coefficient
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The color associated to te pressure coefficient
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CpColor As ColorSharpGL
 
-        ''' <summary>
-        ''' Indicates if this panel is a primitive convection area
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if this panel is a primitive convection area
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property IsPrimitive As Boolean
 
-        ''' <summary>
-        ''' Indicates if this panel represents a slender (zero thickness) surface
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if this panel represents a slender (zero thickness) surface
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property IsSlender As Boolean = True
 
-        ''' <summary>
-        ''' Indicates if this panel is active (for selection)
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if this panel is active (for selection)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Active As Boolean = False
 
         Private _IsTriangular As Boolean
-
-        ''' <summary>
-        ''' Indicates if this panel is represented by only the first three nodes.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if this panel is represented by only the first three nodes.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property IsTriangular As Boolean
             Get
                 Return _IsTriangular
             End Get
         End Property
 
-        ''' <summary>
-        ''' The velocity induced on this panel
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The velocity induced on this panel
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private _InducedVelocity As New Vector3
 
-        ''' <summary>
-        ''' Generates a quadrilateral element
-        ''' </summary>
-        ''' <param name="N1"></param>
-        ''' <param name="N2"></param>
-        ''' <param name="N3"></param>
-        ''' <param name="N4"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a quadrilateral element
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New(ByVal N1 As Integer, ByVal N2 As Integer, ByVal N3 As Integer, ByVal N4 As Integer)
 
             Me.N1 = N1
@@ -185,14 +163,11 @@ Namespace DesignTools.Models.Components.Basics
             _IsTriangular = False
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a triangular element
-        ''' </summary>
-        ''' <param name="N1"></param>
-        ''' <param name="N2"></param>
-        ''' <param name="N3"></param>
-        ''' <remarks></remarks>
+        '==========================================================================================
+        ' Generates a triangular element
+        '==========================================================================================
         Public Sub New(ByVal N1 As Integer, ByVal N2 As Integer, ByVal N3 As Integer)
 
             Me.N1 = N1
@@ -202,21 +177,24 @@ Namespace DesignTools.Models.Components.Basics
             _IsTriangular = True
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The velocity induced at the control point of this panel
-        ''' </summary>
-        ''' <returns></returns>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The velocity induced at the control point of this panel
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property InducedVelocity As Vector3
             Get
                 Return _InducedVelocity
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Deep copy of the given object into this one
-        ''' </summary>
-        ''' <param name="Panel"></param>
+
+        '==========================================================================================
+        ' Deep copy of the given object into this one
+        '==========================================================================================
         Public Sub Assign(ByVal Panel As Panel)
 
             N1 = Panel.N1
@@ -242,128 +220,130 @@ Namespace DesignTools.Models.Components.Basics
             _InducedVelocity.Assign(Panel.InducedVelocity)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Represents a point in a view model. This object is used for modelling and representation of results.
-    ''' </summary>
+
+    
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a point in a view model. This object is used for modelling and representation of results.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class NodalPoint
 
-        ''' <summary>
-        ''' Indicqtes if this node is active (selection)
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicqtes if this node is active (selection)
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Active As Boolean = False
 
-        ''' <summary>
-        ''' The original position of this node (used to represent the undeformed state)
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The original position of this node (used to represent the undeformed state)
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property ReferencePosition As Vector3
 
-        ''' <summary>
-        ''' The position of this node
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The position of this node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Position As Vector3
 
-        ''' <summary>
-        ''' The displacement (for modes or aeroelastic results)
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The displacement (for modes or aeroelastic results)
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Displacement As Vector3
 
-        ''' <summary>
-        ''' The color of the displacement
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The color of the displacement
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property DisplacementColor As ColorSharpGL
 
-        ''' <summary>
-        ''' The interpolated pressure coefficient
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The interpolated pressure coefficient
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Cp As Double
 
-        ''' <summary>
-        ''' The color of the pressure coefficient
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The color of the pressure coefficient
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CpColor As ColorSharpGL
 
-        ''' <summary>
-        ''' The interpolated pressure jump
-        ''' </summary>
-        ''' <returns></returns>
+        '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The interpolated pressure jump
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CpDelta As Double
 
-        ''' <summary>
-        ''' The color of the interpolated pressure jump
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The color of the interpolated pressure jump
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CpDeltaColor As ColorSharpGL
 
-        ''' <summary>
-        ''' Creates a new node with coordinates (0,0,0)
-        ''' </summary>
+        '==========================================================================================
+        ' Creates a new node with coordinates (0,0,0)
+        '==========================================================================================
         Public Sub New()
             Position = New Vector3
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new node at the given coordinates
-        ''' </summary>
-        ''' <param name="X"></param>
-        ''' <param name="Y"></param>
-        ''' <param name="Z"></param>
+
+
+        '==========================================================================================
+        ' Creates a new node at the given coordinates
+        '==========================================================================================
         Public Sub New(ByVal X As Double, ByVal Y As Double, ByVal Z As Double)
             Position = New Vector3(X, Y, Z)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new node at the position of point P
-        ''' </summary>
-        ''' <param name="P"></param>
+
+
+        '==========================================================================================
+        ' Creates a new node at the position of point P
+        '==========================================================================================
         Public Sub New(ByRef P As Vector3)
             Position = New Vector3(P)
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Represents a segment in the lattice
-    ''' </summary>
+
+
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a segment in the lattice
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class LatticeSegment
 
-        ''' <summary>
-        ''' The index of the first node
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The index of the first node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public N1 As Integer
 
-        ''' <summary>
-        ''' The index of the second node
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The index of the second node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public N2 As Integer
 
-        ''' <summary>
-        ''' Creates a new segment referencing to node 0
-        ''' </summary>
+        '==========================================================================================
+        ' Creates a new segment referencing to node 0
+        '==========================================================================================
         Public Sub New()
             N1 = 0
             N2 = 0
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new segment linked to nodes N1 and N2 
-        ''' </summary>
-        ''' <param name="N1"></param>
-        ''' <param name="N2"></param>
+        '==========================================================================================
+        ' Creates a new segment linked to nodes N1 and N2 
+        '==========================================================================================
         Public Sub New(ByVal N1 As Integer, ByVal N2 As Integer)
             Me.N1 = N1
             Me.N2 = N2
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
-
+    '------------------------------------------------------------------------------------------
 End Namespace
+'------------------------------------------------------------------------------------------

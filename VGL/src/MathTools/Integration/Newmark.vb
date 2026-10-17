@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -17,20 +17,23 @@
 
 Namespace MathTools.Integration
 
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class NewmarkIntegrator
 
         Public A(2, 2) As Double
         Public L(2) As Double
 
-        ''' <summary>
-        ''' Initializes the integrator with the given coefficients.
-        ''' This algorithm is descrived in [Finite element procedures, Bathe].
-        ''' </summary>
-        ''' <param name="a">Alpha</param>
-        ''' <param name="d">Delta</param>
-        ''' <param name="z">The damping ratio</param>
-        ''' <param name="w">The natural frequency</param>
-        ''' <param name="Dt">The fixed time step</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Initializes the integrator with the given coefficients.
+        ' This algorithm is described in [Finite element procedures, Bathe].
+        ' a : Alpha
+        ' d : Delta
+        ' z : The damping ratio
+        ' w : The natural frequency
+        ' Dt: The fixed time step
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub Load(a As Double, d As Double, z As Double, w As Double, Dt As Double)
 
             Dim b As Double = 1 / (1 / (w * w * Dt * Dt) + 2 * z * d / (w * Dt) + a)
@@ -53,6 +56,7 @@ Namespace MathTools.Integration
             L(2) = a * b / (w * w)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub Integrate(ByVal P As Double, ByVal A0 As Double, V0 As Double, P0 As Double, ByRef A1 As Double, ByRef V1 As Double, ByRef P1 As Double)
 
@@ -61,7 +65,10 @@ Namespace MathTools.Integration
             P1 = A(2, 0) * A0 + A(2, 1) * V0 + A(2, 2) * P0 + L(2) * P
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
 End Namespace
+'------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -15,31 +15,29 @@
 'You should have received a copy Of the GNU General Public License
 'along with this program.  If Not, see < http:  //www.gnu.org/licenses/>.
 
-''' <summary>
-''' Setup module for MKL suit
-''' </summary>
+'//////////////////////////////////////////////////////////////////////////////////////////
+' Setup module for MKL suit
+'//////////////////////////////////////////////////////////////////////////////////////////
 Public Module MklSetup
 
-    ''' <summary>
-    ''' The original content of the path enviromental varialbe
-    ''' </summary>
-    ''' <returns></returns>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The original content of the path enviromental varialbe
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private ReadOnly OriginalPath As String = Environment.GetEnvironmentVariable("path")
 
-    ''' <summary>
-    ''' The path to the MKL suit (mkl_rt.dll)
-    ''' </summary>
-    ''' <returns></returns>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The path to the MKL suit (mkl_rt.dll)
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private MklSuitPath As String = ""
 
-    ''' <summary>
-    ''' The path to the local file containing the last mkl path entered by the user
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The path to the local file containing the last mkl path entered by the user
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private InitPath As String = IO.Path.Combine(IO.Directory.GetCurrentDirectory, "MklPath.dat")
 
-    ''' <summary>
-    ''' Sets the MKL library path
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Sets the MKL library path
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Sub ChangePath(Path As String)
 
         MklSuitPath = Path
@@ -51,10 +49,11 @@ Public Module MklSetup
         FileClose(FileId)
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' 
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Sub Initialize()
 
         DotNumerics.LinearAlgebra.LinearEquations.UseIntelMathKernel = False
@@ -73,5 +72,6 @@ Public Module MklSetup
         End If
 
     End Sub
+    '------------------------------------------------------------------------------------------
 
 End Module

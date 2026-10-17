@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -34,9 +34,9 @@ Imports VGL.AeroTools.IoHelper
 '#############################################################################
 Namespace AeroTools.Settings
 
-    ''' <summary>
-    ''' The data on a particular time step
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The data on a particular time step
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class StepData
 
         Public Property Time As Double
@@ -45,20 +45,19 @@ Namespace AeroTools.Settings
 
     End Class
 
-    ''' <summary>
-    ''' Contains the velocity and damping functions in the time domain.
-    ''' The aeroelastic histogram is used to simulate a stream perturbation (gust)
-    ''' starting from a steady state condition.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Contains the velocity and damping functions in the time domain.
+    ' The aeroelastic histogram is used to simulate a stream perturbation (gust)
+    ' starting from a steady state condition.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class AeroelasticHistogram
 
         Private _HyperDamping As Double
-
-        ''' <summary>
-        ''' The hyper damping is the value of damping that will be imposed at the
-        ''' beginning of the simulation so that convergence is reached before the
-        ''' gust is applied.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The hyper damping is the value of damping that will be imposed at the
+        ' beginning of the simulation so that convergence is reached before the
+        ' gust is applied.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property HyperDamping As Double
             Set(value As Double)
                 _HyperDamping = value
@@ -68,12 +67,12 @@ Namespace AeroTools.Settings
                 Return _HyperDamping
             End Get
         End Property
-
+        '------------------------------------------------------------------------------------------
+        
         Private _HyperDampingSpan As Double
-
-        ''' <summary>
-        ''' The duration of the hyper damping, from the beginning of the simulation.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The duration of the hyper damping, from the beginning of the simulation.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property HyperDampingSpan As Double
             Set(value As Double)
                 _HyperDampingSpan = value
@@ -83,12 +82,12 @@ Namespace AeroTools.Settings
                 Return _HyperDampingSpan
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
         Private _NormalDamping As Double
-
-        ''' <summary>
-        ''' The damping that will be applied after the hyper damping and before the gust.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The damping that will be applied after the hyper damping and before the gust.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property NormalDamping As Double
             Set(value As Double)
                 _NormalDamping = value
@@ -98,12 +97,12 @@ Namespace AeroTools.Settings
                 Return _NormalDamping
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
         Private _GustX As Double
-
-        ''' <summary>
-        ''' The intensity of the stream perturbation in the X direction
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The intensity of the stream perturbation in the X direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property GustX As Double
             Set(value As Double)
                 _GustX = value
@@ -113,12 +112,12 @@ Namespace AeroTools.Settings
                 Return _GustX
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
         Private _GustY As Double
-
-        ''' <summary>
-        ''' The intensity of the stream perturbation in the Y direction
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The intensity of the stream perturbation in the Y direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property GustY As Double
             Set(value As Double)
                 _GustY = value
@@ -128,12 +127,12 @@ Namespace AeroTools.Settings
                 Return _GustY
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
         Private _GustZ As Double
-
-        ''' <summary>
-        ''' The intensity of the stream perturbation in the Z direction
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The intensity of the stream perturbation in the Z direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property GustZ As Double
             Set(value As Double)
                 _GustZ = value
@@ -143,13 +142,12 @@ Namespace AeroTools.Settings
                 Return _GustZ
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
         Private _GustSpan As Double
-
-        ''' <summary>
-        ''' The duration of the gust (after the hyper damping period).
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The duration of the gust (after the hyper damping period).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property GustSpan As Double
             Set(value As Double)
                 _GustSpan = value
@@ -159,54 +157,59 @@ Namespace AeroTools.Settings
                 Return _GustSpan
             End Get
         End Property
-
+        '------------------------------------------------------------------------------------------
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private _Steps As New List(Of StepData)
 
-        ''' <summary>
-        '''Event triggerd when a value changes. This can be used in a graphical interface.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        'Event triggerd when a value changes. This can be used in a graphical interface.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Event ValueChanged()
 
-        ''' <summary>
-        ''' Returns the gust and damping at the given time step.
-        ''' </summary>
-        ''' <param name="TimeStep"></param>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the gust and damping at the given time step.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property State(TimeStep As Integer) As StepData
             Get
                 Return _Steps(TimeStep)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates the gust and daming functions for the given number of steps and
-        ''' interval between steps.
-        ''' </summary>
-        ''' <param name="Velocity">The reference stream velocity</param>
-        ''' <param name="TimeStep">The interval between two steps (must be constant on the simulation)</param>
-        ''' <param name="Steps">The total number of time steps</param>
+
+
+        '==========================================================================================
+        ' Generates the gust and daming functions for the given number of steps and
+        ' interval between steps.
+        ' Velocity is the reference stream velocity
+        ' TimeStep is the interval between two steps (must be constant on the simulation)
+        ' Steps is the total number of time steps
+        '==========================================================================================
         Public Sub Generate(Velocity As Vector3, TimeStep As Double, Steps As Integer)
 
             _Steps.Clear()
 
             Dim i As Integer = 0
 
-            Dim sd0 As New StepData
-            sd0.Damping = HyperDamping
-            sd0.Velocity.Assign(Velocity)
-            sd0.Time = i * TimeStep
-            _Steps.Add(sd0)
+            Dim FirstStep As New StepData
+            FirstStep.Damping = HyperDamping
+            FirstStep.Velocity.Assign(Velocity)
+            FirstStep.Time = i * TimeStep
+            _Steps.Add(FirstStep)
 
             While _Steps(i).Time < HyperDampingSpan And i < Steps
 
-                Dim sd1 As New StepData
+                Dim NewStep As New StepData
 
-                sd1.Damping = HyperDamping
-                sd1.Velocity.Assign(Velocity)
-                sd1.Time = i * TimeStep
+                NewStep.Damping = HyperDamping
+                NewStep.Velocity.Assign(Velocity)
+                NewStep.Time = i * TimeStep
                 i += 1
 
-                _Steps.Add(sd1)
+                _Steps.Add(NewStep)
 
             End While
 
@@ -214,44 +217,47 @@ Namespace AeroTools.Settings
 
             While _Steps(i).Time < HyperDampingSpan + GustSpan And i < Steps
 
-                Dim sd As New StepData
+                Dim NewStep As New StepData
 
-                sd.Damping = NormalDamping
-                sd.Velocity.Assign(Velocity)
+                NewStep.Damping = NormalDamping
+                NewStep.Velocity.Assign(Velocity)
 
                 Dim f As Double = 0.5 * (Math.Sin(2 * Math.PI * (t / GustSpan - 0.25)) + 1)
 
-                sd.Velocity.X += f * GustX
-                sd.Velocity.Y += f * GustY
-                sd.Velocity.Z += f * GustZ
+                NewStep.Velocity.X += f * GustX
+                NewStep.Velocity.Y += f * GustY
+                NewStep.Velocity.Z += f * GustZ
 
                 t += TimeStep
 
-                sd.Time = _Steps(_Steps.Count - 1).Time + TimeStep
+                NewStep.Time = _Steps(_Steps.Count - 1).Time + TimeStep
 
                 i += 1
 
-                _Steps.Add(sd)
+                _Steps.Add(NewStep)
 
             End While
 
             While i < Steps
 
-                Dim sd As New StepData
-                sd.Damping = NormalDamping
-                sd.Velocity.Assign(Velocity)
-                sd.Time = i * TimeStep
+                Dim NewStep As New StepData
+                NewStep.Damping = NormalDamping
+                NewStep.Velocity.Assign(Velocity)
+                NewStep.Time = i * TimeStep
                 i += 1
 
-                _Steps.Add(sd)
+                _Steps.Add(NewStep)
 
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Deep copy of the object
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Deep copy of the object
+        '==========================================================================================
         Public Function Clone()
 
             Dim ClonedHistogram As AeroelasticHistogram = New AeroelasticHistogram
@@ -266,7 +272,13 @@ Namespace AeroTools.Settings
             Return ClonedHistogram
 
         End Function
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New()
 
             HyperDamping = 6
@@ -278,44 +290,50 @@ Namespace AeroTools.Settings
             GustSpan = 0.4
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the histogram parameters in an XML node
-        ''' </summary>
-        Sub SaveToXML(ByRef writer As XmlWriter)
 
-            writer.WriteStartElement("FlutterTestHistogram")
-            writer.WriteAttributeString("HyperDamping", String.Format("{0}", HyperDamping))
-            writer.WriteAttributeString("NormalDamping", String.Format("{0}", NormalDamping))
-            writer.WriteAttributeString("HyperDampingSpan", String.Format("{0}", HyperDampingSpan))
-            writer.WriteAttributeString("GustIntensityX", String.Format("{0}", GustX))
-            writer.WriteAttributeString("GustIntensityY", String.Format("{0}", GustY))
-            writer.WriteAttributeString("GustIntensityZ", String.Format("{0}", GustZ))
-            writer.WriteAttributeString("GustSpan", String.Format("{0}", GustSpan))
-            writer.WriteEndElement()
+
+        '==========================================================================================
+        ' Writes the histogram parameters in an XML node
+        '==========================================================================================
+        Sub SaveToXML(ByRef Stream As XmlWriter)
+
+            Stream.WriteStartElement("FlutterTestHistogram")
+            Stream.WriteAttributeString("HyperDamping", String.Format("{0}", HyperDamping))
+            Stream.WriteAttributeString("NormalDamping", String.Format("{0}", NormalDamping))
+            Stream.WriteAttributeString("HyperDampingSpan", String.Format("{0}", HyperDampingSpan))
+            Stream.WriteAttributeString("GustIntensityX", String.Format("{0}", GustX))
+            Stream.WriteAttributeString("GustIntensityY", String.Format("{0}", GustY))
+            Stream.WriteAttributeString("GustIntensityZ", String.Format("{0}", GustZ))
+            Stream.WriteAttributeString("GustSpan", String.Format("{0}", GustSpan))
+            Stream.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the histogram parameters from an XML node
-        ''' </summary>
-        Public Sub ReadFromXML(ByRef reader As XmlReader)
 
-            While reader.Read
 
-                If reader.NodeType = XmlNodeType.Element Then
+        '==========================================================================================
+        ' Reads the histogram parameters from an XML node
+        '==========================================================================================
+        Public Sub ReadFromXML(ByRef Stream As XmlReader)
 
-                    Select Case reader.Name
+            While Stream.Read
+
+                If Stream.NodeType = XmlNodeType.Element Then
+
+                    Select Case Stream.Name
 
                         Case "FlutterTestHistogram"
 
-                            HyperDamping = IOXML.ReadDouble(reader, "HyperDamping", 1.0)
-                            NormalDamping = IOXML.ReadDouble(reader, "NormalDamping", 0.01)
-                            HyperDampingSpan = IOXML.ReadDouble(reader, "HyperDampingSpan", 1.0)
-                            GustX = IOXML.ReadDouble(reader, "GustIntensityX", 0.0)
-                            GustY = IOXML.ReadDouble(reader, "GustIntensityY", 0.0)
-                            GustZ = IOXML.ReadDouble(reader, "GustIntensityZ", 0.0)
-                            GustSpan = IOXML.ReadDouble(reader, "GustSpan", 0.0)
+                            HyperDamping = IOXML.ReadDouble(Stream, "HyperDamping", 1.0)
+                            NormalDamping = IOXML.ReadDouble(Stream, "NormalDamping", 0.01)
+                            HyperDampingSpan = IOXML.ReadDouble(Stream, "HyperDampingSpan", 1.0)
+                            GustX = IOXML.ReadDouble(Stream, "GustIntensityX", 0.0)
+                            GustY = IOXML.ReadDouble(Stream, "GustIntensityY", 0.0)
+                            GustZ = IOXML.ReadDouble(Stream, "GustIntensityZ", 0.0)
+                            GustSpan = IOXML.ReadDouble(Stream, "GustSpan", 0.0)
 
                     End Select
 
@@ -324,7 +342,10 @@ Namespace AeroTools.Settings
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

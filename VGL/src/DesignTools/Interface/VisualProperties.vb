@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -32,10 +32,10 @@ Imports VGL.AeroTools.IoHelper
 '#############################################################################
 Namespace DesignTools.Interface
 
-    ''' <summary>
-    ''' The different kind of visualization modes.
-    ''' This is used to know what kind of interactions are allowed. 
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The different kind of visualization modes.
+    ' This is used to know what kind of interactions are allowed. 
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Enum VisualizationMode As Integer
         Physic
         Lattice
@@ -43,18 +43,18 @@ Namespace DesignTools.Interface
         Structural
     End Enum
 
-    ''' <summary>
-    ''' Provides information about the visual aspect of objects.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Provides information about the visual aspect of objects.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class VisualProperties
 
         Implements INotifyPropertyChanged
 
         Private _ColorSurface As Color
 
-        ''' <summary>
-        ''' Color of the surface.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Color of the surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorSurface As Color
             Set(value As Color)
                 If (value <> _ColorSurface) Then
@@ -69,9 +69,9 @@ Namespace DesignTools.Interface
 
         Private _ColorMesh As Color
 
-        ''' <summary>
-        ''' Color of the mesh.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Color of the mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorMesh As Color
             Set(value As Color)
                 If (value <> _ColorMesh) Then
@@ -86,9 +86,9 @@ Namespace DesignTools.Interface
 
         Private _ThicknessMesh As Double
 
-        ''' <summary>
-        ''' Thickness of the mesh lattice.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Thickness of the mesh lattice.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ThicknessMesh As Double
             Set(value As Double)
                 If (value <> _ThicknessMesh) Then
@@ -102,9 +102,9 @@ Namespace DesignTools.Interface
 
         Private _Transparency As Double
 
-        ''' <summary>
-        ''' Transparency of the model.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Transparency of the model.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Transparency As Double
             Set(value As Double)
                 If value <> _Transparency Then
@@ -117,21 +117,21 @@ Namespace DesignTools.Interface
             End Get
         End Property
 
-        ''' <summary>
-        ''' The color of the shedding edge primitives.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The color of the shedding edge primitives.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorPrimitives As Color
 
-        ''' <summary>
-        ''' The color of the surface when selected.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The color of the surface when selected.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorSelection As Color
 
         Private _ShowMesh As Boolean
 
-        ''' <summary>
-        ''' Indicates if the mesh should be displayed.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the mesh should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowMesh As Boolean
             Set(value As Boolean)
                 If value <> _ShowMesh Then
@@ -146,9 +146,9 @@ Namespace DesignTools.Interface
 
         Private _ShowSurface As Boolean
 
-        ''' <summary>
-        ''' Indicates if the surface should be displayed.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the surface should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowSurface As Boolean
             Set(value As Boolean)
                 If value <> _ShowSurface Then
@@ -163,9 +163,9 @@ Namespace DesignTools.Interface
 
         Private _ShowPrimitives As Boolean
 
-        ''' <summary>
-        ''' Indicates if the primitive shedding edges should be displayed.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the primitive shedding edges should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowPrimitives As Boolean
             Set(value As Boolean)
                 If value <> _ShowPrimitives Then
@@ -178,80 +178,80 @@ Namespace DesignTools.Interface
             End Get
         End Property
 
-        ''' <summary>
-        ''' The color of the mesh nodes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The color of the mesh nodes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorNodes As Color
 
-        ''' <summary>
-        ''' The color of the velocity vectors.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The color of the velocity vectors.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorVelocity As Color
 
-        ''' <summary>
-        ''' The color of a positive load.
-        ''' For thick bodies, a positive load is when it is higher than the static pressure.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The color of a positive load.
+        ' For thick bodies, a positive load is when it is higher than the static pressure.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorPositiveLoad As Color
 
-        ''' <summary>
-        ''' The color of a negative load.
-        ''' For thick bodies, a negative load is when it is lower than the static pressure.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The color of a negative load.
+        ' For thick bodies, a negative load is when it is lower than the static pressure.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ColorNegativeLoad As Color
 
-        ''' <summary>
-        ''' The size of the mesh nodes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The size of the mesh nodes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property SizeNodes As Double
 
-        ''' <summary>
-        ''' The scale of the velocity vectors.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The scale of the velocity vectors.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ScaleVelocityVectors As Double
 
-        ''' <summary>
-        ''' The scale of the pressure load vectors.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The scale of the pressure load vectors.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ScaleLoadVectors As Double
 
-        ''' <summary>
-        ''' Indicqtes if the nodes should be displayed.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicqtes if the nodes should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowNodes As Boolean
 
-        ''' <summary>
-        ''' Indicates if the velocity vectors should be displayed.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the velocity vectors should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowVelocityVectors As Boolean
 
-        ''' <summary>
-        ''' Indicates if the pressure load vectors should be displayed.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the pressure load vectors should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property ShowLoadVectors As Boolean
 
-        ''' <summary>
-        ''' Indicates if the color of the surface should be overriden by a pressure colormap.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the color of the surface should be overriden by a pressure colormap.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowColormap As Boolean
 
-        ''' <summary>
-        ''' Indicates if the local coordinates system should be displayed.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the local coordinates system should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowLocalCoordinates As Boolean = True
 
-        ''' <summary>
-        ''' Indicates if the normal vectors should be displayed.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the normal vectors should be displayed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ShowNormalVectors As Boolean
 
         Private _VisualizationMode As VisualizationMode = [Interface].VisualizationMode.Lattice
 
-        ''' <summary>
-        ''' Indicates how the model should be represented.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates how the model should be represented.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property VisualizationMode As VisualizationMode
             Set(ByVal value As VisualizationMode)
                 _VisualizationMode = value
@@ -266,10 +266,10 @@ Namespace DesignTools.Interface
             End Get
         End Property
 
-        ''' <summary>
-        ''' Creates a visualization property object with default values for the given component type.
-        ''' </summary>
-        ''' <param name="ElementType"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a visualization property object with default values for the given component type.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="ElementType"></param>
         Public Sub New(ByVal ElementType As ComponentTypes)
 
             Select Case ElementType
@@ -371,10 +371,11 @@ Namespace DesignTools.Interface
 
             End Select
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the data from an XML node.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the data from an XML node.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
             While reader.Read
@@ -425,11 +426,12 @@ Namespace DesignTools.Interface
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the data to an XML node.
-        ''' </summary>
-        ''' <param name="writer"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the data to an XML node.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="writer"></param>
         Public Sub WriteToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("Visibility")
@@ -463,13 +465,14 @@ Namespace DesignTools.Interface
             writer.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region "Property Changed"
 
-        ''' <summary>
-        ''' Indicates that a property has changed.
-        ''' Note: not all properties raise this event.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates that a property has changed.
+        ' Note: not all properties raise this event.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Event PropertyChanged(Sender As Object, e As PropertyChangedEventArgs) Implements INotifyPropertyChanged.PropertyChanged
 
         Private Sub RaisePropertyChanged(PropertyName As String)
@@ -477,6 +480,7 @@ Namespace DesignTools.Interface
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(PropertyName))
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 

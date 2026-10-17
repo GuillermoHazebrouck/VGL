@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -34,23 +34,33 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace AeroTools.Models.Aero
 
-    ''' <summary>
-    ''' Represents a lattice bounded to a solid surface where several wakes might be convected.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a lattice bounded to a solid surface where several wakes might be convected.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class BoundedLattice
 
         Inherits Lattice
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Wakes As New List(Of Wake)
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub New()
             Wakes = New List(Of Wake)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' This sub repositions the primitive points at the wake. It is used on the aeroelastic analysis.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' This sub repositions the primitive points at the wake. It is used on the aeroelastic 
+        ' analysis.
+        '==========================================================================================
         Public Sub ReEstablishWakes()
 
             For Each Wake In Wakes
@@ -68,10 +78,13 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reasigns velocity at each control point.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Reasigns velocity at each control point.
+        '==========================================================================================
         Public Overloads Overrides Sub ClearVelocity(ByVal Velocity As Vector3)
 
             For Each VortexRing In VortexRings
@@ -79,9 +92,15 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
 
 #Region " Rings on wakes "
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub InitializeWakeRings()
 
             For Each Wake As Wake In Wakes
@@ -95,11 +114,15 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
-        ''' If RemoveOldest is marked as true, oldest wake panels will be removed.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and 
+        ' panels at primitive positions.
+        ' If RemoveOldest is marked as true, oldest wake panels will be removed.
+        '==========================================================================================
         Public Sub PopulateWakeRings(Dt As Double,
                                      TimeStep As Integer,
                                      ExtendWakes As Boolean,
@@ -116,9 +139,9 @@ Namespace AeroTools.Models.Aero
 
                 ' Add new nodes:
 
-                Dim nn As Integer = Wake.Nodes.Count
-                Dim n As Integer = Wake.Primitive.Nodes.Count
-                Dim p As Integer = Wake.Primitive.Rings.Count
+                Dim NodesCount As Integer = Wake.Nodes.Count
+                Dim PrimitiveNodesCount As Integer = Wake.Primitive.Nodes.Count
+                Dim PrimitiveRingsCount As Integer = Wake.Primitive.Rings.Count
                 Dim LocalIndex As Integer = Wake.Nodes(Wake.Nodes.Count - 1).IndexL ' < Last local index
 
                 For Each PrimNode In Wake.Primitive.Nodes
@@ -133,9 +156,9 @@ Namespace AeroTools.Models.Aero
 
                 ' Add new vortex rings:
 
-                nn = Wake.Nodes.Count
-                N4 = nn - 2 * n
-                N3 = nn - n
+                NodesCount = Wake.Nodes.Count
+                N4 = NodesCount - 2 * PrimitiveNodesCount
+                N3 = NodesCount - PrimitiveNodesCount
                 N2 = N3 + 1
                 N1 = N4 + 1
 
@@ -144,7 +167,7 @@ Namespace AeroTools.Models.Aero
                 ' #     #
                 ' N3 ## N2 < primitive edge >
 
-                For i = 0 To p - 1
+                For i = 0 To PrimitiveRingsCount - 1
 
                     ' Add wake ring i:
 
@@ -156,8 +179,8 @@ Namespace AeroTools.Models.Aero
 
                 If TimeStep > Wake.CuttingStep Then
 
-                    Wake.VortexRings.RemoveRange(0, p)
-                    Wake.Nodes.RemoveRange(0, n)
+                    Wake.VortexRings.RemoveRange(0, PrimitiveRingsCount)
+                    Wake.Nodes.RemoveRange(0, PrimitiveNodesCount)
 
                     ' Extend the trailing part of the wake if requested
 
@@ -172,11 +195,15 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
-        ''' If RemoveOldest is marked as true, oldest wake panels will be removed.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and 
+        ' panels at primitive positions.
+        ' If RemoveOldest is marked as true, oldest wake panels will be removed.
+        '==========================================================================================
         Public Sub PopulateWakeRingsAndVortices(Dt As Double,
                                                 TimeStep As Integer,
                                                 ExtendWakes As Boolean,
@@ -193,15 +220,15 @@ Namespace AeroTools.Models.Aero
 
                 ' Add new nodes:
 
-                Dim nn As Integer = Wake.Nodes.Count
-                Dim nv As Integer = Wake.Vortices.Count
-                Dim n As Integer = Wake.Primitive.Nodes.Count
-                Dim p As Integer = Wake.Primitive.Rings.Count
-                Dim LocalIndex As Integer = Wake.Nodes(nn - 1).IndexL ' < Last local index
+                Dim NodesCount As Integer = Wake.Nodes.Count
+                Dim VorticesCount As Integer = Wake.Vortices.Count
+                Dim PrimitiveNodesCount As Integer = Wake.Primitive.Nodes.Count
+                Dim PrimitiveRingsCount As Integer = Wake.Primitive.Rings.Count
+                Dim LocalIndex As Integer = Wake.Nodes(NodesCount - 1).IndexL ' < Last local index
 
                 ' Add nodes:
 
-                For i = 0 To n - 1
+                For i = 0 To PrimitiveNodesCount - 1
 
                     LocalIndex += 1
                     Wake.AddNode(Nodes(Wake.Primitive.Nodes(i)).Position, LocalIndex)
@@ -210,12 +237,12 @@ Namespace AeroTools.Models.Aero
 
                 ' Add streamwise vortices:
 
-                For i = 0 To n - 1
+                For i = 0 To PrimitiveNodesCount - 1
 
                     Dim StreamWiseVortex As New Vortex
 
-                    StreamWiseVortex.Node1 = Wake.Nodes(nn - n + i)
-                    StreamWiseVortex.Node2 = Wake.Nodes(nn + i)
+                    StreamWiseVortex.Node1 = Wake.Nodes(NodesCount - PrimitiveNodesCount + i)
+                    StreamWiseVortex.Node2 = Wake.Nodes(NodesCount + i)
                     StreamWiseVortex.Streamwise = True
                     Wake.Vortices.Add(StreamWiseVortex)
 
@@ -223,12 +250,12 @@ Namespace AeroTools.Models.Aero
 
                 ' Add transverse vortices:
 
-                For i = 1 To n - 1
+                For i = 1 To PrimitiveNodesCount - 1
 
                     Dim TransverseVortex As New Vortex
 
-                    TransverseVortex.Node1 = Wake.Nodes(nn + i - 1)
-                    TransverseVortex.Node2 = Wake.Nodes(nn + i)
+                    TransverseVortex.Node1 = Wake.Nodes(NodesCount + i - 1)
+                    TransverseVortex.Node2 = Wake.Nodes(NodesCount + i)
 
                     Wake.Vortices.Add(TransverseVortex)
 
@@ -236,33 +263,33 @@ Namespace AeroTools.Models.Aero
 
                 ' Assign circulation
 
-                For i = 0 To p - 1
+                For i = 0 To PrimitiveRingsCount - 1
 
                     Dim G As Double = VortexRings(Wake.Primitive.Rings(i)).G
 
-                    Wake.Vortices(nv - p + i).G += G
-                    Wake.Vortices(nv + i).G -= G
-                    Wake.Vortices(nv + i + 1).G += G
-                    Wake.Vortices(nv + n + i).G -= G
+                    Wake.Vortices(VorticesCount - PrimitiveRingsCount + i).G += G
+                    Wake.Vortices(VorticesCount + i).G -= G
+                    Wake.Vortices(VorticesCount + i + 1).G += G
+                    Wake.Vortices(VorticesCount + PrimitiveNodesCount + i).G -= G
 
                 Next
 
-                ' If TameInnerCirculation Then Wake.Vortices(nv).G = 0
+                ' If TameInnerCirculation Then Wake.Vortices(VorticesCount).G = 0
 
                 ' Remove old vortices and nodes
 
                 If TimeStep > Wake.CuttingStep Then
 
-                    Wake.Nodes.RemoveRange(0, n)
-                    Wake.Vortices.RemoveRange(0, n + p)
+                    Wake.Nodes.RemoveRange(0, PrimitiveNodesCount)
+                    Wake.Vortices.RemoveRange(0, PrimitiveNodesCount + PrimitiveRingsCount)
 
                 End If
 
                 ' Add new vortex rings:
 
-                nn = Wake.Nodes.Count
-                N4 = nn - 2 * n
-                N3 = nn - n
+                NodesCount = Wake.Nodes.Count
+                N4 = NodesCount - 2 * PrimitiveNodesCount
+                N3 = NodesCount - PrimitiveNodesCount
                 N2 = N3 + 1
                 N1 = N4 + 1
 
@@ -273,7 +300,7 @@ Namespace AeroTools.Models.Aero
 
                 Dim nr As Integer = Wake.VortexRings.Count
 
-                For i = 0 To p - 1
+                For i = 0 To PrimitiveRingsCount - 1
 
                     ' Add wake ring i:
 
@@ -287,7 +314,7 @@ Namespace AeroTools.Models.Aero
 
                 If TimeStep > Wake.CuttingStep Then
 
-                    Wake.VortexRings.RemoveRange(0, p)
+                    Wake.VortexRings.RemoveRange(0, PrimitiveRingsCount)
 
                     ' Extend the trailing part of the wake if requested
 
@@ -302,11 +329,18 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
+
 
 #End Region
 
 #Region " Vortices on wakes "
 
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub InitializeWakeVortices()
 
             For Each Wake As Wake In Wakes
@@ -330,10 +364,14 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and panels at primitive positions.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Convect all wakes on the primiteve edges of the bound lattice and adds new nodes and
+        ' panels at primitive positions.
+        '==========================================================================================
         Public Sub PopulateWakeVortices(Dt As Double,
                                         TimeStep As Integer,
                                         ExtendWakes As Boolean,
@@ -345,15 +383,15 @@ Namespace AeroTools.Models.Aero
 
                 ' Add new nodes:
 
-                Dim nn As Integer = Wake.Nodes.Count
-                Dim nv As Integer = Wake.Vortices.Count
-                Dim n As Integer = Wake.Primitive.Nodes.Count
-                Dim p As Integer = Wake.Primitive.Rings.Count
-                Dim LocalIndex As Integer = Wake.Nodes(nn - 1).IndexL ' < Last local index
+                Dim NodesCount As Integer = Wake.Nodes.Count
+                Dim VorticesCount As Integer = Wake.Vortices.Count
+                Dim PrimitiveNodesCount As Integer = Wake.Primitive.Nodes.Count
+                Dim PrimitiveRingsCount As Integer = Wake.Primitive.Rings.Count
+                Dim LocalIndex As Integer = Wake.Nodes(NodesCount - 1).IndexL ' < Last local index
 
                 ' Add nodes:
 
-                For i = 0 To n - 1
+                For i = 0 To PrimitiveNodesCount - 1
 
                     LocalIndex += 1
                     Wake.AddNode(Nodes(Wake.Primitive.Nodes(i)).Position, LocalIndex)
@@ -362,12 +400,12 @@ Namespace AeroTools.Models.Aero
 
                 ' Add streamwise vortices:
 
-                For i = 0 To n - 1
+                For i = 0 To PrimitiveNodesCount - 1
 
                     Dim StreamWiseVortex As New Vortex
 
-                    StreamWiseVortex.Node1 = Wake.Nodes(nn - n + i)
-                    StreamWiseVortex.Node2 = Wake.Nodes(nn + i)
+                    StreamWiseVortex.Node1 = Wake.Nodes(NodesCount - PrimitiveNodesCount + i)
+                    StreamWiseVortex.Node2 = Wake.Nodes(NodesCount + i)
                     StreamWiseVortex.Streamwise = True
                     Wake.Vortices.Add(StreamWiseVortex)
 
@@ -375,39 +413,39 @@ Namespace AeroTools.Models.Aero
 
                 ' Add transverse vortices:
 
-                For i = 1 To n - 1
+                For i = 1 To PrimitiveNodesCount - 1
 
                     Dim TransverseVortex As New Vortex
 
-                    TransverseVortex.Node1 = Wake.Nodes(nn + i - 1)
-                    TransverseVortex.Node2 = Wake.Nodes(nn + i)
+                    TransverseVortex.Node1 = Wake.Nodes(NodesCount + i - 1)
+                    TransverseVortex.Node2 = Wake.Nodes(NodesCount + i)
                     Wake.Vortices.Add(TransverseVortex)
 
                 Next
 
                 ' Assign circulation
 
-                For i = 0 To p - 1
+                For i = 0 To PrimitiveRingsCount - 1
 
                     Dim G As Double = VortexRings(Wake.Primitive.Rings(i)).G
 
-                    Wake.Vortices(nv - p + i).G += G
-                    Wake.Vortices(nv + i).G -= G
-                    Wake.Vortices(nv + i + 1).G += G
-                    Wake.Vortices(nv + n + i).G -= G
+                    Wake.Vortices(VorticesCount - PrimitiveRingsCount + i).G += G
+                    Wake.Vortices(VorticesCount + i).G -= G
+                    Wake.Vortices(VorticesCount + i + 1).G += G
+                    Wake.Vortices(VorticesCount + PrimitiveNodesCount + i).G -= G
 
                 Next
 
                 ' Do this when there is a fuselage to avoid wake rollup next to the fuselage:
 
-                If Wake.SupressInnerCircuation Then Wake.Vortices(nv).G = 0
+                If Wake.SupressInnerCircuation Then Wake.Vortices(VorticesCount).G = 0
 
                 ' Remove old vortices and nodes
 
                 If TimeStep > Wake.CuttingStep Then
 
-                    Wake.Nodes.RemoveRange(0, n)
-                    Wake.Vortices.RemoveRange(0, n + p)
+                    Wake.Nodes.RemoveRange(0, PrimitiveNodesCount)
+                    Wake.Vortices.RemoveRange(0, PrimitiveNodesCount + PrimitiveRingsCount)
 
                     ' Extend the trailing part of the wake if requested
 
@@ -422,10 +460,13 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stores the current position of the wake for later use.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Stores the current position of the wake for later use.
+        '==========================================================================================
         Public Sub CacheWakePosition()
 
             For Each Wake As Wake In Wakes
@@ -433,10 +474,13 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reconvects the nodes having an original position.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Reconvects the nodes having an original position.
+        '==========================================================================================
         Public Sub ReconvectWakes(Dt)
 
             For Each Wake As Wake In Wakes
@@ -444,21 +488,24 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
+
 
 #End Region
 
 #Region " Loads "
 
-        ''' <summary>
-        ''' Links to chordwise ring stripes used to calculate skin drag and local CL
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Links to chordwise ring stripes used to calculate skin drag and local CL
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ChordWiseStripes As New List(Of ChorwiseStripe)
 
-        ''' <summary>
-        ''' Calculates pressure coeficient at each bounded vortex ring.
-        ''' </summary>
-        ''' <param name="SquareVelocity">Square of reference velocity used to adimensionalize pressure</param>
+
+
+        '==========================================================================================
+        ' Calculates pressure coeficient at each bounded vortex ring.
+        '==========================================================================================
         Public Sub CalculatePressure(ByVal SquareVelocity As Double)
 
             For Each Ring In VortexRings
@@ -468,89 +515,114 @@ Namespace AeroTools.Models.Aero
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
+
 
 #End Region
 
 #Region " IO "
 
-        Public Overrides Sub ReadBinary(ByRef r As System.IO.BinaryReader)
+        '==========================================================================================
+        ' Writes the lattice nodes, rings and vortices into the binary file.
+        '==========================================================================================
+        Public Overrides Sub WriteBinary(ByRef Stream As System.IO.BinaryWriter, Optional ByVal NodalVelocity As Boolean = False, Optional ByVal ReferencePosition As Boolean = False)
 
-            MyBase.ReadBinary(r)
+            MyBase.WriteBinary(Stream, NodalVelocity, True)
+
+            ' Write vortex rings properties after geometry
+            '---------------------------------------------
 
             For i = 0 To VortexRings.Count - 1
-                VortexRings(i).Cp = r.ReadDouble
-                VortexRings(i).DGdt = r.ReadDouble
-                VortexRings(i).VelocityT.X = r.ReadDouble
-                VortexRings(i).VelocityT.Y = r.ReadDouble
-                VortexRings(i).VelocityT.Z = r.ReadDouble
-                VortexRings(i).Cdi = r.ReadDouble
+                Stream.Write(VortexRings(i).Cp)
+                Stream.Write(VortexRings(i).DGdt)
+                Stream.Write(VortexRings(i).VelocityT.X)
+                Stream.Write(VortexRings(i).VelocityT.Y)
+                Stream.Write(VortexRings(i).VelocityT.Z)
+                Stream.Write(VortexRings(i).Cdi)
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Overrides Sub WriteBinary(ByRef w As System.IO.BinaryWriter, Optional ByVal NodalVelocity As Boolean = False, Optional ByVal ReferencePosition As Boolean = False)
 
-            MyBase.WriteBinary(w, NodalVelocity, True)
 
-            ' Write vortex rings properties after geometry:
-
-            For i = 0 To VortexRings.Count - 1
-                w.Write(VortexRings(i).Cp)
-                w.Write(VortexRings(i).DGdt)
-                w.Write(VortexRings(i).VelocityT.X)
-                w.Write(VortexRings(i).VelocityT.Y)
-                w.Write(VortexRings(i).VelocityT.Z)
-                w.Write(VortexRings(i).Cdi)
-            Next
-
-        End Sub
-
+        '==========================================================================================
+        ' Writes the lattice nodes, rings and vortices into the binary file.
+        '==========================================================================================
         Public Overloads Sub WriteBinary(ByVal FilePath As String, Optional ByVal WakesNodalVelocity As Boolean = False)
 
-            Dim w As New BinaryWriter(New FileStream(FilePath, FileMode.Create))
+            Dim Stream As New BinaryWriter(New FileStream(FilePath, FileMode.Create))
 
             ' Base
             '--------------------------
 
-            Me.WriteBinary(w, True)
+            Me.WriteBinary(Stream, True)
 
             ' Wakes
             '--------------------------
 
-            w.Write(Wakes.Count)
+            Stream.Write(Wakes.Count)
 
             For i = 0 To Wakes.Count - 1
-                Wakes(i).WriteBinary(w, WakesNodalVelocity)
+                Wakes(i).WriteBinary(Stream, WakesNodalVelocity)
             Next
 
             ' Chordwise links
             '--------------------------
 
-            w.Write(ChordWiseStripes.Count)
+            Stream.Write(ChordWiseStripes.Count)
 
             For i = 0 To ChordWiseStripes.Count - 1
-                ChordWiseStripes(i).WriteBinary(w)
+                ChordWiseStripes(i).WriteBinary(Stream)
             Next
 
             ' Air-loads
             '--------------------------
 
-            AirLoads.WriteBinary(w)
+            AirLoads.WriteBinary(Stream)
 
-            w.Close()
+            Stream.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        ' Reads the lattice nodes, rings and vortices from the binary file written by WriteBinary.
+        '==========================================================================================
+        Public Overrides Sub ReadBinary(ByRef Stream As System.IO.BinaryReader)
+
+            MyBase.ReadBinary(Stream)
+
+            For i = 0 To VortexRings.Count - 1
+                VortexRings(i).Cp = Stream.ReadDouble
+                VortexRings(i).DGdt = Stream.ReadDouble
+                VortexRings(i).VelocityT.X = Stream.ReadDouble
+                VortexRings(i).VelocityT.Y = Stream.ReadDouble
+                VortexRings(i).VelocityT.Z = Stream.ReadDouble
+                VortexRings(i).Cdi = Stream.ReadDouble
+            Next
+
+        End Sub
+        '------------------------------------------------------------------------------------------
+
+
+
+        '==========================================================================================
+        ' Reads the lattice nodes, rings and vortices from the binary file written by WriteBinary.
+        '==========================================================================================
         Public Overloads Sub ReadBinary(ByVal FilePath As String, Optional ByVal Polars As PolarDatabase = Nothing, Optional ByVal WithWakes As Boolean = True)
 
             If File.Exists(FilePath) Then
 
-                Dim r As New BinaryReader(New FileStream(FilePath, FileMode.Open))
+                Dim Stream As New BinaryReader(New FileStream(FilePath, FileMode.Open))
 
                 ' Base
                 '--------------------------
 
-                Me.ReadBinary(r)
+                Me.ReadBinary(Stream)
 
                 CalculateLatticeParameters()
 
@@ -561,9 +633,9 @@ Namespace AeroTools.Models.Aero
 
                 If WithWakes Then
 
-                    For i = 0 To r.ReadInt32 - 1
+                    For i = 0 To Stream.ReadInt32 - 1
                         Wakes.Add(New Wake)
-                        Wakes(i).ReadBinary(r)
+                        Wakes(i).ReadBinary(Stream)
                     Next
 
                 End If
@@ -572,9 +644,9 @@ Namespace AeroTools.Models.Aero
                 '--------------------------
 
                 Try
-                    For i = 0 To r.ReadInt32 - 1
+                    For i = 0 To Stream.ReadInt32 - 1
                         ChordWiseStripes.Add(New ChorwiseStripe)
-                        ChordWiseStripes(i).ReadBinary(r, VortexRings, Polars)
+                        ChordWiseStripes(i).ReadBinary(Stream, VortexRings, Polars)
                     Next
                 Catch
                     ' No links were found
@@ -584,16 +656,19 @@ Namespace AeroTools.Models.Aero
                 ' Air-loads
                 '--------------------------
 
-                AirLoads.ReadBinary(r)
+                AirLoads.ReadBinary(Stream)
 
-                r.Close()
+                Stream.Close()
 
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
+    '---------------------------------------------------------------------------------------------- 
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

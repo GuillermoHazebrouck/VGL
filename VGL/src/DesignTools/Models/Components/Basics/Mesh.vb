@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -27,12 +27,18 @@ Imports VGL.MathTools.Algebra.CustomMatrices
 '#############################################################################
 Namespace DesignTools.Models.Components.Basics
 
+    '/////////////////////////////////////////////////////////////////////////////
+    ' Represents a generic mesh for any kind of design model
+    '/////////////////////////////////////////////////////////////////////////////
     Public Class Mesh
 
         Public Nodes As New List(Of NodalPoint) ' Es la que se utiliza para el resto del calculo. Es igual a la original por la matriz de orientacion, mas un vector de translacion
         Public Panels As New List(Of Panel)
         Public Lattice As New List(Of LatticeSegment) ' Matriz de conexion de vórcies
 
+        '=============================================================================
+        '
+        '=============================================================================
         Public Sub Translate(ByVal Vector As Vector3)
 
             For Each Point In Nodes
@@ -42,7 +48,13 @@ Namespace DesignTools.Models.Components.Basics
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '=============================================================================
+        '
+        '=============================================================================
         Public Sub Rotate(ByVal ReferencePoint As Vector3, ByVal Ori As OrientationAngles)
 
             Dim M As New RotationMatrix
@@ -57,7 +69,13 @@ Namespace DesignTools.Models.Components.Basics
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+        
+
+        '=============================================================================
+        '
+        '=============================================================================
         Public Sub Rotate(ByVal ReferencePoint As Vector3, ByVal M As RotationMatrix)
 
             For Each Point In Nodes
@@ -69,7 +87,13 @@ Namespace DesignTools.Models.Components.Basics
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+        
+
+        '=============================================================================
+        '
+        '=============================================================================
         Public Sub Scale(ByVal Scale As Double)
 
             For Each Point In Nodes
@@ -79,11 +103,23 @@ Namespace DesignTools.Models.Components.Basics
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+        
+
+        '=============================================================================
+        '
+        '=============================================================================
         Public Sub Align()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+        
+
+        '=============================================================================
+        '
+        '=============================================================================
         Public Sub GenerateLattice()
 
             If Panels.Count = 0 Then
@@ -98,7 +134,7 @@ Namespace DesignTools.Models.Components.Basics
 
                 Dim N1 As Integer
                 Dim N2 As Integer
-                Dim Esta As Boolean
+                Dim Found As Boolean
 
                 Dim FirstSegment As New LatticeSegment
 
@@ -126,23 +162,23 @@ Namespace DesignTools.Models.Components.Basics
                                 N2 = Panels.Item(i - 1).N1
                         End Select
 
-                        Esta = False
+                        Found = False
 
                         For m = 0 To Lattice.Count - 1
 
                             If Lattice.Item(m).N1 = N1 And Lattice.Item(m).N2 = N2 Then
 
-                                Esta = True
+                                Found = True
 
                             ElseIf Lattice.Item(m).N1 = N2 And Lattice.Item(m).N2 = N1 Then
 
-                                Esta = True
+                                Found = True
 
                             End If
 
                         Next
 
-                        If Esta = False Then
+                        If Found = False Then
 
                             Dim Segment As New LatticeSegment
 
@@ -164,7 +200,10 @@ Namespace DesignTools.Models.Components.Basics
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
 End Namespace
+'------------------------------------------------------------------------------------------

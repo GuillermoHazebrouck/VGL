@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -17,10 +17,10 @@
 
 Namespace DesignTools.Tools.Colormaping
 
-    ''' <summary>
-    ''' Represents a color to be used on SharpGL
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a color to be used on SharpGL
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <remarks></remarks>
     Public Structure ColorSharpGL
 
         Private CR As Double
@@ -50,13 +50,14 @@ Namespace DesignTools.Tools.Colormaping
             Me.CG = Green
             Me.CB = Blue
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Structure
 
-    ''' <summary>
-    ''' Provides methods to draw scalar in colors
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Provides methods to draw scalar in colors
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <remarks></remarks>
     Public Class Colormap
 
         Public Shared Function ScalarToColor2(ByVal Escalar As Double, ByVal Maximo As Double, ByVal Minimo As Double) As ColorSharpGL
@@ -71,14 +72,13 @@ Namespace DesignTools.Tools.Colormaping
 
         End Function
 
-        ''' <summary>
-        ''' Converts a scalar into a color provided the red and blue extremes
-        ''' </summary>
-        ''' <param name="Escalar">Value to convert</param>
-        ''' <param name="Maximum">Value to be displayed as red</param>
-        ''' <param name="Minimum">Value to be displayed as blue</param>
-        ''' <returns>A color representing the given scalar</returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Converts a scalar into a color provided the red and blue extremes
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Escalar">Value to convert</param>
+        ' <param name="Maximum">Value to be displayed as red</param>
+        ' <param name="Minimum">Value to be displayed as blue</param>
+        ' <returns>A color representing the given scalar</returns>
         Public Shared Function ScalarToColor(ByVal Escalar As Double, ByVal Maximum As Double, ByVal Minimum As Double) As ColorSharpGL
 
             Dim Color As ColorSharpGL

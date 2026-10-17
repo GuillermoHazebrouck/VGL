@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
+'Copyright (C) 2026 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -38,7 +38,7 @@ Module Commands
     Sub Main(Arguments As String())
 
         System.Console.WriteLine("******** VGL ********")
-        System.Console.WriteLine("Console version: 1.0")
+        System.Console.WriteLine("Console version: 1.1 (2026)")
         System.Console.WriteLine("Solver  version: " & Solver.Version)
 
         MklSetup.Initialize()
@@ -57,7 +57,7 @@ Module Commands
                 End If
             Next
         Else
-            System.Console.WriteLine("(no arguments)")
+            System.Console.WriteLine("(no arguments, type 'quit' to exit or 'help' to see available commands)")
         End If
 
         ' Process the user commands interactively
@@ -75,18 +75,19 @@ Module Commands
         End While
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Indicates if commands should be read back
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Indicates if commands should be read back
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Private ReadBack As Boolean = False
 
-    ''' <summary>
-    ''' Interpretes and excecutes the given command
-    ''' </summary>
-    ''' <param name="Command">The command</param>
-    ''' <param name="Interactive">Indicates if the console might ask for data</param>
-    ''' <returns></returns>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Interpretes and excecutes the given command
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Command">The command</param>
+    ' <param name="Interactive">Indicates if the console might ask for data</param>
+    ' <returns></returns>
     Private Function ProcessCommand(Command As String, Interactive As Boolean) As Boolean
 
         Try
@@ -459,7 +460,17 @@ Module Commands
 
                     Case "help"
 
-                        System.Console.WriteLine("visit www.VGL.org for info about this console")
+                        System.Console.WriteLine("Available commands:")
+                        System.Console.WriteLine("> load: loads a VGL project file.")
+                        System.Console.WriteLine("> steady: runs a steady calculation for the loaded project.")
+                        System.Console.WriteLine("> free_flight: runs a free-flight simulation for the loaded project.")
+                        System.Console.WriteLine("> aeroelastic: runs an aeroelastic simulation for the loaded project.")
+                        System.Console.WriteLine("> alfa_scan: runs a set of steady simulations at different incidence angles for the loaded project.")
+                        System.Console.WriteLine("> beta_scan: runs a set of steady simulations at different side-slip angles for the loaded project.")
+                        System.Console.WriteLine("> delta_scan: runs a set of steady simulations at different flap or elevator deflection angles for the loaded project.")
+                        System.Console.WriteLine("> alfa_delta_scan: runs a set of steady simulations at different angles of incidence and flap or elevator deflection angles for the loaded project.")
+                        System.Console.WriteLine("> omega_scan: runs a set of steady simulations at different circular trayectories for the loaded project.")
+                        System.Console.WriteLine("> alfa_omega_scan: runs a set of steady simulations at different incidence angles and  circular trayectories for the loaded project.")
 
                     Case Else
 
@@ -506,6 +517,7 @@ Module Commands
         End If
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
     Private OutputFile As StreamWriter
 
@@ -514,13 +526,16 @@ Module Commands
             OutputFile.WriteLine(Line)
         End If
     End Sub
+        '------------------------------------------------------------------------------------------
 
     Private Sub OutputConsoleMessage(Message As String)
         System.Console.WriteLine(Message)
     End Sub
+        '------------------------------------------------------------------------------------------
 
     Private Sub OutputConsoleProgress(Title As String, Value As Integer)
         System.Console.WriteLine(Title)
     End Sub
+        '------------------------------------------------------------------------------------------
 
 End Module

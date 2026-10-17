@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -37,36 +37,32 @@ Namespace DesignTools.Models
 
     Public Class DesignModel
 
-        ''' <summary>
-        ''' Project name.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Project name.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Name As String
 
-        ''' <summary>
-        ''' List of model objects.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' List of model objects.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Objects As New List(Of Surface)
 
-        ''' <summary>
-        ''' Tool that provides back up info while operating (moving or aligning objects).
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Tool that provides back up info while operating (moving or aligning objects).
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property OperationsTool As New OperationsTool
 
-        ''' <summary>
-        ''' Polars.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Polars.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        
         Public Property PolarDataBase As New PolarDatabase
 
 #Region " Add and clone objects "
 
-        ''' <summary>
-        ''' Adds a lifting surface and sets it as current.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '==========================================================================================
+        ' Adds a lifting surface and sets it as current.
+        '==========================================================================================
         Public Sub AddLiftingSurface()
 
             Dim NewLiftingSurface = New LiftingSurface
@@ -74,11 +70,13 @@ Namespace DesignTools.Models
             Objects.Add(NewLiftingSurface)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds an extruded body
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds an extruded body
+        '==========================================================================================
         Public Sub AddExtrudedBody()
 
             Dim NewFuselage As New Fuselage
@@ -98,11 +96,13 @@ Namespace DesignTools.Models
             Objects.Add(NewFuselage)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds a jet engine
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds a jet engine
+        '==========================================================================================
         Public Sub AddJetEngine()
 
             Dim Engine As New JetEngine
@@ -120,11 +120,13 @@ Namespace DesignTools.Models
             Objects.Add(Engine)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds a jet engine
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds a jet engine
+        '==========================================================================================
         Public Sub AddPropeller()
 
             Dim Propeller As New Propeller
@@ -141,11 +143,13 @@ Namespace DesignTools.Models
             Objects.Add(Propeller)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds an imported surface and sets it as current.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds an imported surface and sets it as current.
+        '==========================================================================================
         Public Sub AddImportedSurface()
 
             Dim NewImportedSurface = New ImportedSurface
@@ -153,11 +157,13 @@ Namespace DesignTools.Models
             Objects.Add(NewImportedSurface)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a copy of the current lifting surface with the option symmetric in true
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Generates a copy of the current lifting surface with the option symmetric in true
+        '==========================================================================================
         Public Sub CloneObject(ByVal Index As Integer)
 
             If Index > 0 And Index <= Objects.Count Then
@@ -168,32 +174,36 @@ Namespace DesignTools.Models
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " IO "
 
-        Public Sub ReadFromXML(ByRef Reader As XmlReader)
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Sub ReadFromXML(ByRef Stream As XmlReader)
 
-            Reader.Read()
+            Stream.Read()
 
-            Name = Reader("Name")
+            Name = Stream("Name")
 
-            While Reader.Read()
+            While Stream.Read()
 
-                Select Case Reader.Name
+                Select Case Stream.Name
 
                     Case "PolarDataBase"
 
-                        PolarDataBase.ReadFromXML(Reader.ReadSubtree())
+                        PolarDataBase.ReadFromXML(Stream.ReadSubtree())
 
                     Case "CamberLinesDatabase"
 
-                        CamberLinesDatabase.ReadFromXML(Reader.ReadSubtree())
+                        CamberLinesDatabase.ReadFromXML(Stream.ReadSubtree())
 
                     Case "ModelProperties"
 
-                        Dim SubReader As XmlReader = Reader.ReadSubtree()
+                        Dim SubReader As XmlReader = Stream.ReadSubtree()
 
                         SubReader.Read()
 
@@ -225,7 +235,7 @@ Namespace DesignTools.Models
 
                                     Dim ExtrudedSurface As New Fuselage
 
-                                    ExtrudedSurface.ReadFromXML(Reader.ReadSubtree)
+                                    ExtrudedSurface.ReadFromXML(Stream.ReadSubtree)
 
                                     Objects.Add(ExtrudedSurface)
 
@@ -233,7 +243,7 @@ Namespace DesignTools.Models
 
                                     Dim JetEngine As New JetEngine
 
-                                    JetEngine.ReadFromXML(Reader.ReadSubtree)
+                                    JetEngine.ReadFromXML(Stream.ReadSubtree)
 
                                     Objects.Add(JetEngine)
 
@@ -255,7 +265,7 @@ Namespace DesignTools.Models
 
                                     Dim Import As New ImportedSurface
 
-                                    Import.ReadFromXML(Reader.ReadSubtree)
+                                    Import.ReadFromXML(Stream.ReadSubtree)
 
                                     Objects.Add(Import)
 
@@ -272,86 +282,94 @@ Namespace DesignTools.Models
 
             End While
 
-            Reader.Close()
+            Stream.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Sub WriteToXML(ByRef Writer As XmlWriter)
 
-            Writer.WriteAttributeString("Name", Name)
 
-            Writer.WriteStartElement("PolarDataBase")
-            PolarDataBase.WriteToXML(Writer)
-            Writer.WriteEndElement()
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Sub WriteToXML(ByRef Stream As XmlWriter)
 
-            Writer.WriteStartElement("CamberLinesDatabase")
-            CamberLinesDatabase.WriteToXML(Writer)
-            Writer.WriteEndElement()
+            Stream.WriteAttributeString("Name", Name)
 
-            Writer.WriteStartElement("ModelProperties")
+            Stream.WriteStartElement("PolarDataBase")
+            PolarDataBase.WriteToXML(Stream)
+            Stream.WriteEndElement()
+
+            Stream.WriteStartElement("CamberLinesDatabase")
+            CamberLinesDatabase.WriteToXML(Stream)
+            Stream.WriteEndElement()
+
+            Stream.WriteStartElement("ModelProperties")
 
             For i = 0 To Objects.Count - 1
 
                 If TypeOf Objects(i) Is LiftingSurface Then
 
-                    Writer.WriteStartElement("LiftingSurface")
+                    Stream.WriteStartElement("LiftingSurface")
 
-                    Objects(i).WriteToXML(Writer)
+                    Objects(i).WriteToXML(Stream)
 
-                    Writer.WriteEndElement()
+                    Stream.WriteEndElement()
 
                 End If
 
                 If TypeOf Objects(i) Is Fuselage Then
 
-                    Writer.WriteStartElement("ExtrudedSurface")
+                    Stream.WriteStartElement("ExtrudedSurface")
 
-                    Objects(i).WriteToXML(Writer)
+                    Objects(i).WriteToXML(Stream)
 
-                    Writer.WriteEndElement()
+                    Stream.WriteEndElement()
 
                 End If
 
                 If TypeOf Objects(i) Is JetEngine Then
 
-                    Writer.WriteStartElement("JetEngine")
+                    Stream.WriteStartElement("JetEngine")
 
-                    Objects(i).WriteToXML(Writer)
+                    Objects(i).WriteToXML(Stream)
 
-                    Writer.WriteEndElement()
+                    Stream.WriteEndElement()
 
                 End If
 
                 If TypeOf Objects(i) Is Propeller Then
 
-                    Writer.WriteStartElement("Propeller")
+                    Stream.WriteStartElement("Propeller")
 
-                    Objects(i).WriteToXML(Writer)
+                    Objects(i).WriteToXML(Stream)
 
-                    Writer.WriteEndElement()
+                    Stream.WriteEndElement()
 
                 End If
 
                 If TypeOf Objects(i) Is ImportedSurface Then
 
-                    Writer.WriteStartElement("ImportedSurface")
+                    Stream.WriteStartElement("ImportedSurface")
 
-                    Objects(i).WriteToXML(Writer)
+                    Objects(i).WriteToXML(Stream)
 
-                    Writer.WriteEndElement()
+                    Stream.WriteEndElement()
 
                 End If
 
             Next
 
-            Writer.WriteEndElement()
+            Stream.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the global inertia of the model
-        ''' </summary>
-        ''' <returns></returns>
+
+
+        '==========================================================================================
+        ' Returns the global inertia of the model
+        '==========================================================================================
         Public Function GetGlobalInertia() As InertialProperties
 
             Dim Inertia As InertialProperties

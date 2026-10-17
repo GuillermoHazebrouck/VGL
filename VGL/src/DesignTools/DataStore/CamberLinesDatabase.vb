@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -32,19 +32,19 @@ Imports VGL.DesignTools.Models.Components.Basics
 '#############################################################################
 Namespace DesignTools.DataStore
 
-    ''' <summary>
-    '''  The database of chamber lines used during design.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '  The database of chamber lines used during design.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Module CamberLinesDatabase
 
-        ''' <summary>
-        ''' The actual stack containing all camber lines in the project.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The actual stack containing all camber lines in the project.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public CamberLines As New List(Of CamberLine)
 
-        ''' <summary>
-        ''' Initializes the module.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Initializes the module.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Sub New()
 
             CamberLines.Clear()
@@ -54,12 +54,13 @@ Namespace DesignTools.DataStore
             CamberLines(0).ID = Guid.Empty
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns a camber line of the given unique Id.
-        ''' </summary>
-        ''' <param name="ID"></param>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns a camber line of the given unique Id.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="ID"></param>
+        ' <returns></returns>
         Public Function GetCamberLineFromId(ID As Guid) As CamberLine
 
             For i = 0 To CamberLines.Count - 1
@@ -78,10 +79,10 @@ Namespace DesignTools.DataStore
 
         End Function
 
-        ''' <summary>
-        ''' Removes the camberline given its unique Id.
-        ''' </summary>
-        ''' <param name="ID"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Removes the camberline given its unique Id.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="ID"></param>
         Public Sub RemoveCamberLine(ID As Guid)
 
             If ID <> Guid.Empty Then
@@ -101,11 +102,12 @@ Namespace DesignTools.DataStore
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the database in an XML file
-        ''' </summary>
-        ''' <param name="writer"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the database in an XML file
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="writer"></param>
         Public Sub WriteToXML(writer As XmlWriter)
 
             For Each Line In CamberLines
@@ -119,11 +121,12 @@ Namespace DesignTools.DataStore
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the database in an XML file
-        ''' </summary>
-        ''' <param name="reader"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the database in an XML file
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="reader"></param>
         Public Sub ReadFromXML(reader As XmlReader)
 
             CamberLines.Clear()
@@ -147,6 +150,7 @@ Namespace DesignTools.DataStore
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Module
 

@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -39,9 +39,9 @@ Imports VGL.AeroTools.IoHelper
 '#############################################################################
 Namespace AeroTools.Models.Aero.Components
 
-    ''' <summary>
-    ''' A generic polar curve.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' A generic polar curve.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Interface IPolarCurve
 
         Function SkinDrag(ByRef Cl) As Double
@@ -50,8 +50,8 @@ Namespace AeroTools.Models.Aero.Components
         Property Id As Guid
         Property Name As String
 
-        Sub ReadBinary(ByRef r As BinaryReader)
-        Sub WriteBinary(ByRef w As BinaryWriter)
+        Sub ReadBinary(ByRef Stream As BinaryReader)
+        Sub WriteBinary(ByRef Stream As BinaryWriter)
         Sub WriteToXML(ByRef writer As XmlWriter)
         Sub ReadFromXML(ByRef reader As XmlReader)
 
@@ -64,10 +64,9 @@ Namespace AeroTools.Models.Aero.Components
         Custom = 1
     End Enum
 
-    ''' <summary>
-    ''' Represents a quadratic polar curve
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a quadratic polar curve
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class QuadraticPolar
 
         Implements IPolarCurve
@@ -78,6 +77,9 @@ Namespace AeroTools.Models.Aero.Components
         Private _ID As Guid = Guid.NewGuid
         Private _Name As String = "Polar"
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function SkinDrag(ByRef Cl As Object) As Double Implements IPolarCurve.SkinDrag
 
             Return Cd0 + Cd1 * Cl + Cd2 * Cl * Cl
@@ -85,13 +87,18 @@ Namespace AeroTools.Models.Aero.Components
         End Function
 
         Private _Reynolds As Double = 0.0#
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Type As PolarType Implements IPolarCurve.Type
             Get
                 Return PolarType.Quadratic
             End Get
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Id As Guid Implements IPolarCurve.Id
             Get
                 Return _ID
@@ -101,6 +108,9 @@ Namespace AeroTools.Models.Aero.Components
             End Set
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Name As String Implements IPolarCurve.Name
             Get
                 Return _Name
@@ -110,6 +120,9 @@ Namespace AeroTools.Models.Aero.Components
             End Set
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Reynolds As Double Implements IPolarCurve.Reynolds
             Set(ByVal value As Double)
                 _Reynolds = value
@@ -119,14 +132,17 @@ Namespace AeroTools.Models.Aero.Components
             End Get
         End Property
 
-        Sub ReadBinary(ByRef r As BinaryReader) Implements IPolarCurve.ReadBinary
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Sub ReadBinary(ByRef Stream As BinaryReader) Implements IPolarCurve.ReadBinary
             Try
-                _ID = New Guid(r.ReadString)
-                _Name = r.ReadString
-                _Reynolds = r.ReadDouble
-                Cd0 = r.ReadDouble
-                Cd1 = r.ReadDouble
-                Cd2 = r.ReadDouble
+                _ID = New Guid(Stream.ReadString)
+                _Name = Stream.ReadString
+                _Reynolds = Stream.ReadDouble
+                Cd0 = Stream.ReadDouble
+                Cd1 = Stream.ReadDouble
+                Cd2 = Stream.ReadDouble
             Catch ex As Exception
                 Cd0 = 0
                 Cd1 = 0
@@ -134,17 +150,29 @@ Namespace AeroTools.Models.Aero.Components
                 _Reynolds = 0
             End Try
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Sub WriteBinary(ByRef w As BinaryWriter) Implements IPolarCurve.WriteBinary
-            w.Write(Type)
-            w.Write(_ID.ToString)
-            w.Write(_Name)
-            w.Write(_Reynolds)
-            w.Write(Cd0)
-            w.Write(Cd1)
-            w.Write(Cd2)
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Sub WriteBinary(ByRef Stream As BinaryWriter) Implements IPolarCurve.WriteBinary
+            Stream.Write(Type)
+            Stream.Write(_ID.ToString)
+            Stream.Write(_Name)
+            Stream.Write(_Reynolds)
+            Stream.Write(Cd0)
+            Stream.Write(Cd1)
+            Stream.Write(Cd2)
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function Clone() As IPolarCurve Implements IPolarCurve.Clone
             Dim Polar As New QuadraticPolar
             Polar.Cd0 = Cd0
@@ -156,6 +184,9 @@ Namespace AeroTools.Models.Aero.Components
 
 #Region " IO "
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub WriteToXML(ByRef writer As XmlWriter) Implements IPolarCurve.WriteToXML
 
             writer.WriteAttributeString("CD0", String.Format("{0}", Cd0))
@@ -166,7 +197,13 @@ Namespace AeroTools.Models.Aero.Components
             writer.WriteAttributeString("Name", String.Format("{0}", Name))
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub ReadFromXML(ByRef reader As XmlReader) Implements IPolarCurve.ReadFromXML
 
             Cd0 = IOXML.ReadDouble(reader, "CD0", 0.05)
@@ -177,6 +214,7 @@ Namespace AeroTools.Models.Aero.Components
             Name = IOXML.ReadString(reader, "Name", 0.0)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
@@ -187,7 +225,9 @@ Namespace AeroTools.Models.Aero.Components
         Implements IPolarCurve
 
         Private _ID As Guid = Guid.NewGuid
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Id As Guid Implements IPolarCurve.Id
             Get
                 Return _ID
@@ -196,9 +236,12 @@ Namespace AeroTools.Models.Aero.Components
                 _ID = value
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
         Private _Name As String = "Polar"
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Name As String Implements IPolarCurve.Name
             Get
                 Return _Name
@@ -207,15 +250,22 @@ Namespace AeroTools.Models.Aero.Components
                 _Name = value
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Type As PolarType Implements IPolarCurve.Type
             Get
                 Return PolarType.Custom
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
         Private _Reynolds As Double = 0.0#
-
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Reynolds As Double Implements IPolarCurve.Reynolds
             Set(ByVal value As Double)
                 _Reynolds = value
@@ -224,22 +274,29 @@ Namespace AeroTools.Models.Aero.Components
                 Return _Reynolds
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Nodes As New List(Of Vector2)
 
-        Sub ReadBinary(ByRef r As BinaryReader) Implements IPolarCurve.ReadBinary
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Sub ReadBinary(ByRef Stream As BinaryReader) Implements IPolarCurve.ReadBinary
 
             Try
 
-                _ID = New Guid(r.ReadString)
-                _Name = r.ReadString
-                _Reynolds = r.ReadDouble
+                _ID = New Guid(Stream.ReadString)
+                _Name = Stream.ReadString
+                _Reynolds = Stream.ReadDouble
 
                 Nodes.Clear()
-                Dim n As Integer = r.ReadInt32
+                Dim n As Integer = Stream.ReadInt32
 
                 For i = 1 To n
-                    Nodes.Add(New Vector2(r.ReadDouble, r.ReadDouble))
+                    Nodes.Add(New Vector2(Stream.ReadDouble, Stream.ReadDouble))
                 Next
 
             Catch ex As Exception
@@ -248,23 +305,35 @@ Namespace AeroTools.Models.Aero.Components
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Sub WriteBinary(ByRef w As BinaryWriter) Implements IPolarCurve.WriteBinary
 
-            w.Write(Type)
-            w.Write(_ID.ToString)
-            w.Write(_Name)
-            w.Write(_Reynolds)
 
-            w.Write(Nodes.Count)
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Sub WriteBinary(ByRef Stream As BinaryWriter) Implements IPolarCurve.WriteBinary
+
+            Stream.Write(Type)
+            Stream.Write(_ID.ToString)
+            Stream.Write(_Name)
+            Stream.Write(_Reynolds)
+
+            Stream.Write(Nodes.Count)
 
             For Each p In Nodes
-                w.Write(p.X)
-                w.Write(p.Y)
+                Stream.Write(p.X)
+                Stream.Write(p.Y)
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function Clone() As IPolarCurve Implements IPolarCurve.Clone
 
             Dim Polar As New CustomPolar
@@ -277,9 +346,13 @@ Namespace AeroTools.Models.Aero.Components
             Return Polar
 
         End Function
+        '------------------------------------------------------------------------------------------
 
 #Region " IO "
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub WriteToXML(ByRef writer As XmlWriter) Implements IPolarCurve.WriteToXML
 
             writer.WriteAttributeString("N", String.Format("{0}", Nodes.Count))
@@ -294,7 +367,13 @@ Namespace AeroTools.Models.Aero.Components
             writer.WriteAttributeString("Name", String.Format("{0}", Name))
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub ReadFromXML(ByRef reader As XmlReader) Implements IPolarCurve.ReadFromXML
 
             Dim n As Integer = IOXML.ReadInteger(reader, "N", 0)
@@ -310,18 +389,22 @@ Namespace AeroTools.Models.Aero.Components
             Name = IOXML.ReadString(reader, "Name", 0.0)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Function SkinDrag(ByRef Cl As Object) As Double Implements IPolarCurve.SkinDrag
 
-            Dim CDi As Double = 0.0#
+            Dim CDp As Double = 0.0#
 
             For i = 0 To Nodes.Count - 2
 
                 If Cl > Nodes(i).X And Cl <= Nodes(i + 1).X Then
 
-                    CDi = Nodes(i).Y + (Nodes(i + 1).Y - Nodes(i).Y) * (Cl - Nodes(i).X) / (Nodes(i + 1).X - Nodes(i).X)
+                    CDp = Nodes(i).Y + (Nodes(i + 1).Y - Nodes(i).Y) * (Cl - Nodes(i).X) / (Nodes(i + 1).X - Nodes(i).X)
 
                     Exit For
 
@@ -329,20 +412,38 @@ Namespace AeroTools.Models.Aero.Components
 
             Next
 
-            Return CDi
+            Return CDp
 
         End Function
 
     End Class
+    '------------------------------------------------------------------------------------------
 
+
+
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class PolarFamily
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Polars As New List(Of IPolarCurve)
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Name As String = "Polar family"
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Id As Guid = Guid.NewGuid
 
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Sub SortPolars()
 
             Polars.Sort(Function(x As IPolarCurve, y As IPolarCurve)
@@ -362,7 +463,13 @@ Namespace AeroTools.Models.Aero.Components
                         End Function)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Sub WriteToXML(ByRef writer As XmlWriter)
 
             writer.WriteStartElement("Info")
@@ -396,7 +503,13 @@ Namespace AeroTools.Models.Aero.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
             reader.Read()
@@ -422,21 +535,27 @@ Namespace AeroTools.Models.Aero.Components
             reader.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Overloads Sub ReadBinary(ByRef r As BinaryReader)
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
+        Public Overloads Sub ReadBinary(ByRef Stream As BinaryReader)
             Try
-                Id = New Guid(r.ReadString)
-                Name = r.ReadString
-                For i = 1 To r.ReadInt32
-                    Dim type As Short = r.ReadInt16
+                Id = New Guid(Stream.ReadString)
+                Name = Stream.ReadString
+                For i = 1 To Stream.ReadInt32
+                    Dim type As Short = Stream.ReadInt16
                     Select Case type
                         Case PolarType.Quadratic
                             Dim Polar As New QuadraticPolar()
-                            Polar.ReadBinary(r)
+                            Polar.ReadBinary(Stream)
                             Polars.Add(Polar)
                         Case PolarType.Custom
                             Dim Polar As New CustomPolar()
-                            Polar.ReadBinary(r)
+                            Polar.ReadBinary(Stream)
                             Polars.Add(Polar)
                     End Select
                 Next
@@ -444,21 +563,33 @@ Namespace AeroTools.Models.Aero.Components
                 Polars.Clear()
             End Try
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Overloads Sub WriteBinary(ByRef w As BinaryWriter)
 
-            w.Write(Id.ToString)
-            w.Write(Name)
-            w.Write(Polars.Count)
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
+        Public Overloads Sub WriteBinary(ByRef Stream As BinaryWriter)
+
+            Stream.Write(Id.ToString)
+            Stream.Write(Name)
+            Stream.Write(Polars.Count)
 
             Dim i As Integer = 0
             For Each Polar In Polars
                 i += 1
-                Polar.WriteBinary(w)
+                Polar.WriteBinary(Stream)
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Function SkinDrag(Cl As Double, Re As Double)
 
             If Polars.Count = 0 Then
@@ -483,71 +614,116 @@ Namespace AeroTools.Models.Aero.Components
         End Function
 
     End Class
+    '------------------------------------------------------------------------------------------
 
+
+
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    '
+    '////////////////////////////////////////////////////////////////////////////////////////// 
     Public Class PolarDatabase
 
         Public Property Families As New List(Of PolarFamily)
 
         Public Path As String = ""
 
-        Public Overloads Sub ReadBinary(ByRef r As BinaryReader)
+        '==========================================================================================
+        '
+        '==========================================================================================
+        Public Overloads Sub ReadBinary(ByRef Stream As BinaryReader)
             Try
-                Dim n As Integer = r.ReadInt32
+                Dim n As Integer = Stream.ReadInt32
                 For i = 1 To n
                     Dim family As New PolarFamily()
-                    family.ReadBinary(r)
+                    family.ReadBinary(Stream)
                     Families.Add(family)
                 Next
             Catch ex As Exception
                 Families.Clear()
             End Try
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Overloads Sub WriteBinary(ByRef w As BinaryWriter)
-            w.Write(Families.Count)
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
+        Public Overloads Sub WriteBinary(ByRef Stream As BinaryWriter)
+            Stream.Write(Families.Count)
             Dim i As Integer = 0
             For Each family In Families
                 i += 1
-                family.WriteBinary(w)
+                family.WriteBinary(Stream)
             Next
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Overloads Sub ReadBinary(ByRef FilePath As String)
 
             If File.Exists(FilePath) Then
                 Families.Clear()
                 Path = FilePath
-                Dim r As New BinaryReader(New FileStream(FilePath, FileMode.Open))
-                ReadBinary(r)
-                r.Close()
+                Dim Stream As New BinaryReader(New FileStream(FilePath, FileMode.Open))
+                ReadBinary(Stream)
+                Stream.Close()
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Overloads Sub WriteBinary(ByRef FilePath As String)
 
             Try
-                Dim w As New BinaryWriter(New FileStream(FilePath, FileMode.Create))
-                WriteBinary(w)
-                w.Close()
+                Dim Stream As New BinaryWriter(New FileStream(FilePath, FileMode.Create))
+                WriteBinary(Stream)
+                Stream.Close()
             Catch
                 Families.Clear()
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Overloads Sub ReadBinary()
 
             ReadBinary(Path)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Overloads Sub WriteBinary()
 
             WriteBinary(Path)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Function Clone() As PolarDatabase
 
             Dim db As New PolarDatabase
@@ -570,7 +746,13 @@ Namespace AeroTools.Models.Aero.Components
             Return db
 
         End Function
+        '------------------------------------------------------------------------------------------
 
+
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Sub WriteToXML(ByRef writer As XmlWriter)
 
             writer.WriteAttributeString("NumberOfFamilies", String.Format("{0}", Families.Count))
@@ -584,7 +766,13 @@ Namespace AeroTools.Models.Aero.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
+        
 
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
             reader.Read()
@@ -603,7 +791,13 @@ Namespace AeroTools.Models.Aero.Components
             reader.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
+        
 
+
+        '==========================================================================================
+        '
+        '========================================================================================== 
         Function GetFamilyFromId(FamilyID As Guid) As PolarFamily
             For Each Family In Families
                 If Family.Id.Equals(FamilyID) Then
@@ -612,6 +806,10 @@ Namespace AeroTools.Models.Aero.Components
             Next
             Return Nothing
         End Function
-    End Class
+        '------------------------------------------------------------------------------------------
 
+    End Class
+    '----------------------------------------------------------------------------------------------
+    
 End Namespace
+'--------------------------------------------------------------------------------------------------

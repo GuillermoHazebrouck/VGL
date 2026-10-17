@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
+'Copyright (C) 2026 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -33,10 +33,10 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace DesignTools.Models.Components
 
-    ''' <summary>
-    ''' Represents a flat 3D rectangular surface where the airfield velocity is computed at
-    ''' regular nodes.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a flat 3D rectangular surface where the airfield velocity is computed at
+    ' regular nodes.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class VelocityPlane
 
         Private Points As New List(Of Vector3)
@@ -148,6 +148,7 @@ Namespace DesignTools.Models.Components
             Vectors.Add(Vector)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub AddControlPoint(ByVal Point As Vector3)
 
@@ -158,6 +159,7 @@ Namespace DesignTools.Models.Components
             Vectors.Add(Vector)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub GenerateMesh()
 
@@ -216,6 +218,7 @@ Namespace DesignTools.Models.Components
             NormalVector = Direction1.VectorProduct(Direction2)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub SaveToXML(ByRef writer As XmlWriter)
 
@@ -255,6 +258,7 @@ Namespace DesignTools.Models.Components
             writer.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub ReadFromXML(ByRef reader As XmlReader)
 
@@ -310,6 +314,7 @@ Namespace DesignTools.Models.Components
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

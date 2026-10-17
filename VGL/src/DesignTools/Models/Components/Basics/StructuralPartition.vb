@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -28,45 +28,42 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace DesignTools.Models.Components.Basics
 
-    ''' <summary>
-    ''' Represents an structural partition
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents an structural partition
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <remarks></remarks>
     Public Class StructuralPartition
 
-        ''' <summary>
-        ''' Position of this partition
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Position of this partition
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public P As Vector3
 
-        ''' <summary>
-        ''' The center of mass
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The center of mass
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public M As Vector3
 
-        ''' <summary>
-        ''' The local system of coordinates
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The local system of coordinates
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Basis As Base3
 
-        ''' <summary>
-        ''' Section associated to this partition point
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Section associated to this partition point
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public LocalSection As Section
 
-        ''' <summary>
-        ''' Chord associated to this partition
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Chord associated to this partition
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public LocalChord As Double
 
-        ''' <summary>
-        ''' Creates a new partition with the given position
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="section"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a new partition with the given position
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="p"></param>
+        ' <param name="section"></param>
         Public Sub New(ByVal p As Vector3, ByVal section As Section)
 
             Me.P = New Vector3(p.X, p.Y, p.Z)
@@ -76,10 +73,11 @@ Namespace DesignTools.Models.Components.Basics
             LocalSection.Assign(section)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new partition
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a new partition
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
 
             Me.P = New Vector3()
@@ -89,6 +87,7 @@ Namespace DesignTools.Models.Components.Basics
             Basis = New Base3()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

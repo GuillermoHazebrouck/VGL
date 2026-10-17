@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -86,16 +86,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a time magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a time magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class TimeMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             Seconds
@@ -105,9 +105,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.Seconds
 
         Private _DefaultUnitValue As Double
@@ -124,6 +124,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -143,6 +144,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -160,6 +162,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -225,16 +228,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a length magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a length magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class LengthMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             Meters
@@ -248,9 +251,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.Meters
 
         Private _DefaultUnitValue As Double
@@ -267,6 +270,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -294,6 +298,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -319,6 +324,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -392,16 +398,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents an area magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents an area magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class AreaMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             SquareMeters
@@ -415,9 +421,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.SquareMeters
 
         Private _DefaultUnitValue As Double
@@ -434,6 +440,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -461,6 +468,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -486,6 +494,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -559,16 +568,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a length magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a length magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class VelocityMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             MetersPerSecond
@@ -578,9 +587,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.MetersPerSecond
 
         Private _DefaultUnitValue As Double
@@ -597,6 +606,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -616,6 +626,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -633,6 +644,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -698,16 +710,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a density magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a density magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class DensityMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             kg_m3
@@ -715,9 +727,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.kg_m3
 
         Private _DefaultUnitValue As Double
@@ -734,6 +746,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -749,6 +762,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -762,6 +776,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -823,25 +838,25 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a viscocity magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a viscocity magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ViscosityMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             kg_ms
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.kg_ms
 
         Private _DefaultUnitValue As Double
@@ -858,6 +873,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -871,6 +887,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -882,6 +899,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -941,16 +959,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a temperature magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a temperature magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class TemperatureMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             Kelving
@@ -958,9 +976,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.Celsius
 
         Private _DefaultUnitValue As Double
@@ -977,6 +995,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -992,6 +1011,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -1005,6 +1025,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -1066,16 +1087,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a force magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a force magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ForceMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             N
@@ -1084,9 +1105,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.N
 
         Private _DefaultUnitValue As Double
@@ -1103,6 +1124,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -1120,6 +1142,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -1135,6 +1158,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -1198,16 +1222,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a pressure magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a pressure magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class PressureMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             Pa
@@ -1217,9 +1241,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.Pa
 
         Private _DefaultUnitValue As Double
@@ -1236,6 +1260,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -1255,6 +1280,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -1272,6 +1298,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -1337,16 +1364,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a force magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a force magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class MomentMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             Nm
@@ -1354,9 +1381,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.Nm
 
         Private _DefaultUnitValue As Double
@@ -1373,6 +1400,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -1388,6 +1416,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -1401,6 +1430,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -1462,16 +1492,16 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents an angular magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents an angular magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class AngularMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             Degrees
@@ -1479,9 +1509,9 @@ Namespace MathTools.Magnitudes
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.Radians
 
         Private _DefaultUnitValue As Double
@@ -1498,6 +1528,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -1513,6 +1544,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -1526,6 +1558,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)
@@ -1587,25 +1620,25 @@ Namespace MathTools.Magnitudes
 
     End Class
 
-    ''' <summary>
-    ''' Represents a dimensionless magnitude.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a dimensionless magnitude.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class DimensionlessMagnitude
 
         Implements IPhysicalMagnitude
 
-        ''' <summary>
-        ''' Time units.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Time units.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Enum Units As Short
 
             None
 
         End Enum
 
-        ''' <summary>
-        ''' Unit used as reference.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unit used as reference.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Const DefaultUnit As Units = Units.None
 
         Private _DefaultUnitValue As Double
@@ -1622,6 +1655,7 @@ Namespace MathTools.Magnitudes
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetValueFromDafaultUnitValue(value As Double)
 
@@ -1633,6 +1667,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Private Sub SetDafaultUnitValueFromValue(value As Double)
 
@@ -1644,6 +1679,7 @@ Namespace MathTools.Magnitudes
             End Select
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Property DefaultUnitValue As Double Implements IPhysicalMagnitude.DefaultUnitValue
             Set(value As Double)

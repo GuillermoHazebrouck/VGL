@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -22,9 +22,9 @@
 '#############################################################################
 Namespace DesignTools.Interface
 
-    ''' <summary>
-    ''' The different types of components that can be interacted with.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The different types of components that can be interacted with.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Enum ComponentTypes As Integer
 
         etNothing = 0
@@ -37,9 +37,9 @@ Namespace DesignTools.Interface
 
     End Enum
 
-    ''' <summary>
-    ''' The different kind of entities that can be interacted with.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The different kind of entities that can be interacted with.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Enum EntityTypes As Integer
 
         etNothing = 0
@@ -51,18 +51,17 @@ Namespace DesignTools.Interface
 
     End Enum
 
-    ''' <summary>
-    ''' Provides information about a selection based in a single integer identifier.
-    ''' Note that the selection mechanism is not part of this library.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Provides information about a selection based in a single integer identifier.
+    ' Note that the selection mechanism is not part of this library.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Structure SelectionInfo
 
         Private _Id As Integer
 
-        ''' <summary>
-        ''' Reads back the code and sets identity credentials.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads back the code and sets identity credentials.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Id As Integer
             Set(ByVal value As Integer)
                 _Id = value
@@ -75,9 +74,9 @@ Namespace DesignTools.Interface
 
         Private _ComponentType As ComponentTypes
 
-        ''' <summary>
-        ''' The component type given as described by the ComponentTypes enum.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The component type given as described by the ComponentTypes enum.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property ComponentType As ComponentTypes
             Get
                 Return _ComponentType
@@ -86,9 +85,9 @@ Namespace DesignTools.Interface
 
         Private _EntityType As EntityTypes
 
-        ''' <summary>
-        ''' The entity type given as described by the EntityTypes enum.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The entity type given as described by the EntityTypes enum.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property EntityType As EntityTypes
             Get
                 Return _EntityType
@@ -97,9 +96,9 @@ Namespace DesignTools.Interface
 
         Private _ComponentIndex As Integer
 
-        ''' <summary>
-        ''' The component index in its original stack.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The component index in its original stack.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property ComponentIndex As Integer
             Get
                 Return _ComponentIndex
@@ -108,18 +107,18 @@ Namespace DesignTools.Interface
 
         Private _EntityIndex As Integer
 
-        ''' <summary>
-        ''' The entity index in its original stack inside the parent component.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The entity index in its original stack inside the parent component.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property EntityIndex As Integer
             Get
                 Return _EntityIndex
             End Get
         End Property
 
-        ''' <summary>
-        ''' Decodes the identifier as a component type, component index, entity type and entity index.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Decodes the identifier as a component type, component index, entity type and entity index.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub SetUp()
 
             Dim Name As String = _Id.ToString
@@ -133,47 +132,48 @@ Namespace DesignTools.Interface
             _EntityIndex = CInt(Mid(Name, 5, 4))
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The depth of the entity associated to this selection info.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The depth of the entity associated to this selection info.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property EyeDepth As Double
 
     End Structure
 
-    ''' <summary>
-    ''' Gathers a collection of selection infos.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Gathers a collection of selection infos.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Selection
 
-        ''' <summary>
-        ''' The entities that have be selected.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The entities that have be selected.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public SelectionList As New List(Of SelectionInfo)
 
-        ''' <summary>
-        ''' The specific entities that can be selected.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The specific entities that can be selected.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public EntityToSelect As EntityTypes = EntityTypes.etPanel
 
-        ''' <summary>
-        ''' Indicates if multiple entities can be selected at the same time.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if multiple entities can be selected at the same time.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public MultipleSelection As Boolean = False
 
-        ''' <summary>
-        ''' Returns the selection Id for the given component and entity.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns the selection Id for the given component and entity.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Shared Function GetSelectionCode(ByVal ElementType As ComponentTypes, ByVal ElementIndex As Integer, ByVal EntityType As EntityTypes, ByVal EntityIndex As Integer) As Integer
             Return ElementType * 10000000 + ElementIndex * 100000 + EntityType * 10000 + EntityIndex
         End Function
 
     End Class
 
-    ''' <summary>
-    ''' Interface that must be implemented by components that can be selected.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Interface that must be implemented by components that can be selected.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Interface ISelectable
 
         Property Active As Boolean

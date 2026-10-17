@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
+'Copyright (C) 2026 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -55,18 +55,17 @@ Imports VGL.DesignTools.Models.Components
 '#############################################################################
 Namespace DesignTools.Models
 
-    ''' <summary>
-    ''' The converter module provides a group of extesions to the Solver to automatically
-    ''' load the different kinds of standard surfaces from the design model. 
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The converter module provides a group of extesions to the Solver to automatically
+    ' load the different kinds of standard surfaces from the design model. 
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Module Converter
 
-        ''' <summary>
-        ''' Transfers a geometric model to the calculation cell
-        ''' </summary>
-        ''' <param name="Model">Model to be transferred</param>
-        ''' <param name="GenerateStructure">Indicates if a structural link that should be created</param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Transfers a geometric model to the calculation cell
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Model">Model to be transferred</param>
+        ' <param name="GenerateStructure">Indicates if a structural link that should be created</param>
         <Extension()>
         Public Sub GenerateFromExistingModel(This As Solver,
                                              ByVal Model As DesignModel,
@@ -290,14 +289,14 @@ Namespace DesignTools.Models
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds a bounded lattice with wakes from a lifting surface.
-        ''' </summary>
-        ''' <param name="Surface"></param>
-        ''' <param name="Mirror"></param>
-        ''' <param name="GenerateStructure"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Adds a bounded lattice with wakes from a lifting surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Surface"></param>
+        ' <param name="Mirror"></param>
+        ' <param name="GenerateStructure"></param>
         <Extension()>
         Private Sub AddLiftingSurface(This As Solver,
                                       ByRef Surface As LiftingSurface,
@@ -508,10 +507,11 @@ Namespace DesignTools.Models
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds a bounded lattice with wakes from a propeller.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Adds a bounded lattice with wakes from a propeller.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         <Extension()>
         Private Sub AddPropeller(This As Solver,
                                  ByRef Surface As Propeller)
@@ -619,10 +619,11 @@ Namespace DesignTools.Models
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Includes the model of a jet engine in the calculation core
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Includes the model of a jet engine in the calculation core
+        '//////////////////////////////////////////////////////////////////////////////////////////
         <Extension()>
         Private Sub AddJetEngine(This As Solver, ByRef Nacelle As JetEngine)
 
@@ -672,6 +673,7 @@ Namespace DesignTools.Models
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Module
 

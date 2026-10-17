@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -22,12 +22,14 @@
 '#############################################################################
 Namespace MathTools.Algebra.EuclideanSpace
 
-    ''' <summary>
-    ''' Provides static methods to operate with vectors and matrices.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Provides static methods to operate with vectors and matrices.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Algebra
 
+        '=========================================================================================
+        '
+        '=========================================================================================
         Public Overloads Shared Function VectorProduct(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Vector3
             Dim Producto As New Vector3
 
@@ -38,7 +40,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Return Producto
 
         End Function
+        '-----------------------------------------------------------------------------------------
 
+
+
+        '=========================================================================================
+        '
+        '=========================================================================================
         Public Overloads Shared Function InnerProduct(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Double
 
             Dim Producto As Double
@@ -48,7 +56,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Return Producto
 
         End Function
+        '-----------------------------------------------------------------------------------------
 
+
+
+        '=========================================================================================
+        '
+        '=========================================================================================
         Public Overloads Shared Function SubstractVectors(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Vector3
 
             Dim Resta As New Vector3
@@ -60,7 +74,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Return Resta
 
         End Function
+        '-----------------------------------------------------------------------------------------
 
+
+
+        '=========================================================================================
+        '
+        '=========================================================================================
         Public Overloads Shared Function AddVectors(ByVal Vector1 As Vector3, ByVal Vector2 As Vector3) As Vector3
 
             Dim Resta As New Vector3
@@ -72,7 +92,13 @@ Namespace MathTools.Algebra.EuclideanSpace
             Return Resta
 
         End Function
+        '-----------------------------------------------------------------------------------------
 
+
+
+        '=========================================================================================
+        '
+        '=========================================================================================
         Public Overloads Shared Function ScalarProduct(ByVal Escalar As Double, ByVal Vector As Vector3) As Vector3
 
             Dim Resultado As New Vector3
@@ -84,7 +110,10 @@ Namespace MathTools.Algebra.EuclideanSpace
             Return Resultado
 
         End Function
+        '-----------------------------------------------------------------------------------------
 
     End Class
+    '---------------------------------------------------------------------------------------------
 
 End Namespace
+'-------------------------------------------------------------------------------------------------

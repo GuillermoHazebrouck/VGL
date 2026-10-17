@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -33,113 +33,117 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace AeroTools.Models.Aero.Components
 
-    ''' <summary>
-    ''' Represents a collection of adjacent vortex rings (typically along the chord of a wing) 
-    ''' where lift and drag can be locally computed.
-    ''' Note: the stripe force coefficients are referred to the local velocity, not to the 
-    ''' reference stream velocity (with the idea of quantifying the situation on the airfoil).
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a collection of adjacent vortex rings (typically along the chord of a wing) 
+    ' where lift and drag can be locally computed.
+    ' Note: the stripe force coefficients are referred to the local velocity, not to the 
+    ' reference stream velocity (with the idea of quantifying the situation on the airfoil).
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ChorwiseStripe
 
-        ''' <summary>
-        ''' Chordwise stripe of vortex rings (from the leading edge to the trailing edge).
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Chordwise stripe of vortex rings (from the leading edge to the trailing edge).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Rings As List(Of VortexRing)
 
-        ''' <summary>
-        ''' Polar curve used to compute the local drag.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Polar curve used to compute the local drag.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Polars As PolarFamily
 
-        ''' <summary>
-        ''' Initializes the object.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Initializes the object.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
 
             Rings = New List(Of VortexRing)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the area of this portion of wing in m².
-        ''' </summary>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the area of this portion of wing in m².
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Area As Double
 
-        ''' <summary>
-        ''' Local lift coefficient in this portion of wing.
-        ''' Note: the reference velocity is the local velocity.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Local lift coefficient in this portion of wing.
+        ' Note: the reference velocity is the local velocity.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property LiftCoefficient As Double
 
-        ''' <summary>
-        ''' Local induced drag coefficient in this portion of wing.
-        ''' Note: the reference velocity is the local velocity.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Local induced drag coefficient in this portion of wing.
+        ' Note: the reference velocity is the local velocity.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property InducedDragCoefficient As Double
 
-        ''' <summary>
-        ''' Skin drag coefficient in this portion of wing.
-        ''' Note: the reference velocity is the local velocity.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Skin drag coefficient in this portion of wing.
+        ' Note: the reference velocity is the local velocity.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property SkinDragCoefficient As Double
 
-        ''' <summary>
-        ''' Total stripe lift in N.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Total stripe lift in N.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Lift As New Vector3
 
-        ''' <summary>
-        ''' Total stripe induced drag in N.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Total stripe induced drag in N.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property InducedDrag As New Vector3
 
-        ''' <summary>
-        ''' Total stripe induced drag in N.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Total stripe induced drag in N.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property SkinDrag As New Vector3
 
-        ''' <summary>
-        ''' Total stripe moment (with respect to the origin) in N.m.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Total stripe moment (with respect to the origin) in N.m.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property LiftMoment As New Vector3
 
-        ''' <summary>
-        ''' Total stripe moment (with respect to the origin) in N.m.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Total stripe moment (with respect to the origin) in N.m.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property InducedDragMoment As New Vector3
 
-        ''' <summary>
-        ''' Total stripe moment (with respect to the origin) in N.m.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Total stripe moment (with respect to the origin) in N.m.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property SkinDragMoment As New Vector3
 
-        ''' <summary>
-        ''' Stripe chord in meters.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stripe chord in meters.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Chord As Double
 
-        ''' <summary>
-        ''' Vector having the direction of the chord.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Vector having the direction of the chord.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property ChordWiseVector As New Vector3
 
-        ''' <summary>
-        ''' Point located at the geometric center of the chordwise stripe.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Point located at the geometric center of the chordwise stripe.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property CenterPoint As New Vector3
 
-        ''' <summary>
-        ''' Calculates the stripe lift, drag and area, along with the correspondig moment and reference coefficients. 
-        ''' The Cp (pressure coefficient) and the Cdi (local induced component) of each panel should be calculated before calling this sub.
-        ''' NOTE:
-        ''' This method corrects the missing leading edge pressure decay by substracting the projection of the total force in 
-        ''' the direction of the local stream velocity (this is why the stream direction is requested). This is an extention of 
-        ''' the 2D potential theory in which 2D airfoils do not introduce drag. This is arguable, but at least the correction 
-        ''' does provide more consistent results, specially in the case of rotating wings where the incidence varies considerably.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates the stripe lift, drag and area, along with the correspondig moment and 
+        ' reference coefficients. 
+        ' The Cp (pressure coefficient) and the Cdi (local induced component) of each panel 
+        ' should be calculated before calling this sub.
+        ' NOTE:
+        ' This method corrects the missing leading edge pressure decay by substracting the 
+        ' projection of the total force in the direction of the local stream velocity (this is 
+        ' why the stream direction is requested). This is an extention of the 2D potential theory
+        ' in which 2D airfoils do not introduce drag. This is arguable, but at least the  
+        ' correction does provide more consistent results, specially in the case of rotating 
+        ' wings where the incidence varies considerably.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ComputeLoads(StreamVelocity As Vector3,
                                 StreamRotation As Vector3,
                                 Density As Double,
@@ -255,139 +259,148 @@ Namespace AeroTools.Models.Aero.Components
             _SkinDragMoment.FromVectorProduct(CenterPoint, SkinDrag)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the chordwise link data from a binary stream.
-        ''' </summary>
-        Sub ReadBinary(ByRef Reader As BinaryReader, ByRef InRings As List(Of VortexRing), ByRef PolarData As PolarDatabase)
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the chordwise link data from a binary stream.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Sub ReadBinary(ByRef Stream As BinaryReader, ByRef InRings As List(Of VortexRing), ByRef PolarData As PolarDatabase)
             Try
                 ' Rings
                 '-----------------------------------
-                For I = 1 To Reader.ReadInt32
-                    Rings.Add(InRings(Reader.ReadInt32))
+                For I = 1 To Stream.ReadInt32
+                    Rings.Add(InRings(Stream.ReadInt32))
                 Next
 
                 ' Polar id
                 '-----------------------------------
-                Dim PolarId = New Guid(Reader.ReadString())
+                Dim PolarId = New Guid(Stream.ReadString())
                 Polars = PolarData.GetFamilyFromId(PolarId)
 
                 ' Geometric properties
                 '-----------------------------------
 
-                _Chord = Reader.ReadDouble
-                _Area = Reader.ReadDouble
+                _Chord = Stream.ReadDouble
+                _Area = Stream.ReadDouble
 
-                _ChordWiseVector.X = Reader.ReadDouble
-                _ChordWiseVector.Y = Reader.ReadDouble
-                _ChordWiseVector.Z = Reader.ReadDouble
+                _ChordWiseVector.X = Stream.ReadDouble
+                _ChordWiseVector.Y = Stream.ReadDouble
+                _ChordWiseVector.Z = Stream.ReadDouble
 
-                _CenterPoint.X = Reader.ReadDouble
-                _CenterPoint.Y = Reader.ReadDouble
-                _CenterPoint.Z = Reader.ReadDouble
+                _CenterPoint.X = Stream.ReadDouble
+                _CenterPoint.Y = Stream.ReadDouble
+                _CenterPoint.Z = Stream.ReadDouble
 
                 ' Forces and moments
                 '-----------------------------------
 
-                _Lift.X = Reader.ReadDouble
-                _Lift.Y = Reader.ReadDouble
-                _Lift.Z = Reader.ReadDouble
-                _LiftCoefficient = Reader.ReadDouble
+                _Lift.X = Stream.ReadDouble
+                _Lift.Y = Stream.ReadDouble
+                _Lift.Z = Stream.ReadDouble
+                _LiftCoefficient = Stream.ReadDouble
 
-                _InducedDrag.X = Reader.ReadDouble
-                _InducedDrag.Y = Reader.ReadDouble
-                _InducedDrag.Z = Reader.ReadDouble
-                _InducedDragCoefficient = Reader.ReadDouble
+                _InducedDrag.X = Stream.ReadDouble
+                _InducedDrag.Y = Stream.ReadDouble
+                _InducedDrag.Z = Stream.ReadDouble
+                _InducedDragCoefficient = Stream.ReadDouble
 
-                _SkinDrag.X = Reader.ReadDouble
-                _SkinDrag.Y = Reader.ReadDouble
-                _SkinDrag.Z = Reader.ReadDouble
-                _SkinDragCoefficient = Reader.ReadDouble
+                _SkinDrag.X = Stream.ReadDouble
+                _SkinDrag.Y = Stream.ReadDouble
+                _SkinDrag.Z = Stream.ReadDouble
+                _SkinDragCoefficient = Stream.ReadDouble
 
-                _LiftMoment.X = Reader.ReadDouble
-                _LiftMoment.Y = Reader.ReadDouble
-                _LiftMoment.Z = Reader.ReadDouble
+                _LiftMoment.X = Stream.ReadDouble
+                _LiftMoment.Y = Stream.ReadDouble
+                _LiftMoment.Z = Stream.ReadDouble
 
-                _InducedDragMoment.X = Reader.ReadDouble
-                _InducedDragMoment.Y = Reader.ReadDouble
-                _InducedDragMoment.Z = Reader.ReadDouble
+                _InducedDragMoment.X = Stream.ReadDouble
+                _InducedDragMoment.Y = Stream.ReadDouble
+                _InducedDragMoment.Z = Stream.ReadDouble
 
-                _SkinDragMoment.X = Reader.ReadDouble
-                _SkinDragMoment.Y = Reader.ReadDouble
-                _SkinDragMoment.Z = Reader.ReadDouble
+                _SkinDragMoment.X = Stream.ReadDouble
+                _SkinDragMoment.Y = Stream.ReadDouble
+                _SkinDragMoment.Z = Stream.ReadDouble
 
             Catch ex As Exception
                 Rings.Clear()
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the chordwise link data to a binary stream.
-        ''' </summary>
-        Sub WriteBinary(ByRef Writer As BinaryWriter)
+
+
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the chordwise link data to a binary stream.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Sub WriteBinary(ByRef Stream As BinaryWriter)
 
             ' Rings
             '-----------------------------------
-            Writer.Write(Rings.Count)
+            Stream.Write(Rings.Count)
 
             For Each Ring In Rings
-                Writer.Write(Ring.IndexL)
+                Stream.Write(Ring.IndexL)
             Next
 
             ' Polar id
             '-----------------------------------
             If Polars Is Nothing Then
-                Writer.Write(Guid.Empty.ToString)
+                Stream.Write(Guid.Empty.ToString)
             Else
-                Writer.Write(Polars.Id.ToString)
+                Stream.Write(Polars.Id.ToString)
             End If
 
             ' Geometric properties
             '-----------------------------------
 
-            Writer.Write(Chord)
-            Writer.Write(Area)
+            Stream.Write(Chord)
+            Stream.Write(Area)
 
-            Writer.Write(ChordWiseVector.X)
-            Writer.Write(ChordWiseVector.Y)
-            Writer.Write(ChordWiseVector.Z)
+            Stream.Write(ChordWiseVector.X)
+            Stream.Write(ChordWiseVector.Y)
+            Stream.Write(ChordWiseVector.Z)
 
-            Writer.Write(CenterPoint.X)
-            Writer.Write(CenterPoint.Y)
-            Writer.Write(CenterPoint.Z)
+            Stream.Write(CenterPoint.X)
+            Stream.Write(CenterPoint.Y)
+            Stream.Write(CenterPoint.Z)
 
             ' Forces and moments
             '-----------------------------------
 
-            Writer.Write(Lift.X)
-            Writer.Write(Lift.Y)
-            Writer.Write(Lift.Z)
-            Writer.Write(LiftCoefficient)
+            Stream.Write(Lift.X)
+            Stream.Write(Lift.Y)
+            Stream.Write(Lift.Z)
+            Stream.Write(LiftCoefficient)
 
-            Writer.Write(InducedDrag.X)
-            Writer.Write(InducedDrag.Y)
-            Writer.Write(InducedDrag.Z)
-            Writer.Write(InducedDragCoefficient)
+            Stream.Write(InducedDrag.X)
+            Stream.Write(InducedDrag.Y)
+            Stream.Write(InducedDrag.Z)
+            Stream.Write(InducedDragCoefficient)
 
-            Writer.Write(SkinDrag.X)
-            Writer.Write(SkinDrag.Y)
-            Writer.Write(SkinDrag.Z)
-            Writer.Write(SkinDragCoefficient)
+            Stream.Write(SkinDrag.X)
+            Stream.Write(SkinDrag.Y)
+            Stream.Write(SkinDrag.Z)
+            Stream.Write(SkinDragCoefficient)
 
-            Writer.Write(LiftMoment.X)
-            Writer.Write(LiftMoment.Y)
-            Writer.Write(LiftMoment.Z)
+            Stream.Write(LiftMoment.X)
+            Stream.Write(LiftMoment.Y)
+            Stream.Write(LiftMoment.Z)
 
-            Writer.Write(InducedDragMoment.X)
-            Writer.Write(InducedDragMoment.Y)
-            Writer.Write(InducedDragMoment.Z)
+            Stream.Write(InducedDragMoment.X)
+            Stream.Write(InducedDragMoment.Y)
+            Stream.Write(InducedDragMoment.Z)
 
-            Writer.Write(SkinDragMoment.X)
-            Writer.Write(SkinDragMoment.Y)
-            Writer.Write(SkinDragMoment.Z)
+            Stream.Write(SkinDragMoment.X)
+            Stream.Write(SkinDragMoment.Y)
+            Stream.Write(SkinDragMoment.Z)
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
+
 
     End Class
 

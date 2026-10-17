@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -27,56 +27,50 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace AeroTools.Models.Structural.Library.Nodes
 
-    ''' <summary>
-    ''' Structural node
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Structural node
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class StructuralNode
 
-        ''' <summary>
-        ''' The position of the node.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The position of the node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Position As Vector3
 
-        ''' <summary>
-        ''' The contrains (or stiffness)
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The contrains (or stiffness)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Contrains As Constrains
 
-        ''' <summary>
-        ''' The point load.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The point load.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Load As NodalLoad
 
-        ''' <summary>
-        ''' The displacement relative to the original position.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The displacement relative to the original position.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Displacement As NodalDisplacement
 
-        ''' <summary>
-        ''' The velocity of the node.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The velocity of the node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Velocity As NodalDisplacement
 
         Private _Index As Integer
 
-        ''' <summary>
-        ''' Node global index (used to build the finite element matrices).
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Node global index (used to build the finite element matrices).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Index As Integer
             Get
                 Return _Index
             End Get
         End Property
 
-        ''' <summary>
-        ''' Creates a new structural node
-        ''' </summary>
-        ''' <param name="Index">Global index</param>
-        ''' <remarks></remarks>
+        '==========================================================================================
+        ' Creates a new structural node
+        '==========================================================================================
         Public Sub New(ByVal Index As Integer)
             _Index = Index
             Position = New Vector3
@@ -85,7 +79,10 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             Contrains = New Constrains
             Load = New NodalLoad
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

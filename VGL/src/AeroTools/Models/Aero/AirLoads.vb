@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -24,135 +24,117 @@ Imports System.IO
 '-----------------------------------------------------------------------------
 Imports VGL.MathTools.Algebra.EuclideanSpace
 
-'#############################################################################
+'##################################################################################################
 ' Unit: AirLoads
 '
 ' This unit provides a declaration of air loads.
-'#############################################################################
+'##################################################################################################
 Namespace AeroTools.Models.Aero
 
-    ''' <summary>
-    ''' Gathers the resultants of aerodynamic forces per type. 
-    ''' All forces are normalized by normalized by qS (using the properties Area and DynamicPressure).
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////////
+    ' Gathers the resultants of aerodynamic forces per type. 
+    ' All forces are normalized by normalized by qS (using the properties Area and DynamicPressure).
+    '//////////////////////////////////////////////////////////////////////////////////////////////
     Public Class AirLoads
 
-        ' Related data
-        '------------------------------------------
-
-        ''' <summary>
-        ''' The reference area (the default value is 1.0) [m²].
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The reference area (the default value is 1.0).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Area As Double = 1.0
 
-        ''' <summary>
-        ''' The reference length (the default value is 1.0) [m].
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The reference length (the default value is 1.0).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Length As Double = 1.0
 
-        ''' <summary>
-        ''' The reference dynamic pressure [Pa].
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The reference dynamic pressure [Pa].
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property DynamicPressure As Double = 0.0
 
-        ' Total loads
-        '------------------------------------------
-
-        ''' <summary>
-        ''' The force.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The total force.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Force As New Vector3
 
-        ''' <summary>
-        ''' The moment about the origin.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The total moment about the origin.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Moment As New Vector3
 
-        ' Force and moment components classified by their nature
-        ' (Units are shown in international system)
-        '-------------------------------------------------------
-
-        ''' <summary>
-        ''' The lift force from the slender panels [N]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The lift force from the slender panels [N]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property LiftForce As New Vector3
 
-        ''' <summary>
-        ''' The lift moment about the origin from the slender panels [Nm]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The lift moment about the origin from the slender panels [Nm]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property LiftMoment As New Vector3
 
-        ''' <summary>
-        ''' The induced drag force from the slender panels [N]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The induced drag force from the slender panels [N]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property InducedDragForce As New Vector3
 
-        ''' <summary>
-        ''' The induced drag moment about the origin from the slender panels [Nm]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The induced drag moment about the origin from the slender panels [Nm]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property InducedDragMoment As New Vector3
 
-        ''' <summary>
-        ''' The skin drag force from the slender panels extracted from the polar 
-        ''' curves using the lift coefficient and the local Reynolds number [N].
-        ''' There is an option to include here the body skin drag using a very 
-        ''' simplistic model (under development).
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The skin drag force from the slender panels extracted from the polar 
+        ' curves using the lift coefficient and the local Reynolds number [N].
+        ' There is an option to include here the body skin drag using a very 
+        ' simplistic model (under development).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SkinDragForce As New Vector3
 
-        ''' <summary>
-        ''' The skin drag moment about the origin from the slender panels [Nm]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The skin drag moment about the origin from the slender panels [Nm]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SkinDragMoment As New Vector3
 
-        ''' <summary>
-        ''' The force from the closed surface panels [Nm]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The force from the closed surface panels [Nm]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property BodyForce As New Vector3
 
-        ''' <summary>
-        ''' The body moment about the origin from the closed surface panels [Nm]
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The body moment about the origin from the closed surface panels [Nm]
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property BodyMoment As New Vector3
 
-        ' Classic dimensionless force components
-        '------------------------------------------
-
-        ''' <summary>
-        ''' The lift coefficient.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The lift coefficient.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property LiftCoefficient As Double
 
-        ''' <summary>
-        ''' The induced drag coefficient.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The induced drag coefficient.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property InducedDragCoefficient As Double
 
-        ''' <summary>
-        ''' The skin drag coefficient.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The skin drag coefficient.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SkinDragCoefficient As Double
 
-        ''' <summary>
-        ''' The normal incidence angle
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The normal incidence angle
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Alfa As Double
 
-        ''' <summary>
-        ''' The lateral incidence angle
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The lateral incidence angle
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Beta As Double
 
-        ''' <summary>
-        ''' Adds the given load scaled by the surface.
-        ''' </summary>
-        ''' <param name="Airloads"></param>
+
+
+        '==========================================================================================
+        ' Adds the given load scaled by the surface.
+        '==========================================================================================
         Public Sub Add(Airloads As AirLoads)
 
             Force.Add(Airloads.Force)
@@ -171,10 +153,13 @@ Namespace AeroTools.Models.Aero
             BodyMoment.Add(Airloads.BodyMoment)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Clears the airloads to zero.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Clears the airloads to zero.
+        '==========================================================================================
         Public Sub Clear()
 
             Force.SetToCero()
@@ -197,11 +182,13 @@ Namespace AeroTools.Models.Aero
             BodyMoment.SetToCero()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Applies the transformation to all vectors
-        ''' </summary>
-        ''' <param name="Base"></param>
+
+
+        '==========================================================================================
+        ' Applies the transformation to all vectors
+        '==========================================================================================
         Public Sub Transform(Base As Base3)
 
             Force.Transform(Base)
@@ -220,11 +207,13 @@ Namespace AeroTools.Models.Aero
             BodyMoment.Transform(Base)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Applies the anti transformation to all vectors
-        ''' </summary>
-        ''' <param name="Base"></param>
+
+
+        '==========================================================================================
+        ' Applies the anti transformation to all vectors
+        '==========================================================================================
         Public Sub AntiTransform(Base As Base3)
 
             Force.AntiTransform(Base)
@@ -243,123 +232,130 @@ Namespace AeroTools.Models.Aero
             BodyMoment.AntiTransform(Base)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the airloads data to a binary stream
-        ''' </summary>
-        ''' <param name="w"></param>
-        Public Sub WriteBinary(ByRef w As BinaryWriter)
 
-            w.Write(Force.X)
-            w.Write(Force.Y)
-            w.Write(Force.Z)
 
-            w.Write(Moment.X)
-            w.Write(Moment.Y)
-            w.Write(Moment.Z)
+        '==========================================================================================
+        ' Writes the airloads data to a binary stream
+        '==========================================================================================
+        Public Sub WriteBinary(ByRef Stream As BinaryWriter)
 
-            w.Write(LiftCoefficient)
-            w.Write(InducedDragCoefficient)
-            w.Write(SkinDragCoefficient)
+            Stream.Write(Force.X)
+            Stream.Write(Force.Y)
+            Stream.Write(Force.Z)
 
-            w.Write(LiftForce.X)
-            w.Write(LiftForce.Y)
-            w.Write(LiftForce.Z)
+            Stream.Write(Moment.X)
+            Stream.Write(Moment.Y)
+            Stream.Write(Moment.Z)
 
-            w.Write(LiftMoment.X)
-            w.Write(LiftMoment.Y)
-            w.Write(LiftMoment.Z)
+            Stream.Write(LiftCoefficient)
+            Stream.Write(InducedDragCoefficient)
+            Stream.Write(SkinDragCoefficient)
 
-            w.Write(InducedDragForce.X)
-            w.Write(InducedDragForce.Y)
-            w.Write(InducedDragForce.Z)
+            Stream.Write(LiftForce.X)
+            Stream.Write(LiftForce.Y)
+            Stream.Write(LiftForce.Z)
 
-            w.Write(InducedDragMoment.X)
-            w.Write(InducedDragMoment.Y)
-            w.Write(InducedDragMoment.Z)
+            Stream.Write(LiftMoment.X)
+            Stream.Write(LiftMoment.Y)
+            Stream.Write(LiftMoment.Z)
 
-            w.Write(SkinDragForce.X)
-            w.Write(SkinDragForce.Y)
-            w.Write(SkinDragForce.Z)
+            Stream.Write(InducedDragForce.X)
+            Stream.Write(InducedDragForce.Y)
+            Stream.Write(InducedDragForce.Z)
 
-            w.Write(SkinDragMoment.X)
-            w.Write(SkinDragMoment.Y)
-            w.Write(SkinDragMoment.Z)
+            Stream.Write(InducedDragMoment.X)
+            Stream.Write(InducedDragMoment.Y)
+            Stream.Write(InducedDragMoment.Z)
 
-            w.Write(BodyForce.X)
-            w.Write(BodyForce.Y)
-            w.Write(BodyForce.Z)
+            Stream.Write(SkinDragForce.X)
+            Stream.Write(SkinDragForce.Y)
+            Stream.Write(SkinDragForce.Z)
 
-            w.Write(BodyMoment.X)
-            w.Write(BodyMoment.Y)
-            w.Write(BodyMoment.Z)
+            Stream.Write(SkinDragMoment.X)
+            Stream.Write(SkinDragMoment.Y)
+            Stream.Write(SkinDragMoment.Z)
 
-            w.Write(Area)
-            w.Write(Length)
-            w.Write(DynamicPressure)
-            w.Write(Alfa)
-            w.Write(Beta)
+            Stream.Write(BodyForce.X)
+            Stream.Write(BodyForce.Y)
+            Stream.Write(BodyForce.Z)
 
-        End Sub
+            Stream.Write(BodyMoment.X)
+            Stream.Write(BodyMoment.Y)
+            Stream.Write(BodyMoment.Z)
 
-        ''' <summary>
-        ''' Reads the airloads data from a binary stream.
-        ''' </summary>
-        ''' <param name="w"></param>
-        Public Sub ReadBinary(ByRef r As System.IO.BinaryReader)
-
-            Force.X = r.ReadDouble
-            Force.Y = r.ReadDouble
-            Force.Z = r.ReadDouble
-
-            Moment.X = r.ReadDouble
-            Moment.Y = r.ReadDouble
-            Moment.Z = r.ReadDouble
-
-            LiftCoefficient = r.ReadDouble
-            InducedDragCoefficient = r.ReadDouble
-            SkinDragCoefficient = r.ReadDouble
-
-            LiftForce.X = r.ReadDouble
-            LiftForce.Y = r.ReadDouble
-            LiftForce.Z = r.ReadDouble
-
-            LiftMoment.X = r.ReadDouble
-            LiftMoment.Y = r.ReadDouble
-            LiftMoment.Z = r.ReadDouble
-
-            InducedDragForce.X = r.ReadDouble
-            InducedDragForce.Y = r.ReadDouble
-            InducedDragForce.Z = r.ReadDouble
-
-            InducedDragMoment.X = r.ReadDouble
-            InducedDragMoment.Y = r.ReadDouble
-            InducedDragMoment.Z = r.ReadDouble
-
-            SkinDragForce.X = r.ReadDouble
-            SkinDragForce.Y = r.ReadDouble
-            SkinDragForce.Z = r.ReadDouble
-
-            SkinDragMoment.X = r.ReadDouble
-            SkinDragMoment.Y = r.ReadDouble
-            SkinDragMoment.Z = r.ReadDouble
-
-            BodyForce.X = r.ReadDouble
-            BodyForce.Y = r.ReadDouble
-            BodyForce.Z = r.ReadDouble
-
-            BodyMoment.X = r.ReadDouble
-            BodyMoment.Y = r.ReadDouble
-            BodyMoment.Z = r.ReadDouble
-
-            Area = r.ReadDouble
-            Length = r.ReadDouble
-            DynamicPressure = r.ReadDouble
-            Alfa = r.ReadDouble
-            Beta = r.ReadDouble
+            Stream.Write(Area)
+            Stream.Write(Length)
+            Stream.Write(DynamicPressure)
+            Stream.Write(Alfa)
+            Stream.Write(Beta)
 
         End Sub
+        '------------------------------------------------------------------------------------------
+
+
+
+        '==========================================================================================
+        ' Reads the airloads data from a binary stream.
+        '==========================================================================================
+        Public Sub ReadBinary(ByRef Stream As System.IO.BinaryReader)
+
+            Force.X = Stream.ReadDouble
+            Force.Y = Stream.ReadDouble
+            Force.Z = Stream.ReadDouble
+
+            Moment.X = Stream.ReadDouble
+            Moment.Y = Stream.ReadDouble
+            Moment.Z = Stream.ReadDouble
+
+            LiftCoefficient = Stream.ReadDouble
+            InducedDragCoefficient = Stream.ReadDouble
+            SkinDragCoefficient = Stream.ReadDouble
+
+            LiftForce.X = Stream.ReadDouble
+            LiftForce.Y = Stream.ReadDouble
+            LiftForce.Z = Stream.ReadDouble
+
+            LiftMoment.X = Stream.ReadDouble
+            LiftMoment.Y = Stream.ReadDouble
+            LiftMoment.Z = Stream.ReadDouble
+
+            InducedDragForce.X = Stream.ReadDouble
+            InducedDragForce.Y = Stream.ReadDouble
+            InducedDragForce.Z = Stream.ReadDouble
+
+            InducedDragMoment.X = Stream.ReadDouble
+            InducedDragMoment.Y = Stream.ReadDouble
+            InducedDragMoment.Z = Stream.ReadDouble
+
+            SkinDragForce.X = Stream.ReadDouble
+            SkinDragForce.Y = Stream.ReadDouble
+            SkinDragForce.Z = Stream.ReadDouble
+
+            SkinDragMoment.X = Stream.ReadDouble
+            SkinDragMoment.Y = Stream.ReadDouble
+            SkinDragMoment.Z = Stream.ReadDouble
+
+            BodyForce.X = Stream.ReadDouble
+            BodyForce.Y = Stream.ReadDouble
+            BodyForce.Z = Stream.ReadDouble
+
+            BodyMoment.X = Stream.ReadDouble
+            BodyMoment.Y = Stream.ReadDouble
+            BodyMoment.Z = Stream.ReadDouble
+
+            Area = Stream.ReadDouble
+            Length = Stream.ReadDouble
+            DynamicPressure = Stream.ReadDouble
+            Alfa = Stream.ReadDouble
+            Beta = Stream.ReadDouble
+
+        End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

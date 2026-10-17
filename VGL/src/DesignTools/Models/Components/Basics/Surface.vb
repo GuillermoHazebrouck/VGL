@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -33,55 +33,49 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace DesignTools.Models.Components.Basics
 
-    ''' <summary>
-    ''' Basic definition of a model surface. 
-    ''' All model surfaces in the library must inherit from this class.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Basic definition of a model surface. 
+    ' All model surfaces in the library must inherit from this class.
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <remarks></remarks>
     Public MustInherit Class Surface
 
         Implements IOperational
 
         Implements ISelectable
 
-        ''' <summary>
-        ''' Surface identifier.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Surface identifier.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Id As Guid
 
-        ''' <summary>
-        ''' Surface name.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Surface name.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Name As String
 
-        ''' <summary>
-        ''' The inertial properties of this model.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The inertial properties of this model.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Inertia As InertialProperties
 
-        ''' <summary>
-        ''' Mesh.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Mesh As Mesh
 
-        ''' <summary>
-        ''' Number of segments in the mesh.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Number of segments in the mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property NumberOfSegments As Integer
             Get
                 Return Mesh.Lattice.Count
             End Get
         End Property
 
-        ''' <summary>
-        ''' Number of nodes in the mesh.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Number of nodes in the mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property NumberOfNodes As Integer
             Get
                 If Not IsNothing(Mesh.Nodes) Then
@@ -92,10 +86,9 @@ Namespace DesignTools.Models.Components.Basics
             End Get
         End Property
 
-        ''' <summary>
-        ''' Number of panels in the mesh.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Number of panels in the mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property NumberOfPanels As Integer
             Get
                 If Not IsNothing(Mesh.Panels) Then
@@ -106,60 +99,51 @@ Namespace DesignTools.Models.Components.Basics
             End Get
         End Property
 
-        ''' <summary>
-        ''' Surface visual properties.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Surface visual properties.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property VisualProperties As VisualProperties
 
-        ''' <summary>
-        ''' Indicates if the surface participates in the calculation model.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the surface participates in the calculation model.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property IncludeInCalculation As Boolean = False
 
-        ''' <summary>
-        ''' Indicate if the GUI has to block the content of this surface.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicate if the GUI has to block the content of this surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property LockContent As Boolean = True
 
-        ''' <summary>
-        ''' Position of the surface in the global coordinates system.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Position of the surface in the global coordinates system.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Position As New Vector3
 
-        ''' <summary>
-        ''' Center of rotation of the surface in the local coordinates system.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Center of rotation of the surface in the local coordinates system.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property CenterOfRotation As New Vector3
 
-        ''' <summary>
-        ''' Orientation of the surface.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Orientation of the surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Orientation As New OrientationAngles
 
-        ''' <summary>
-        ''' Scale of this surface.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Scale of this surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property SizeScale As Double = 1.0
 
 #Region " Operations "
 
-        ''' <summary>
-        ''' Local directions.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Local directions.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property LocalDirections As New Base3
 
-        ''' <summary>
-        ''' Moves the origin of the local coordinates to a given point.
-        ''' </summary>
-        ''' <param name="Vector"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Moves the origin of the local coordinates to a given point.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overridable Sub MoveTo(ByVal Vector As Vector3) Implements IOperational.MoveTo
 
             Position.X = Vector.X
@@ -169,12 +153,11 @@ Namespace DesignTools.Models.Components.Basics
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Changes the orientation of the surface.
-        ''' </summary>
-        ''' <param name="Point"></param>
-        ''' <param name="Ori"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Changes the orientation of the surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overridable Sub Orientate(ByVal Point As Vector3, ByVal Ori As OrientationAngles) Implements IOperational.Orientate
 
             Orientation.Angle1 = Ori.Angle1
@@ -188,11 +171,11 @@ Namespace DesignTools.Models.Components.Basics
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Scales the coordinates.
-        ''' </summary>
-        ''' <param name="Scale"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Scales the coordinates.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overridable Sub Scale(ByVal Scale As Double) Implements IOperational.Scale
 
             SizeScale = Scale
@@ -200,34 +183,28 @@ Namespace DesignTools.Models.Components.Basics
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Align the surface.
-        ''' </summary>
-        ''' <param name="P1"></param>
-        ''' <param name="P2"></param>
-        ''' <param name="P3"></param>
-        ''' <param name="P4"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Align the surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overridable Sub Align(ByVal P1 As Vector3, ByVal P2 As Vector3, ByVal P3 As Vector3, ByVal P4 As Vector3) Implements IOperational.Align
 
             Mesh.Align()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
-        ''' <summary>
-        ''' Indicates if the surface is currently selected.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the surface is currently selected.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Active As Boolean = False Implements ISelectable.Active
 
-        ''' <summary>
-        ''' Unselects all nodal points.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Unselects all nodal points.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub UnselectAll() Implements ISelectable.UnselectAll
 
             For Each Node In Mesh.Nodes
@@ -239,23 +216,24 @@ Namespace DesignTools.Models.Components.Basics
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Clones the surface
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Clones the surface
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public MustOverride Function Clone() As Surface
 
 #Region " Meshing "
 
-        ''' <summary>
-        ''' Generates the mesh.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates the mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overridable Sub GenerateMesh()
 
             RaiseEvent MeshUpdated()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Event MeshUpdated()
 
@@ -263,9 +241,9 @@ Namespace DesignTools.Models.Components.Basics
 
 #Region " IO "
 
-        ''' <summary>
-        ''' Converts the boolean to a character '*' or '-'
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Converts the boolean to a character '*' or '-'
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function GetCharFlag(Flag As Boolean) As Char
 
             If Flag Then
@@ -276,23 +254,20 @@ Namespace DesignTools.Models.Components.Basics
 
         End Function
 
-        ''' <summary>
-        ''' Writes the surface to an XML node
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the surface to an XML node
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public MustOverride Sub WriteToXML(ByRef writes As XmlWriter)
 
-        ''' <summary>
-        ''' Reads the surface from an XML node
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the surface from an XML node
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public MustOverride Sub ReadFromXML(ByRef reader As XmlReader)
 
-        ''' <summary>
-        ''' Writes an ASCII STL file containing the model mesh.
-        ''' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
-        ''' </summary>
-        ''' <param name="FilePath">The target file</param>
-        ''' <param name="Append">Indicates if the information must be added to the given file without the solid header</param>
-        ''' <param name="Transformation">The linear transformation if necessary (or nothing)</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes an ASCII STL file containing the model mesh.
+        ' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overridable Sub ExportStlFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             Dim FileId As Integer = FreeFile()
@@ -385,14 +360,12 @@ Namespace DesignTools.Models.Components.Basics
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes a connectivity file containing the model mesh in native VGL format.
-        ''' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
-        ''' </summary>
-        ''' <param name="FilePath">The target file</param>
-        ''' <param name="Append">Indicates if the information must be added to the given file without the surface header</param>
-        ''' <param name="Transformation">The linear transformation if necessary (or Nothing)</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes a connectivity file containing the model mesh in native VGL format.
+        ' Note that this method can be overriden by classes inheriting Surface, so this is probably not the final implementation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overridable Sub ExportNativeFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             Dim FileId As Integer = FreeFile()
@@ -472,14 +445,12 @@ Namespace DesignTools.Models.Components.Basics
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 
-        ''' <summary>
-        ''' Writes a the surface mesh in a format that can be directly ploted in Scilab using plot3d2 function
-        ''' </summary>
-        ''' <param name="FilePath">The target file</param>
-        ''' <param name="Append">Indicates if the information must be added to the given file</param>
-        ''' <param name="Transformation">The linear transformation if necessary (or Nothing)</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes a the surface mesh in a format that can be directly ploted in Scilab using plot3d2 function
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ExportScilabFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             Dim FileId As Integer = FreeFile()
@@ -561,6 +532,7 @@ Namespace DesignTools.Models.Components.Basics
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 

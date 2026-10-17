@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -31,14 +31,14 @@ Namespace AeroTools.Solver
 
     Partial Public Class Solver
 
-        ''' <summary>
-        ''' This method simulates an experiment where the model is rigidly 
-        ''' attached to the inertial reference frame and the flow is
-        ''' suddently started for a given numer of time steps. If the
-        ''' number of steps is sufficiently high, the steady state
-        ''' will be reached.
-        ''' Loads are only calculated at the last time step.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' This method simulates an experiment where the model is rigidly 
+        ' attached to the inertial reference frame and the flow is
+        ' suddently started for a given numer of time steps. If the
+        ' number of steps is sufficiently high, the steady state
+        ' will be reached.
+        ' Loads are only calculated at the last time step.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub SteadyStateTransit(ByVal ReferenceFilePath As String)
 
             RaiseEvent PushMessage("Starting steady analysis")
@@ -219,6 +219,7 @@ Namespace AeroTools.Solver
             RaiseEvent CalculationDone()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

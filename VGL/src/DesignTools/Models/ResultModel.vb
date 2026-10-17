@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -36,60 +36,60 @@ Namespace DesignTools.Models
 
     End Enum
 
-    ''' <summary>
-    ''' Represents the latties at a single transit state
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents the latties at a single transit state
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ResultFrame
 
-        ''' <summary>
-        ''' The model
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The model
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property Model As ResultContainer
 
-        ''' <summary>
-        ''' The wakes shed from the model
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The wakes shed from the model
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property Wakes As ResultContainer
 
-        ''' <summary>
-        ''' The stream velocity for this frame
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The stream velocity for this frame
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property StreamVelocity As New Vector3
 
-        ''' <summary>
-        ''' The stream velocity for this frame
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The stream velocity for this frame
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property StreamRotation As New Vector3
 
-        ''' <summary>
-        ''' Contains the airloads of each component
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Contains the airloads of each component
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property TotalAirLoads As New AirLoads
 
-        ''' <summary>
-        ''' The airloads for each component of the model
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The airloads for each component of the model
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property PartialAirLoads As New List(Of PartialAirLoads)
 
-        ''' <summary>
-        ''' The orientation of the model in the inertial reference frame.
-        ''' This property is assigned in free flight.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The orientation of the model in the inertial reference frame.
+        ' This property is assigned in free flight.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property Orientation As New OrientationAngles
 
-        ''' <summary>
-        ''' The position the model respect to the original position in the inertial reference frame.
-        ''' This property is assigned in free flight.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The position the model respect to the original position in the inertial reference frame.
+        ' This property is assigned in free flight.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property Position As New Vector3
 
-        ''' <summary>
-        ''' The kind of frame
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The kind of frame
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property FrameKind As ResultFrameKinds
 
         Public Sub New(Kind As ResultFrameKinds,
@@ -137,69 +137,71 @@ Namespace DesignTools.Models
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 
-    ''' <summary>
-    ''' Stores results for a given time step.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Stores results for a given time step.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class ResultModel
 
-        ''' <summary>
-        ''' Creates a new empty result model
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a new empty result model
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
             _Frames = New List(Of ResultFrame)
             _Settings = New SimulationSettings
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Name of the model
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Name of the model
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Name As String
 
-        ''' <summary>
-        ''' The active transit
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The active transit
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ActiveFrame As ResultFrame
 
-        ''' <summary>
-        ''' Contains all the transit states
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Contains all the transit states
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property Frames As List(Of ResultFrame)
 
-        ''' <summary>
-        ''' The visual properties for the model
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The visual properties for the model
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private ModelVisuals As New VisualProperties(ComponentTypes.etResultContainer)
 
-        ''' <summary>
-        ''' ''' The visual properties for the wakes
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' ' The visual properties for the wakes
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private WakesVisuals As New VisualProperties(ComponentTypes.etResultContainer)
 
-        ''' <summary>
-        ''' The simulation settings that where used for this results.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The simulation settings that where used for this results.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property Settings As SimulationSettings
 
-        ''' <summary>
-        ''' The collection of polars that where used for the analysis
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The collection of polars that where used for the analysis
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property PolarDatabase As PolarDatabase
 
-        ''' <summary>
-        ''' The simulated motion of the aircraft (if any)
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The simulated motion of the aircraft (if any)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property FreeMotion As FreeMotionResults
 
-        ''' <summary>
-        ''' The modal response of the wings (if any)
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The modal response of the wings (if any)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property AeroelasticResult As AeroelasticResults
 
         Public Sub Clear()
@@ -212,10 +214,11 @@ Namespace DesignTools.Models
             _ActiveFrame = Nothing
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Sets the lattices on the result object
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Sets the lattices on the result object
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub LoadFromDirectory(DirectoryPath As String)
 
             Frames.Clear()
@@ -450,12 +453,13 @@ Namespace DesignTools.Models
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads the dynamic modes using the given lattices and structural links
-        ''' </summary>
-        ''' <param name="Lattices"></param>
-        ''' <param name="StructuralLinks"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the dynamic modes using the given lattices and structural links
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Lattices"></param>
+        ' <param name="StructuralLinks"></param>
         Private Sub LoadDynamicModes(ByRef Lattices As List(Of BoundedLattice),
                                     ByRef StructuralLinks As List(Of StructuralLink))
 
@@ -563,11 +567,12 @@ Namespace DesignTools.Models
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads all the lattices in a new frame
-        ''' </summary>
-        ''' <param name="Lattices"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads all the lattices in a new frame
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="Lattices"></param>
         Private Sub LoadLatticesToFrame(ByRef Frame As ResultFrame,
                                         ByRef Lattices As List(Of BoundedLattice))
 
@@ -757,6 +762,7 @@ Namespace DesignTools.Models
             Frame.Wakes.VisualProperties.ShowNodes = True
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 
@@ -800,53 +806,53 @@ Namespace DesignTools.Models
 
 #Region "Partial airloads"
 
-    ''' <summary>
-    ''' Describes the loads of a single component of the model
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Describes the loads of a single component of the model
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class PartialAirLoads
 
-        ''' <summary>
-        ''' The name of the component
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The name of the component
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Name As String = "Lattice"
 
-        ''' <summary>
-        ''' Contains the airloads for each component
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Contains the airloads for each component
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property AirLoads As New AirLoads
 
-        ''' <summary>
-        ''' All lift vectors
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' All lift vectors
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property LiftVectors As New List(Of FixedVector)
 
-        ''' <summary>
-        ''' The maximum lift
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The maximum lift
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property MaximumLift As Double = 0
 
-        ''' <summary>
-        ''' All induced drag vectors
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' All induced drag vectors
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property InducedDragVectors As New List(Of FixedVector)
 
-        ''' <summary>
-        ''' The maximum induced drag
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The maximum induced drag
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property MaximumInducedDrag As Double = 0
 
-        ''' <summary>
-        ''' All skin drag vectors
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' All skin drag vectors
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property SkinDragVectors As New List(Of FixedVector)
 
-        ''' <summary>
-        ''' The maximum skin drag
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The maximum skin drag
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property MaximumSkinDrag As Double = 0
 
     End Class
@@ -860,6 +866,7 @@ Namespace DesignTools.Models
         Public Sub New(FilePath As String)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

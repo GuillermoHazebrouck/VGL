@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -54,9 +54,9 @@ Namespace DesignTools.Models.Components
 
         Inherits Surface
 
-        ''' <summary>
-        ''' Initializes the propeller using default values
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Initializes the propeller using default values
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
 
             VisualProperties = New VisualProperties(ComponentTypes.etPropeller)
@@ -81,86 +81,85 @@ Namespace DesignTools.Models.Components
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Position of the local origin in global coordinates.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Position of the local origin in global coordinates.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property LocalOrigin As New Vector3
 
-        ''' <summary>
-        ''' Cached points used to represent the directions of the local axes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Cached points used to represent the directions of the local axes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property MainDirections As New Base3
 
-        ''' <summary>
-        ''' Index of polar curve to be loaded.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Index of polar curve to be loaded.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <value></value>
+        ' <returns></returns>
         Public Property PolarId As Guid
 
-        ''' <summary>
-        ''' Local polar curve.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Local polar curve.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property PolarFamiliy As PolarFamily
 
 #Region " Parametric geometry "
 
-        ''' <summary>
-        ''' The diameter of the propeller
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The diameter of the propeller
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Diameter As Double
 
-        ''' <summary>
-        ''' The collective pitch angle
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The collective pitch angle
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property CollectivePitch As Double
 
-        ''' <summary>
-        ''' The bending along the blade axis
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The bending along the blade axis
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property AxisDeflection As Double
 
-        ''' <summary>
-        ''' The position of the axis relative to the leading edge
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The position of the axis relative to the leading edge
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property AxisPosition As Double
 
-        ''' <summary>
-        ''' Index of polar curve to be loaded.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Index of polar curve to be loaded.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property CamberLineId As Guid
 
-        ''' <summary>
-        ''' The number of blades
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The number of blades
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property NumberOfBlades As Integer
 
-        ''' <summary>
-        '''  The number of panels along the span
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        '  The number of panels along the span
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property NumberOfSpanPanels As Integer
 
-        ''' <summary>
-        ''' The number of panels along the chord
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The number of panels along the chord
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property NumberOfChordPanels As Integer
 
-        ''' <summary>
-        ''' The wake cutting step
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The wake cutting step
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property CuttingStep As Integer
 
-        ''' <summary>
-        ''' The nodes describing the twist of the blade along the normalized coordinate
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The nodes describing the twist of the blade along the normalized coordinate
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property TwistFunction As New List(Of Vector2)
 
-        ''' <summary>
-        ''' Returns the twist at an specific normalized coordinate (rande from 0 to 1)
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns the twist at an specific normalized coordinate (rande from 0 to 1)
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Function Twist(X As Double) As Double
 
             For i = 0 To TwistFunction.Count - 2
@@ -177,14 +176,14 @@ Namespace DesignTools.Models.Components
 
         End Function
 
-        ''' <summary>
-        ''' The nodes describing the chord of the blade along the normalized coordinate
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The nodes describing the chord of the blade along the normalized coordinate
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property ChordFunction As New List(Of Vector2)
 
-        ''' <summary>
-        ''' Returns the twist at an specific normalized coordinate (rande from 0 to 1)
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns the twist at an specific normalized coordinate (rande from 0 to 1)
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Function Chord(X As Double) As Double
 
             For i = 0 To ChordFunction.Count - 2
@@ -205,9 +204,9 @@ Namespace DesignTools.Models.Components
 
 #Region " 3D model and vortices generation "
 
-        ''' <summary>
-        ''' Generates the lifting surface mesh based on the geometrical parameters.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates the lifting surface mesh based on the geometrical parameters.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Sub GenerateMesh()
 
             Mesh.Nodes.Clear()
@@ -325,13 +324,14 @@ Namespace DesignTools.Models.Components
             Mesh.GenerateLattice()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
-        ''' <summary>
-        ''' Loads the geometry of the propeller from a text file
-        ''' The format of each line must be: r/R c/R beta
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Loads the geometry of the propeller from a text file
+        ' The format of each line must be: r/R c/R beta
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub LoadFromFile(FilePath As String)
 
             If File.Exists(FilePath) Then
@@ -372,19 +372,20 @@ Namespace DesignTools.Models.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates an identical propeller
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates an identical propeller
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Function Clone() As Surface
 
             Throw New NotImplementedException()
 
         End Function
 
-        ''' <summary>
-        ''' Encodes the function as a string
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Encodes the function as a string
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Function EncodePoints(Points As List(Of Vector2)) As String
 
             Dim Result As String = ""
@@ -399,9 +400,9 @@ Namespace DesignTools.Models.Components
 
         End Function
 
-        ''' <summary>
-        ''' Encodes the function as a string
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Encodes the function as a string
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Sub DecodePoints(Data As String, ByRef Points As List(Of Vector2))
 
             Points.Clear()
@@ -426,10 +427,11 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the data to an XML node
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the data to an XML node
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Sub WriteToXML(ByRef Writer As XmlWriter)
 
             ' Identity
@@ -497,10 +499,11 @@ Namespace DesignTools.Models.Components
             Writer.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the data from an XML node
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the data from an XML node
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Sub ReadFromXML(ByRef Reader As XmlReader)
 
             While Reader.Read
@@ -570,6 +573,7 @@ Namespace DesignTools.Models.Components
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

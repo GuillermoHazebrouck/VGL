@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -23,18 +23,19 @@
 '#############################################################################
 Namespace AeroTools.Models.Structural.Library.Nodes
 
-    ''' <summary>
-    ''' Represents a nodal displacement.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a nodal displacement.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class NodalDisplacement
 
-        ''' <summary>
-        ''' Contains the nodal displacements (Dx, Dy, Dz, Rx, Ry, Rz)
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Contains the nodal displacements (Dx, Dy, Dz, Rx, Ry, Rz)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Values(5) As Double
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Dx As Double
             Set(ByVal value As Double)
                 Values(0) = value
@@ -44,6 +45,9 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Dy As Double
             Set(ByVal value As Double)
                 Values(1) = value
@@ -53,6 +57,9 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Dz As Double
             Set(ByVal value As Double)
                 Values(2) = value
@@ -62,6 +69,9 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Rx As Double
             Set(ByVal value As Double)
                 Values(3) = value
@@ -71,6 +81,9 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Ry As Double
             Set(ByVal value As Double)
                 Values(4) = value
@@ -80,6 +93,9 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             End Get
         End Property
 
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        '
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Rz As Double
             Set(ByVal value As Double)
                 Values(5) = value
@@ -89,6 +105,11 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             End Get
         End Property
 
+
+        
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Clear()
             Dx = 0.0#
             Dy = 0.0#
@@ -97,13 +118,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             Ry = 0.0#
             Rz = 0.0#
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates the virtual work of this displacement with the given load
-        ''' </summary>
-        ''' <param name="Load">Nodal load</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Calculates the virtual work of this displacement with the given load
+        '==========================================================================================
         Public Function VirtualWork(ByVal Load As NodalLoad) As Double
 
             Dim Work As Double = 0.0#
@@ -114,7 +135,10 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             Return Work
 
         End Function
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

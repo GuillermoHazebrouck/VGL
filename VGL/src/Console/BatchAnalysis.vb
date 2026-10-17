@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
+'Copyright (C) 2026 Guillermo Hazebrouck (guillermo.hazebrouck@VGL.org)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -30,12 +30,12 @@ Imports VGL.DesignTools.Models.Components.Basics
 
 Module BatchAnalysis
 
-    ''' <summary>
-    ''' Performs a series of steady analysis between Alfa1 and Alfa2 using the AlfaS in between.
-    ''' </summary>
-    ''' <param name="Alfa1">The initial incidence angle.</param>
-    ''' <param name="Alfa2">The final incidence angle.</param>
-    ''' <param name="AlfaS">The step.</param>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Performs a series of steady analysis between Alfa1 and Alfa2 using the AlfaS in between.
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Alfa1">The initial incidence angle.</param>
+    ' <param name="Alfa2">The final incidence angle.</param>
+    ' <param name="AlfaS">The step.</param>
     Public Sub AlfaScan(Alfa1 As Double,
                         Alfa2 As Double,
                         AlfaS As Double)
@@ -116,13 +116,14 @@ Module BatchAnalysis
         FileClose(FileId)
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Performs a series of steady analysis between Beta1 and Beta2 using the BetaS in between.
-    ''' </summary>
-    ''' <param name="Beta1">The initial side slip angle.</param>
-    ''' <param name="Beta2">The final side slip angle.</param>
-    ''' <param name="BetaS">The step.</param>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Performs a series of steady analysis between Beta1 and Beta2 using the BetaS in between.
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Beta1">The initial side slip angle.</param>
+    ' <param name="Beta2">The final side slip angle.</param>
+    ' <param name="BetaS">The step.</param>
     Public Sub BetaScan(Alfa0 As Double,
                         Beta1 As Double,
                         Beta2 As Double,
@@ -207,16 +208,17 @@ Module BatchAnalysis
         FileClose(FileId)
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Scans the airloads for a given set of flap deflections.
-    ''' </summary>
-    ''' <param name="Surface">The target surface name.</param>
-    ''' <param name="Region">The region containing the controlled flap (1-based).</param>
-    ''' <param name="Alfa">The incidence angle.</param>
-    ''' <param name="Delta1">The initial flap deflection.</param>
-    ''' <param name="Delta2">The final flap deflection.</param>
-    ''' <param name="DeltaS">The deflection step.</param>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Scans the airloads for a given set of flap deflections.
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Surface">The target surface name.</param>
+    ' <param name="Region">The region containing the controlled flap (1-based).</param>
+    ' <param name="Alfa">The incidence angle.</param>
+    ' <param name="Delta1">The initial flap deflection.</param>
+    ' <param name="Delta2">The final flap deflection.</param>
+    ' <param name="DeltaS">The deflection step.</param>
     Public Sub DeltaScan(Alfa As Double,
                          SurfaceName As String,
                          RegionIndex As Integer,
@@ -373,16 +375,17 @@ Module BatchAnalysis
         FileClose(FileId)
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Scans the airloads for a given set of flap deflections.
-    ''' </summary>
-    ''' <param name="Surface">The target surface name.</param>
-    ''' <param name="Region">The region containing the controlled flap (1-based).</param>
-    ''' <param name="Alfa">The incidence angle.</param>
-    ''' <param name="Delta1">The initial flap deflection.</param>
-    ''' <param name="Delta2">The final flap deflection.</param>
-    ''' <param name="DeltaS">The deflection step.</param>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Scans the airloads for a given set of flap deflections.
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Surface">The target surface name.</param>
+    ' <param name="Region">The region containing the controlled flap (1-based).</param>
+    ' <param name="Alfa">The incidence angle.</param>
+    ' <param name="Delta1">The initial flap deflection.</param>
+    ' <param name="Delta2">The final flap deflection.</param>
+    ' <param name="DeltaS">The deflection step.</param>
     Public Sub AlfaDeltaScan(Alfa1 As Double,
                              Alfa2 As Double,
                              AlfaS As Double,
@@ -736,13 +739,14 @@ Module BatchAnalysis
         FileClose(FileId)
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Performs a series of steady analysis between Omega1 and Omega2 using the OmegaS in between.
-    ''' </summary>
-    ''' <param name="Alfa1">The initial angular velocity.</param>
-    ''' <param name="Alfa2">The final angular velocity.</param>
-    ''' <param name="AlfaS">The step.</param>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Performs a series of steady analysis between Omega1 and Omega2 using the OmegaS in between.
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Alfa1">The initial angular velocity.</param>
+    ' <param name="Alfa2">The final angular velocity.</param>
+    ' <param name="AlfaS">The step.</param>
     Public Sub OmegaScan(OmegaMax As Double, No As Integer, Mass1 As Double, Mass2 As Double, Nm As Integer)
 
         Dim Loads As New List(Of AirLoads)
@@ -947,13 +951,14 @@ Module BatchAnalysis
         FileClose(FileId)
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
-    ''' <summary>
-    ''' Performs a series of steady analysis between Omega1 and Omega2 using the OmegaS in between.
-    ''' </summary>
-    ''' <param name="Alfa1">The initial angular velocity.</param>
-    ''' <param name="Alfa2">The final angular velocity.</param>
-    ''' <param name="AlfaS">The step.</param>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Performs a series of steady analysis between Omega1 and Omega2 using the OmegaS in between.
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' <param name="Alfa1">The initial angular velocity.</param>
+    ' <param name="Alfa2">The final angular velocity.</param>
+    ' <param name="AlfaS">The step.</param>
     Public Sub PropellerScan(JMin As Double, JMax As Double, Steps As Integer, Rpm As Double)
 
         Dim D As Double = 0.0#
@@ -1029,5 +1034,6 @@ Module BatchAnalysis
         FileClose(FileId)
 
     End Sub
+        '------------------------------------------------------------------------------------------
 
 End Module

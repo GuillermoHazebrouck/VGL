@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -38,10 +38,9 @@ Imports VGL.MathTools.Algebra.CustomMatrices
 '#############################################################################
 Namespace DesignTools.Models.Components
 
-    ''' <summary>
-    ''' Contains information about a parent wing.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Contains information about a parent wing.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class WingAnchorInfo
 
         Public Property ParentID As Guid
@@ -50,81 +49,71 @@ Namespace DesignTools.Models.Components
 
     End Class
 
-    ''' <summary>
-    ''' Represents a point in the surface where a vertex has to be added.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a point in the surface where a vertex has to be added.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class AnchorPoint
 
-        ''' <summary>
-        ''' Curvilinear coordinate.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Curvilinear coordinate.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property s As Double
 
-        ''' <summary>
-        ''' Longitudinal coordinate.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Longitudinal coordinate.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Z As Double
 
-        ''' <summary>
-        ''' Perimeter of the section associated to this anchor point.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks>Used to find back the cartesian coordinates.</remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Perimeter of the section associated to this anchor point used to find back the
+        ' cartesian coordinates.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Perimeter As Double
 
     End Class
 
-    ''' <summary>
-    ''' Represents a series of segments that have to be projected on a extruded surface.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a series of segments that have to be projected on a extruded surface.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class AnchorLine
 
-        ''' <summary>
-        ''' Lines of extrusion.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Lines of extrusion.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Lines As New List(Of Line3)
 
-        ''' <summary>
-        ''' Surface coordinates anchor points.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Surface coordinates anchor points.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Projections As New List(Of AnchorPoint)
 
-        ''' <summary>
-        ''' Indicates the initial position in the mesh where the points were located.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates the initial position in the mesh where the points were located.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property BeginIndex As Integer
 
-        ''' <summary>
-        ''' Indicates the end position in the mesh where the points were located.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates the end position in the mesh where the points were located.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property EndIndex As Integer
 
-        ''' <summary>
-        ''' Gather information about the parent lifting surface.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gather information about the parent lifting surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property WingAnchorInfo As WingAnchorInfo
 
-        ''' <summary>
-        ''' Inidcates if the projections where created.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Inidcates if the projections where created.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property Generated As Boolean
             Get
                 Return Projections.Count > 1
             End Get
         End Property
 
-        ''' <summary>
-        ''' Moves all points the given displacements.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Moves all points the given displacements.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub TranslatePoints(ByVal dX As Double, ByVal dY As Double, ByVal dZ As Double)
 
             For Each Line In Lines
@@ -136,42 +125,45 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new instance with values read from an xml file.
-        ''' </summary>
-        Public Sub New(ByVal reader As XmlReader)
-            ReadFromXML(reader)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a new instance with values read from an xml file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Public Sub New(ByVal Stream As XmlReader)
+            ReadFromXML(Stream)
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new instance.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a new instance.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region "IO"
 
-        Public Sub ReadFromXML(ByRef reader As XmlReader)
+        Public Sub ReadFromXML(ByRef Stream As XmlReader)
 
-            While reader.Read
+            While Stream.Read
 
-                If reader.IsStartElement Then
+                If Stream.IsStartElement Then
 
-                    Select Case reader.Name
+                    Select Case Stream.Name
 
                         Case "Line"
 
                             Dim Line As New Line3
 
-                            Line.Point.X = IOXML.ReadDouble(reader, "Xp", 0.0)
-                            Line.Point.Y = IOXML.ReadDouble(reader, "Yp", 0.0)
-                            Line.Point.Z = IOXML.ReadDouble(reader, "Zp", 0.0)
+                            Line.Point.X = IOXML.ReadDouble(Stream, "Xp", 0.0)
+                            Line.Point.Y = IOXML.ReadDouble(Stream, "Yp", 0.0)
+                            Line.Point.Z = IOXML.ReadDouble(Stream, "Zp", 0.0)
 
-                            Line.Direction.X = IOXML.ReadDouble(reader, "Xd", 0.0)
-                            Line.Direction.Y = IOXML.ReadDouble(reader, "Yd", 0.0)
-                            Line.Direction.Z = IOXML.ReadDouble(reader, "Zd", 0.0)
+                            Line.Direction.X = IOXML.ReadDouble(Stream, "Xd", 0.0)
+                            Line.Direction.Y = IOXML.ReadDouble(Stream, "Yd", 0.0)
+                            Line.Direction.Z = IOXML.ReadDouble(Stream, "Zd", 0.0)
 
                             Lines.Add(Line)
 
@@ -179,9 +171,9 @@ Namespace DesignTools.Models.Components
 
                             WingAnchorInfo = New WingAnchorInfo()
 
-                            WingAnchorInfo.ParentID = New Guid(IOXML.ReadString(reader, "ParentID", Guid.NewGuid.ToString))
-                            WingAnchorInfo.AnchorFromRoot = IOXML.ReadBoolean(reader, "Root", False)
-                            WingAnchorInfo.AnchorFromTip = IOXML.ReadBoolean(reader, "Tip", False)
+                            WingAnchorInfo.ParentID = New Guid(IOXML.ReadString(Stream, "ParentID", Guid.NewGuid.ToString))
+                            WingAnchorInfo.AnchorFromRoot = IOXML.ReadBoolean(Stream, "Root", False)
+                            WingAnchorInfo.AnchorFromTip = IOXML.ReadBoolean(Stream, "Tip", False)
 
                     End Select
 
@@ -190,44 +182,46 @@ Namespace DesignTools.Models.Components
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        Public Sub WriteToXML(ByRef writer As XmlWriter)
+        Public Sub WriteToXML(ByRef Stream As XmlWriter)
 
             For Each Line In Lines
 
-                writer.WriteStartElement("Line")
+                Stream.WriteStartElement("Line")
 
-                writer.WriteAttributeString("Xp", Line.Point.X.ToString)
-                writer.WriteAttributeString("Yp", Line.Point.Y.ToString)
-                writer.WriteAttributeString("Zp", Line.Point.Z.ToString)
+                Stream.WriteAttributeString("Xp", Line.Point.X.ToString)
+                Stream.WriteAttributeString("Yp", Line.Point.Y.ToString)
+                Stream.WriteAttributeString("Zp", Line.Point.Z.ToString)
 
-                writer.WriteAttributeString("Xd", Line.Direction.X.ToString)
-                writer.WriteAttributeString("Yd", Line.Direction.Y.ToString)
-                writer.WriteAttributeString("Zd", Line.Direction.Z.ToString)
-                writer.WriteEndElement()
+                Stream.WriteAttributeString("Xd", Line.Direction.X.ToString)
+                Stream.WriteAttributeString("Yd", Line.Direction.Y.ToString)
+                Stream.WriteAttributeString("Zd", Line.Direction.Z.ToString)
+                Stream.WriteEndElement()
 
             Next
 
             If Not IsNothing(WingAnchorInfo) Then
 
-                writer.WriteStartElement("Info")
+                Stream.WriteStartElement("Info")
 
-                writer.WriteAttributeString("ParentID", WingAnchorInfo.ParentID.ToString)
-                writer.WriteAttributeString("Root", WingAnchorInfo.AnchorFromRoot)
-                writer.WriteAttributeString("Tip", WingAnchorInfo.AnchorFromTip)
-                writer.WriteEndElement()
+                Stream.WriteAttributeString("ParentID", WingAnchorInfo.ParentID.ToString)
+                Stream.WriteAttributeString("Root", WingAnchorInfo.AnchorFromRoot)
+                Stream.WriteAttributeString("Tip", WingAnchorInfo.AnchorFromTip)
+                Stream.WriteEndElement()
 
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
 
-    ''' <summary>
-    ''' The grid of a mesh feature
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The grid of a mesh feature
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class FeatureGrid
 
         Public e As Integer
@@ -248,54 +242,51 @@ Namespace DesignTools.Models.Components
 
     End Class
 
-    ''' <summary>
-    ''' Represents a planar cross section.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a planar cross section.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class CrossSection
 
         Implements IComparable
 
-        ''' <summary>
-        ''' Te position of the cross section along the Z axis.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Te position of the cross section along the Z axis.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Z As Double = 0.0#
 
-        ''' <summary>
-        ''' The nodes describing the section.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The nodes describing the section.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Vertices As New List(Of Vector2)
 
-        ''' <summary>
-        ''' Indicates if this section breaks the spline first order continuity.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if this section breaks the spline first order continuity.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property BrokenEdge As Boolean = False
 
-        ''' <summary>
-        ''' The total perimeter.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total perimeter.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _Perimeter As Double
 
         Public Sub New()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new section from an XML node.
-        ''' </summary>
-        ''' <param name="Reader"></param>
-        Public Sub New(ByRef Reader As XmlReader)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a new section from an XML node.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Public Sub New(ByRef Stream As XmlReader)
 
-            ReadFromXML(Reader)
+            ReadFromXML(Stream)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates and caches the perimeter.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Calculates and caches the perimeter.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub CalculatePerimeter()
 
             _Perimeter = 0
@@ -307,23 +298,21 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Perimeter of the section.
-        ''' </summary>
-        ''' <value></value>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Perimeter of the section.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property Perimeter As Double
             Get
                 Return _Perimeter
             End Get
         End Property
 
-        ''' <summary>
-        ''' Returns an interpolated point at the given line coordinate s.
-        ''' </summary>
-        ''' <param name="s">Curvilinear dimensionless coordinate (from 0 to 1)</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns an interpolated point at the given line coordinate s
+        ' (s is a curvilinear dimensionless coordinate (from 0 to 1)
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function GetPoint(ByVal s As Double) As Vector2
 
             If Vertices.Count > 1 Then
@@ -384,11 +373,9 @@ Namespace DesignTools.Models.Components
 
         End Function
 
-        ''' <summary>
-        ''' Compares the position of this cross section with another section.
-        ''' </summary>
-        ''' <param name="obj"></param>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Compares the position of this cross section with another section.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
 
             Dim OtherSection As CrossSection = obj
@@ -405,46 +392,43 @@ Namespace DesignTools.Models.Components
 
 #Region " IO "
 
-        ''' <summary>
-        ''' Writes the section to an XML file.
-        ''' </summary>
-        ''' <param name="writer"></param>
-        ''' <remarks></remarks>
-        Public Sub WriteToXML(ByRef writer As XmlWriter)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the section to an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Public Sub WriteToXML(ByRef Stream As XmlWriter)
 
-            writer.WriteAttributeString("Z", String.Format("{0}", Z))
-            writer.WriteAttributeString("BrokenEdge", String.Format("{0}", BrokenEdge))
+            Stream.WriteAttributeString("Z", String.Format("{0}", Z))
+            Stream.WriteAttributeString("BrokenEdge", String.Format("{0}", BrokenEdge))
 
             For Each Vertex In Vertices
 
-                writer.WriteStartElement("Vertex")
-                writer.WriteAttributeString("X", String.Format("{0}", Vertex.X))
-                writer.WriteAttributeString("Y", String.Format("{0}", Vertex.Y))
-                writer.WriteEndElement()
+                Stream.WriteStartElement("Vertex")
+                Stream.WriteAttributeString("X", String.Format("{0}", Vertex.X))
+                Stream.WriteAttributeString("Y", String.Format("{0}", Vertex.Y))
+                Stream.WriteEndElement()
 
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the wing from an XML file.
-        ''' </summary>
-        ''' <param name="reader"></param>
-        ''' <remarks></remarks>
-        Public Sub ReadFromXML(ByRef reader As XmlReader)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the wing from an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Public Sub ReadFromXML(ByRef Stream As XmlReader)
 
             Vertices.Clear()
 
-            Z = IOXML.ReadDouble(reader, "Z", 0.0)
-            BrokenEdge = IOXML.ReadBoolean(reader, "BrokenEdge", True)
+            Z = IOXML.ReadDouble(Stream, "Z", 0.0)
+            BrokenEdge = IOXML.ReadBoolean(Stream, "BrokenEdge", True)
 
-            Dim subtree As XmlReader = reader.ReadSubtree()
+            Dim subtree As XmlReader = Stream.ReadSubtree()
 
             While subtree.ReadToFollowing("Vertex")
 
                 Dim Vertex As New Vector2
-                Vertex.X = IOXML.ReadDouble(reader, "X", 0.0)
-                Vertex.Y = IOXML.ReadDouble(reader, "Y", 0.0)
+                Vertex.X = IOXML.ReadDouble(Stream, "X", 0.0)
+                Vertex.Y = IOXML.ReadDouble(Stream, "Y", 0.0)
                 Vertices.Add(Vertex)
 
             End While
@@ -452,15 +436,15 @@ Namespace DesignTools.Models.Components
             CalculatePerimeter()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
 
-    ''' <summary>
-    ''' All types of meshes.
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' All types of meshes.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Enum MeshTypes
 
         UnstructuredTriangles = 0
@@ -475,20 +459,18 @@ Namespace DesignTools.Models.Components
 
     End Enum
 
-    ''' <summary>
-    ''' Represents a surface defined by parallel planar cross sections.
-    ''' </summary>
-    ''' <remarks>
-    ''' Fuselages can be attached to one or more lifting surface, as long as these do
-    ''' not supperpose in the direction of the longitudinal axis.
-    ''' </remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a surface defined by parallel planar cross sections.
+    ' Fuselages can be attached to one or more lifting surface, as long as these do
+    ' not supperpose in the direction of the longitudinal axis.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Fuselage
 
         Inherits Surface
 
-        ''' <summary>
-        ''' Generates a new surface using default initial values.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a new surface using default initial values.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
 
             Mesh = New Mesh()
@@ -505,40 +487,33 @@ Namespace DesignTools.Models.Components
             CrossRefinement = 10
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' List containing cross sections used to extrude the surface.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' List containing cross sections used to extrude the surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property CrossSections As List(Of CrossSection)
 
-        ''' <summary>
-        ''' Gathers all ankor lines.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gathers all ankor lines.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property AnchorLines As List(Of AnchorLine)
 
-        ''' <summary>
-        ''' Defines the type of mesh
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Defines the type of mesh
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property MeshType As MeshTypes = MeshTypes.StructuredQuadrilaterals
 
-        ''' <summary>
-        ''' The interpolation used between the declared cross sections.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The interpolation used between the declared cross sections.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property InterpolationType As InterpolationTypes = InterpolationTypes.CubicSpline
 
         Private _LongitudinalRefinement As Integer = 2
 
-        ''' <summary>
-        ''' Indicates the  number of paneles in the transverse direction.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates the  number of paneles in the transverse direction.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property LongitudinalRefinement As Integer
             Set(value As Integer)
                 If value >= 2 Then _LongitudinalRefinement = value
@@ -550,12 +525,9 @@ Namespace DesignTools.Models.Components
 
         Private _CrossRefinement As Integer = 2
 
-        ''' <summary>
-        ''' Indicates the  number of paneles in the transverse direction.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates the  number of paneles in the transverse direction.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property CrossRefinement As Integer
             Set(value As Integer)
                 If value >= 2 Then _CrossRefinement = value
@@ -565,18 +537,16 @@ Namespace DesignTools.Models.Components
             End Get
         End Property
 
-        ''' <summary>
-        ''' List containing cross sections used to extrude the surface.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' List containing cross sections used to extrude the surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _CrossSectionsToDisplay(0)() As Vector3
 
-        ''' <summary>
-        ''' Gets a point on the surface given its 2D surface coordinates.
-        ''' </summary>
-        ''' <param name="Z">The longitudinal coordinate (along extrusion axis).</param>
-        ''' <param name="S">The transverse dimensionless coordinate.</param>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Gets a point on the surface given its 2D surface coordinates.
+        ' Z is the longitudinal coordinate (along extrusion axis).
+        ' S is the transverse dimensionless coordinate.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function GetPoint(ByVal Z As Double, ByVal S As Double) As Vector3
 
             ' Limit Z (locally) to the cross section longitudinal range
@@ -673,10 +643,9 @@ Namespace DesignTools.Models.Components
 
         End Function
 
-        ''' <summary>
-        ''' Generates a triangular or quadrilateral mesh.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a triangular or quadrilateral mesh.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Sub GenerateMesh()
 
             Select Case MeshType
@@ -691,22 +660,23 @@ Namespace DesignTools.Models.Components
             MyBase.GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a mesh of triangular panels (not implemented).
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a mesh of triangular panels (not implemented).
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub GenerateTriangularMesh()
 
             Throw New NotImplementedException
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a structured mesh of quadrilaterals using the provided cross sections and wing anchors.
-        ''' Visit the wikibook pages for informaton about how fuselages are generated.
-        ''' </summary>
-        ''' <remarks>Cannot handle "Z supperposed" anchors.</remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a structured mesh of quadrilaterals using the provided cross sections and wing anchors.
+        ' Visit the wikibook pages for informaton about how fuselages are generated.
+        ' Note that this cannot handle anchors supperposed is the Z direction.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub GenerateQuadrilateralMesh()
 
             Mesh.Panels.Clear()
@@ -1107,7 +1077,7 @@ Namespace DesignTools.Models.Components
 
                 End If
 
-                ' add the anchors:
+                ' Add the anchors:
 
                 For Each Grid In Grids
 
@@ -1168,7 +1138,7 @@ Namespace DesignTools.Models.Components
 
                 End If
 
-                ' add symmetric part: new panels are inserted so that symmetric panels are consecutive.
+                ' Add symmetric part: new panels are inserted so that symmetric panels are consecutive.
 
                 Dim n As Integer = Mesh.Nodes.Count - 1
 
@@ -1330,11 +1300,11 @@ Namespace DesignTools.Models.Components
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns a clone of the fuselage (not implemented).
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns a clone of the fuselage (not implemented).
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Overrides Function Clone() As Surface
 
             Return Nothing
@@ -1343,10 +1313,10 @@ Namespace DesignTools.Models.Components
 
 #Region " Anchors "
 
-        ''' <summary>
-        ''' For each anchor line, this procedure updates the projection of the associated
-        ''' wing root nodes on the fuselage surface.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' For each anchor line, this procedure updates the projection of the associated
+        ' wing root nodes on the fuselage surface.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub UpdateAnchors()
 
             For Each Anchor In AnchorLines
@@ -1459,7 +1429,7 @@ Namespace DesignTools.Models.Components
 
                             Next
 
-                            ' pick the intersection closest to the point to be projected:
+                            ' Pick the intersection closest to the point to be projected:
 
                             Dim currentS As Double = Double.NaN
                             Dim distance As Double = 0
@@ -1526,76 +1496,75 @@ Namespace DesignTools.Models.Components
                              End Function)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " IO "
 
-        ''' <summary>
-        ''' Reads the wing from an XML file.
-        ''' </summary>
-        ''' <param name="reader"></param>
-        ''' <remarks></remarks>
-        Public Overrides Sub ReadFromXML(ByRef reader As XmlReader)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the fuselage from an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Public Overrides Sub ReadFromXML(ByRef Stream As XmlReader)
 
-            While reader.Read
+            While Stream.Read
 
-                Select Case reader.Name
+                Select Case Stream.Name
 
                     Case "Identity"
 
-                        Name = reader.GetAttribute("Name")
-                        Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
-                        IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
+                        Name = Stream.GetAttribute("Name")
+                        Id = New Guid(IOXML.ReadString(Stream, "ID", Guid.NewGuid.ToString))
+                        IncludeInCalculation = IOXML.ReadBoolean(Stream, "Include", True)
 
                     Case "SurfaceProperties"
 
-                        MeshType = IOXML.ReadInteger(reader, "MeshType", MeshTypes.StructuredQuadrilaterals)
-                        CrossRefinement = IOXML.ReadInteger(reader, "NPS", 10)
-                        LongitudinalRefinement = IOXML.ReadInteger(reader, "NPZ", 10)
+                        MeshType = IOXML.ReadInteger(Stream, "MeshType", MeshTypes.StructuredQuadrilaterals)
+                        CrossRefinement = IOXML.ReadInteger(Stream, "NPS", 10)
+                        LongitudinalRefinement = IOXML.ReadInteger(Stream, "NPZ", 10)
 
-                        Position.X = IOXML.ReadDouble(reader, "X", 0.0#)
-                        Position.Y = IOXML.ReadDouble(reader, "Y", 0.0#)
-                        Position.Z = IOXML.ReadDouble(reader, "Z", 0.0#)
+                        Position.X = IOXML.ReadDouble(Stream, "X", 0.0#)
+                        Position.Y = IOXML.ReadDouble(Stream, "Y", 0.0#)
+                        Position.Z = IOXML.ReadDouble(Stream, "Z", 0.0#)
 
-                        Orientation.Angle1 = IOXML.ReadDouble(reader, "Psi", 0.0)
-                        Orientation.Angle2 = IOXML.ReadDouble(reader, "Tita", 0.0)
-                        Orientation.Angle3 = IOXML.ReadDouble(reader, "Fi", 0.0)
-                        Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(RotationSequence.ZYX))
+                        Orientation.Angle1 = IOXML.ReadDouble(Stream, "Psi", 0.0)
+                        Orientation.Angle2 = IOXML.ReadDouble(Stream, "Tita", 0.0)
+                        Orientation.Angle3 = IOXML.ReadDouble(Stream, "Fi", 0.0)
+                        Orientation.Sequence = IOXML.ReadInteger(Stream, "Sequence", CInt(RotationSequence.ZYX))
 
-                        CenterOfRotation.X = IOXML.ReadDouble(reader, "Xcr", 0.0)
-                        CenterOfRotation.Y = IOXML.ReadDouble(reader, "Ycr", 0.0)
-                        CenterOfRotation.Z = IOXML.ReadDouble(reader, "Zcr", 0.0)
+                        CenterOfRotation.X = IOXML.ReadDouble(Stream, "Xcr", 0.0)
+                        CenterOfRotation.Y = IOXML.ReadDouble(Stream, "Ycr", 0.0)
+                        CenterOfRotation.Z = IOXML.ReadDouble(Stream, "Zcr", 0.0)
 
                     Case "CrossSection"
 
-                        CrossSections.Add(New CrossSection(reader))
+                        CrossSections.Add(New CrossSection(Stream))
 
                     Case "VisualProperties"
 
-                        VisualProperties.ReadFromXML(reader.ReadSubtree)
+                        VisualProperties.ReadFromXML(Stream.ReadSubtree)
 
                     Case "Anchor"
 
-                        AnchorLines.Add(New AnchorLine(reader.ReadSubtree))
+                        AnchorLines.Add(New AnchorLine(Stream.ReadSubtree))
 
                     Case "Inertia"
 
                         Dim I As InertialProperties
 
-                        I.Mass = IOXML.ReadDouble(reader, "Mass", 0.0)
+                        I.Mass = IOXML.ReadDouble(Stream, "Mass", 0.0)
 
-                        I.Xcg = IOXML.ReadDouble(reader, "Xcg", 0.0)
-                        I.Ycg = IOXML.ReadDouble(reader, "Ycg", 0.0)
-                        I.Zcg = IOXML.ReadDouble(reader, "Zcg", 0.0)
+                        I.Xcg = IOXML.ReadDouble(Stream, "Xcg", 0.0)
+                        I.Ycg = IOXML.ReadDouble(Stream, "Ycg", 0.0)
+                        I.Zcg = IOXML.ReadDouble(Stream, "Zcg", 0.0)
 
-                        I.Ixx = IOXML.ReadDouble(reader, "Ixx", 0.0)
-                        I.Iyy = IOXML.ReadDouble(reader, "Iyy", 0.0)
-                        I.Izz = IOXML.ReadDouble(reader, "Izz", 0.0)
+                        I.Ixx = IOXML.ReadDouble(Stream, "Ixx", 0.0)
+                        I.Iyy = IOXML.ReadDouble(Stream, "Iyy", 0.0)
+                        I.Izz = IOXML.ReadDouble(Stream, "Izz", 0.0)
 
-                        I.Ixy = IOXML.ReadDouble(reader, "Ixy", 0.0)
-                        I.Ixz = IOXML.ReadDouble(reader, "Ixz", 0.0)
-                        I.Iyz = IOXML.ReadDouble(reader, "Iyz", 0.0)
+                        I.Ixy = IOXML.ReadDouble(Stream, "Ixy", 0.0)
+                        I.Ixz = IOXML.ReadDouble(Stream, "Ixz", 0.0)
+                        I.Iyz = IOXML.ReadDouble(Stream, "Iyz", 0.0)
 
                         Inertia = I
 
@@ -1606,58 +1575,57 @@ Namespace DesignTools.Models.Components
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the wing to an XML file.
-        ''' </summary>
-        ''' <param name="writer"></param>
-        ''' <remarks></remarks>
-        Public Overrides Sub WriteToXML(ByRef writer As XmlWriter)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the fuselage to an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Public Overrides Sub WriteToXML(ByRef Stream As XmlWriter)
 
             ' Identity
             '-----------------------------------------------------
 
-            writer.WriteStartElement("Identity")
+            Stream.WriteStartElement("Identity")
 
-            writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ID", Id.ToString)
-            writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
+            Stream.WriteAttributeString("Name", Name)
+            Stream.WriteAttributeString("ID", Id.ToString)
+            Stream.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
-            writer.WriteEndElement()
+            Stream.WriteEndElement()
 
             ' Surface properties
             '-----------------------------------------------------
 
-            writer.WriteStartElement("SurfaceProperties")
+            Stream.WriteStartElement("SurfaceProperties")
 
-            writer.WriteAttributeString("MeshType", CInt(MeshType))
+            Stream.WriteAttributeString("MeshType", CInt(MeshType))
 
-            writer.WriteAttributeString("NPS", CInt(CrossRefinement))
-            writer.WriteAttributeString("NPZ", CInt(LongitudinalRefinement))
+            Stream.WriteAttributeString("NPS", CInt(CrossRefinement))
+            Stream.WriteAttributeString("NPZ", CInt(LongitudinalRefinement))
 
-            writer.WriteAttributeString("X", String.Format("{0}", Position.X))
-            writer.WriteAttributeString("Y", String.Format("{0}", Position.Y))
-            writer.WriteAttributeString("Z", String.Format("{0}", Position.Z))
+            Stream.WriteAttributeString("X", String.Format("{0}", Position.X))
+            Stream.WriteAttributeString("Y", String.Format("{0}", Position.Y))
+            Stream.WriteAttributeString("Z", String.Format("{0}", Position.Z))
 
-            writer.WriteAttributeString("Psi", String.Format("{0}", Orientation.Angle1))
-            writer.WriteAttributeString("Tita", String.Format("{0}", Orientation.Angle2))
-            writer.WriteAttributeString("Fi", String.Format("{0}", Orientation.Angle3))
-            writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
+            Stream.WriteAttributeString("Psi", String.Format("{0}", Orientation.Angle1))
+            Stream.WriteAttributeString("Tita", String.Format("{0}", Orientation.Angle2))
+            Stream.WriteAttributeString("Fi", String.Format("{0}", Orientation.Angle3))
+            Stream.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
 
-            writer.WriteAttributeString("Xcr", String.Format("{0}", CenterOfRotation.X))
-            writer.WriteAttributeString("Ycr", String.Format("{0}", CenterOfRotation.Y))
-            writer.WriteAttributeString("Zcr", String.Format("{0}", CenterOfRotation.Z))
+            Stream.WriteAttributeString("Xcr", String.Format("{0}", CenterOfRotation.X))
+            Stream.WriteAttributeString("Ycr", String.Format("{0}", CenterOfRotation.Y))
+            Stream.WriteAttributeString("Zcr", String.Format("{0}", CenterOfRotation.Z))
 
-            writer.WriteEndElement()
+            Stream.WriteEndElement()
 
             ' Sections
             '-----------------------------------------------------
 
             For Each Section In CrossSections
 
-                writer.WriteStartElement("CrossSection")
-                Section.WriteToXML(writer)
-                writer.WriteEndElement()
+                Stream.WriteStartElement("CrossSection")
+                Section.WriteToXML(Stream)
+                Stream.WriteEndElement()
 
             Next
 
@@ -1666,49 +1634,50 @@ Namespace DesignTools.Models.Components
 
             For Each Anchor In AnchorLines
 
-                writer.WriteStartElement("Anchor")
-                Anchor.WriteToXML(writer)
-                writer.WriteEndElement()
+                Stream.WriteStartElement("Anchor")
+                Anchor.WriteToXML(Stream)
+                Stream.WriteEndElement()
 
             Next
 
             ' Visual properties
             '-----------------------------------------------------
 
-            writer.WriteStartElement("VisualProperties")
-            VisualProperties.WriteToXML(writer)
-            writer.WriteEndElement()
+            Stream.WriteStartElement("VisualProperties")
+            VisualProperties.WriteToXML(Stream)
+            Stream.WriteEndElement()
 
             ' Inertia
             '-----------------------------------------------------
 
-            writer.WriteStartElement("Inertia")
+            Stream.WriteStartElement("Inertia")
 
-            writer.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
+            Stream.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
 
-            writer.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
-            writer.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
-            writer.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
+            Stream.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
+            Stream.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
+            Stream.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
 
-            writer.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
-            writer.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
-            writer.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
+            Stream.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
+            Stream.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
+            Stream.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
 
-            writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
-            writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
-            writer.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
+            Stream.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
+            Stream.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
+            Stream.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
 
-            writer.WriteEndElement()
+            Stream.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Examples "
 
-        ''' <summary>
-        ''' Generates a simple example.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a simple example.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub GenerateExample()
 
             CrossSections.Clear()
@@ -1782,10 +1751,11 @@ Namespace DesignTools.Models.Components
             CrossSections.Add(Section3)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a simple model for testing and quality check.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a simple model for testing and quality check.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub GenerateModelForTesting_1()
 
             Mesh.Nodes.Clear()
@@ -1814,10 +1784,11 @@ Namespace DesignTools.Models.Components
             Mesh.GenerateLattice()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a simple model for testing and quality check.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a simple model for testing and quality check.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub GenerateModelForTesting_2()
 
             Mesh.Nodes.Clear()
@@ -1859,10 +1830,11 @@ Namespace DesignTools.Models.Components
             Mesh.GenerateLattice()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates a simple model for testing and quality check.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Generates a simple model for testing and quality check.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub GenerateModelForTesting_3()
 
             Mesh.Nodes.Clear()
@@ -1933,6 +1905,7 @@ Namespace DesignTools.Models.Components
             Mesh.GenerateLattice()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 

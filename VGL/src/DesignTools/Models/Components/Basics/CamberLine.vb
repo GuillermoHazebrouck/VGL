@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -36,30 +36,30 @@ Namespace DesignTools.Models.Components.Basics
 
         Public Property Name As String = "Camber line"
 
-        ''' <summary>
-        ''' The identification number of this camber line.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The identification number of this camber line.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property ID As Guid
 
-        ''' <summary>
-        ''' The nodes if this camber line.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The nodes if this camber line.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property Nodes As New List(Of Vector2)
 
-        ''' <summary>
-        ''' Returns a NACA chamber point provided the position as fraction of the chord.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns a NACA chamber point provided the position as fraction of the chord.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the Y coordinate of the basic camber function given a chordwise coordinate.
-        ''' </summary>
-        ''' <param name="X">Chordwise coordinate</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns the Y coordinate of the basic camber function given a chordwise coordinate.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="X">Chordwise coordinate</param>
         Public Function Y(ByVal X As Single) As Single
 
             For i = 1 To Nodes.Count - 1
@@ -93,6 +93,7 @@ Namespace DesignTools.Models.Components.Basics
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub Assign(ByVal Camber As CamberLine)
 
@@ -105,6 +106,7 @@ Namespace DesignTools.Models.Components.Basics
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Function Clone() As CamberLine
 
@@ -146,6 +148,7 @@ Namespace DesignTools.Models.Components.Basics
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub WriteToXML(writer As XmlWriter)
 
@@ -166,6 +169,7 @@ Namespace DesignTools.Models.Components.Basics
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
         Public Sub ReadFromXML(reader As XmlReader)
 
@@ -194,6 +198,7 @@ Namespace DesignTools.Models.Components.Basics
             End While
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

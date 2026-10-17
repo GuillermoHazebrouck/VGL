@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -32,17 +32,17 @@ Namespace AeroTools.Solver
 
     Partial Public Class Solver
 
-        ''' <summary>
-        ''' This method simulates an experiment where the model is only rigidly 
-        ''' attached to the inertial reference frame for a certain number of steps
-        ''' and then released without any constrain.
-        ''' If the number of steps is sufficiently high, the method will simulate
-        ''' free flight.
-        ''' Be careful when using this method to select an appropriate initial state,
-        ''' or the model might react violently when being released.
-        ''' It is reccomended to use the Console to run a static equilibrium analysis
-        ''' before any free flight simulation.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' This method simulates an experiment where the model is only rigidly 
+        ' attached to the inertial reference frame for a certain number of steps
+        ' and then released without any constrain.
+        ' If the number of steps is sufficiently high, the method will simulate
+        ' free flight.
+        ' Be careful when using this method to select an appropriate initial state,
+        ' or the model might react violently when being released.
+        ' It is reccomended to use the Console to run a static equilibrium analysis
+        ' before any free flight simulation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub FreeFlight(ByVal ReferenceFilePath As String)
 
             '#############################################
@@ -370,6 +370,7 @@ Namespace AeroTools.Solver
             RaiseEvent CalculationDone()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
 

@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -32,66 +32,62 @@ Imports VGL.MathTools.Algebra.EuclideanSpace
 '#############################################################################
 Namespace AeroTools.Models.Aero.Components
 
-    ''' <summary>
-    ''' Represents a straight constant-circulation vortex segment
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a straight constant-circulation vortex segment
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Vortex
 
-        ''' <summary>
-        ''' Four times Pi
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Four times Pi
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Const FourPi As Double = 4 * Math.PI
 
-        ''' <summary>
-        ''' First vortex node
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' First vortex node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Node1 As Node
 
-        ''' <summary>
-        ''' Second vortex node
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Second vortex node
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Node2 As Node
 
-        ''' <summary>
-        ''' Adjacent rings.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Adjacent rings.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Rings(2) As VortexRing
 
-        ''' <summary>
-        ''' Sence of the adjacent rings.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Sence of the adjacent rings.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Sence(2) As SByte
 
-        ''' <summary>
-        ''' Intensity
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Intensity
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public G As Double
 
-        ' ''' <summary>
-        ' ''' Indicates if the vortex is free or bounded.
-        ' ''' </summary>
-        ' ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the vortex is free or bounded.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         'Public Free As Boolean
 
-        ''' <summary>
-        ''' Indicates if the vortex has been emitted in streamwise direction.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the vortex has been emitted in streamwise direction.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Streamwise As Boolean = False
 
         '' Possible optimization: compute the L vector only once every time step
 
-        ''' <summary>
-        ''' The vortex segment
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The vortex segment
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         'Public L As New Vector3
 
-        ''' <summary>
-        ''' Calculates the L vector as Node2 - Node1.
-        ''' This procedure could be used to lower the calculation time
-        ''' </summary>
+        '==========================================================================================
+        ' Calculates the L vector as Node2 - Node1.
+        ' This procedure could be used to lower the calculation time
+        '==========================================================================================
         'Public Sub Refresh()
 
         '    L.X = Node2.Position.X - Node1.Position.X
@@ -99,16 +95,15 @@ Namespace AeroTools.Models.Aero.Components
         '    L.Z = Node2.Position.Z - Node1.Position.Z
 
         'End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region "Field evaluation"
 
-        ''' <summary>
-        ''' Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
-        ''' </summary>
-        ''' <remarks>
-        ''' Calculation has been optimized by replacing object subs by local code.
-        ''' Value types are used on internal calculations (other versions used reference type EVector3).
-        ''' </remarks>
+        '==========================================================================================
+        ' Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+        ' Calculation has been optimized by replacing object subs by local code.
+        ' Value types are used on internal calculations (other versions used reference type EVector3).
+        '==========================================================================================
         Public Function InducedVelocity(ByVal Point As Vector3,
                                         Optional ByVal CutOff As Double = 0.0001,
                                         Optional ByVal WithG As Boolean = True) As Vector3
@@ -176,14 +171,15 @@ Namespace AeroTools.Models.Aero.Components
             Return Vector
 
         End Function
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
-        ''' </summary>
-        ''' <remarks>
-        ''' Calculation has been optimized by replacing object subs by local code.
-        ''' Value types are used on internal calculations (other versions used reference type EVector3).
-        ''' </remarks>
+        
+
+        '==========================================================================================
+        ' Calculates BiotSavart vector at a given point. If WidthG is true vector is scaled by G.
+        ' Calculation has been optimized by replacing object subs by local code.
+        ' Value types are used on internal calculations (other versions used reference type EVector3).
+        '==========================================================================================
         Public Sub AddInducedVelocity(ByRef Vector As Vector3,
                                        Point As Vector3,
                                        CutOff As Double,
@@ -242,9 +238,12 @@ Namespace AeroTools.Models.Aero.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

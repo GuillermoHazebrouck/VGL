@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -23,26 +23,25 @@
 '#############################################################################
 Namespace AeroTools.Models.Structural.Library.Nodes
 
-    ''' <summary>
-    ''' Nodal constrains
-    ''' </summary>
-    ''' <remarks></remarks>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Nodal constrains
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class Constrains
 
-        ''' <summary>
-        ''' Indicates which degrees of freedom in the node are fixed to the inertial reference frame.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates which degrees of freedom in the node are fixed to the inertial reference frame.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Fixed(5) As Boolean
 
-        ''' <summary>
-        ''' Indicates which degrees of freedom in the node are attached to a spring
-        ''' on the inertial reference frame.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates which degrees of freedom in the node are attached to a spring
+        ' on the inertial reference frame.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public K(5) As Double
 
-        ''' <summary>
-        ''' Indicates if the displacement in the X direction is restrained.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the displacement in the X direction is restrained.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FixedDx As Boolean
             Set(ByVal value As Boolean)
                 Fixed(0) = value
@@ -51,10 +50,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return Fixed(0)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates if the displacement in the Y direction is restrained.
-        ''' </summary>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the displacement in the Y direction is restrained.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FixedDy As Boolean
             Set(ByVal value As Boolean)
                 Fixed(1) = value
@@ -63,10 +65,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return Fixed(1)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates if the displacement in the Z direction is restrained.
-        ''' </summary>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the displacement in the Z direction is restrained.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FixedDz As Boolean
             Set(ByVal value As Boolean)
                 Fixed(2) = value
@@ -75,10 +80,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return Fixed(2)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates if the rotation about the X axis is restrained.
-        ''' </summary>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the rotation about the X axis is restrained.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FixedRx As Boolean
             Set(ByVal value As Boolean)
                 Fixed(3) = value
@@ -87,10 +95,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return Fixed(3)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates if the rotation about the Y axis is restrained.
-        ''' </summary>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the rotation about the Y axis is restrained.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FixedRy As Boolean
             Set(ByVal value As Boolean)
                 Fixed(4) = value
@@ -99,10 +110,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return Fixed(4)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates if the rotation about the Z axis is restrained.
-        ''' </summary>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the rotation about the Z axis is restrained.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FixedRz As Boolean
             Set(ByVal value As Boolean)
                 Fixed(5) = value
@@ -111,13 +125,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return Fixed(5)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stiffness in x direction
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stiffness in X direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property KDx As Double
             Set(ByVal value As Double)
                 K(0) = value
@@ -126,13 +140,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return K(0)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stiffness in y direction
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stiffness in Y direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property KDy As Double
             Set(ByVal value As Double)
                 K(1) = value
@@ -141,13 +155,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return K(1)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stiffness in z direction
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stiffness in Z direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property KDz As Double
             Set(ByVal value As Double)
                 K(2) = value
@@ -156,13 +170,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return K(2)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stiffness arround x direction
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stiffness arround X direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property KRx As Double
             Set(ByVal value As Double)
                 K(3) = value
@@ -171,13 +185,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return K(3)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stiffness arround y direction
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stiffness arround Y direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property KRy As Double
             Set(ByVal value As Double)
                 K(4) = value
@@ -186,13 +200,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return K(4)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stiffness arround z direction
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stiffness arround Z direction
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property KRz As Double
             Set(ByVal value As Double)
                 K(5) = value
@@ -201,11 +215,13 @@ Namespace AeroTools.Models.Structural.Library.Nodes
                 Return K(5)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Fixes all degrees of freedom to the base reference frame
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Fixes all degrees of freedom to the base reference frame
+        '==========================================================================================
         Public Sub Clamped()
 
             For i = 0 To 5
@@ -213,7 +229,10 @@ Namespace AeroTools.Models.Structural.Library.Nodes
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

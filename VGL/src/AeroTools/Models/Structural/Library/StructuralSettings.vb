@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -27,13 +27,9 @@ Namespace AeroTools.Models.Structural.Library
     Public Class StructuralSettings
 
         Private _ModalDamping As Double = 0.05
-
-        ''' <summary>
-        ''' Damping associated to the structural modes
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Damping associated to the structural modes
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property ModalDamping As Double
             Set(ByVal value As Double)
                 If value > 0 Then _ModalDamping = value
@@ -44,11 +40,9 @@ Namespace AeroTools.Models.Structural.Library
         End Property
 
         Private _NumberOfModes As Integer = 6
-
-        ''' <summary>
-        ''' Specifies the number of dynamic modes to be used
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Specifies the number of dynamic modes to be used
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property NumberOfModes As Integer
             Set(ByVal value As Integer)
                 If value > 0 Then _NumberOfModes = value
@@ -59,12 +53,10 @@ Namespace AeroTools.Models.Structural.Library
         End Property
 
         Private _StructuralLinkingStep As Integer = 20
-
-        ''' <summary>
-        ''' Specifies when at which instant the structure is coupled to the model.
-        ''' (use it when a steady state is required as start condition).
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Specifies when at which instant the structure is coupled to the model.
+        ' (use it when a steady state is required as start condition).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property StructuralLinkingStep As Integer
             Set(ByVal value As Integer)
                 If value > 0 Then _StructuralLinkingStep = value
@@ -74,21 +66,24 @@ Namespace AeroTools.Models.Structural.Library
             End Get
         End Property
 
-        ''' <summary>
-        ''' Sub steps used to integrate the equations of motion in one aerodynamic step.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Sub steps used to integrate the equations of motion in one aerodynamic step.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SubSteps As Integer = 1
 
+        '==========================================================================================
+        '
+        '==========================================================================================
         Public Sub Assign(ByVal Other As StructuralSettings)
             ModalDamping = Other.ModalDamping
             SubSteps = Other.SubSteps
             _NumberOfModes = Other._NumberOfModes
             _StructuralLinkingStep = Other._StructuralLinkingStep
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

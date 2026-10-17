@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -31,56 +31,58 @@ Imports DotNumerics.LinearAlgebra
 '#############################################################################
 Namespace AeroTools.Models.Structural
 
-    ''' <summary>
-    ''' The structural model containing nodes and elements
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' The structural model containing nodes and elements
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class StructuralCore
 
-        ''' <summary>
-        ''' The structural nodes
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The structural nodes
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Nodes As New List(Of StructuralNode)
 
-        ''' <summary>
-        ''' The list of structural elements
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The list of structural elements
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Elements As new List(Of BeamElement)
 
-        ''' <summary>
-        ''' The structural settings
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The structural settings
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property StructuralSettings As New StructuralSettings
 
-        ''' <summary>
-        ''' The dynamic modes of the structure
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The dynamic modes of the structure
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property Modes As New List(Of Mode)
 
-        ''' <summary>
-        ''' The complete mass matrix (including constrained DOF)
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The complete mass matrix (including constrained DOF)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private M As SymmetricMatrix
 
-        ''' <summary>
-        ''' The complete stiffness matrix (including constrained static DOF)
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The complete stiffness matrix (including constrained static DOF)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private K As SymmetricMatrix
 
-        ''' <summary>
-        ''' The complete damping matrix (including constrained static DOF)
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The complete damping matrix (including constrained static DOF)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private C As SymmetricMatrix
 
-        ''' <summary>
-        ''' The number of degrees of freedom
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The number of degrees of freedom
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private DOF As Integer = 0
 
-        ''' <summary>
-        ''' Generates the structure global stiffness and mass matrices by assembling all of the element matrices together.
-        ''' The final assembly still contains degrees of freedom that should be constrained. The reduction of the system to the
-        ''' actual degrees of freedom occurs in a different procedure.
-        ''' </summary>
+        '==========================================================================================
+        ' Generates the structure global stiffness and mass matrices by assembling all of the
+        ' element matrices together.
+        ' The final assembly still contains degrees of freedom that should be constrained.
+        ' The reduction of the system to the actual degrees of freedom occurs in a different
+        ' procedure.
+        '==========================================================================================
         Public Sub CreateMatrices(ByVal Path As String, Optional ByVal PrintAsTxt As Boolean = False, ByVal Optional Index As Integer = 0)
 
             '-----------------------------------------------------------------------------
@@ -183,12 +185,17 @@ Namespace AeroTools.Models.Structural
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Calculates the structure dynamic modes using the Subspace iteration method.
-        ''' The global mass and stiffness matrices are supposed to be calculated before calling this method.
-        ''' This method will reduce the size of the system by removing the constrained degrees of freedom.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Calculates the structure dynamic modes using the Subspace iteration method.
+        ' The global mass and stiffness matrices are supposed to be calculated before calling
+        ' this method.
+        ' This method will reduce the size of the system by removing the constrained degrees of
+        ' freedom.
+        '==========================================================================================
         Public Sub FindModes(ByVal LinkId As Integer)
 
             '-----------------------------------------------------------------------------
@@ -285,11 +292,15 @@ Namespace AeroTools.Models.Structural
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Autotest that runs a couple of well known eigen-value examples.
-        ''' This method is used to check that the there are no critical bugs (still it does not cover everything).
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Autotest that runs a couple of well known eigen-value examples.
+        ' This method is used to check that the there are no critical bugs 
+        ' (still it does not cover everything).
+        '==========================================================================================
         Public Shared Sub TestEigenValues()
 
             '-----------------------------------------------------------
@@ -444,45 +455,54 @@ Namespace AeroTools.Models.Structural
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Transfers the mode shape to the nodal displacement using the given amplitude factor.
-        ''' </summary>
-        ''' <param name="ModeIndex">The mode shape to be transferred.</param>
-        ''' <param name="Scale">The amplitude of the displacemet relative to the modal shape.</param>
+
+
+        '==========================================================================================
+        ' Transfers the mode shape to the nodal displacement using the given amplitude factor.        
+        ' ModeIndex: the mode shape to be transferred.</param>
+        ' Scale:     the amplitude of the displacemet relative to the modal shape.
+        '==========================================================================================
         Public Sub TransferModeShapeToNodes(ByVal ModeIndex As Integer, Optional ByVal Scale As Double = 1.0)
 
-            For Each n As StructuralNode In Nodes
+            For Each Node As StructuralNode In Nodes
 
-                n.Displacement.Dx = Scale * Modes(ModeIndex).Shape(n.Index).Dx
-                n.Displacement.Dy = Scale * Modes(ModeIndex).Shape(n.Index).Dy
-                n.Displacement.Dz = Scale * Modes(ModeIndex).Shape(n.Index).Dz
-                n.Displacement.Rx = Scale * Modes(ModeIndex).Shape(n.Index).Rx
-                n.Displacement.Ry = Scale * Modes(ModeIndex).Shape(n.Index).Ry
-                n.Displacement.Rz = Scale * Modes(ModeIndex).Shape(n.Index).Rz
+                Node.Displacement.Dx = Scale * Modes(ModeIndex).Shape(Node.Index).Dx
+                Node.Displacement.Dy = Scale * Modes(ModeIndex).Shape(Node.Index).Dy
+                Node.Displacement.Dz = Scale * Modes(ModeIndex).Shape(Node.Index).Dz
+                Node.Displacement.Rx = Scale * Modes(ModeIndex).Shape(Node.Index).Rx
+                Node.Displacement.Ry = Scale * Modes(ModeIndex).Shape(Node.Index).Ry
+                Node.Displacement.Rz = Scale * Modes(ModeIndex).Shape(Node.Index).Rz
 
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Sets all nodal displacements to zero.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Sets all nodal displacements to zero.
+        '==========================================================================================
         Public Sub ResetDisplacements()
 
-            For Each n As StructuralNode In Nodes
+            For Each Node As StructuralNode In Nodes
 
-                n.Displacement.Dx = 0.0
-                n.Displacement.Dy = 0.0
-                n.Displacement.Dz = 0.0
-                n.Displacement.Rx = 0.0
-                n.Displacement.Ry = 0.0
-                n.Displacement.Rz = 0.0
+                Node.Displacement.Dx = 0.0
+                Node.Displacement.Dy = 0.0
+                Node.Displacement.Dz = 0.0
+                Node.Displacement.Rx = 0.0
+                Node.Displacement.Ry = 0.0
+                Node.Displacement.Rz = 0.0
 
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '----------------------------------------------------------------------------------------------
 
 End Namespace
+'--------------------------------------------------------------------------------------------------

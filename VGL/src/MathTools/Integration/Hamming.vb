@@ -1,6 +1,6 @@
 ﻿'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -20,9 +20,9 @@ Imports System.IO
 
 Namespace MathTools.Integration
 
-    ''' <summary>
-    ''' A 6-DOF dynamics variable
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' A 6-DOF dynamics variable
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Structure Variable
 
         ' Reference vectors 
@@ -235,10 +235,9 @@ Namespace MathTools.Integration
 
         End Operator
 
-        ''' <summary>
-        ''' Convertes all variables to absolute values
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Convertes all variables to absolute values
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub Absolute()
 
             Ix = Math.Abs(Ix)
@@ -266,50 +265,46 @@ Namespace MathTools.Integration
             Oz = Math.Abs(Oz)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Structure
 
-    ''' <summary>
-    ''' This class represents a predictor corrector method specifically tailored for
-    ''' solving rigid body motion in 6 degrees of freedom under a uniform graviational field.
-    ''' The algorithm starts with the Euler method and then uses two Adams/Bashford 
-    ''' and Adams/Moulton steps of increasing accuracy.
-    ''' The Hamming method is used from step 4 on.
-    ''' Remarks:
-    ''' > All steps compensate the truncation errors.
-    ''' > The gravity field is implicitly taken into account and initialized as (0.0, 0.0, -g).
-    ''' How to use:
-    ''' 1) Instantiate the class and initialize the inertial properties.
-    '''    The X, Y and Z axis are the main intertial axes and the
-    '''    origin is at the CG.
-    ''' 2) Provide the initial external forces.
-    ''' 3) Enter the time iteration loop:
-    '''    > "Predict" with the current forces
-    '''    > Enter the refinement loop:
-    '''       > Adapt system and calculate the external forces using the 
-    '''         predicted or already corrected state variables.
-    '''       > "Correct" with the new forces.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' This class represents a predictor corrector method specifically tailored for
+    ' solving rigid body motion in 6 degrees of freedom under a uniform graviational field.
+    ' The algorithm starts with the Euler method and then uses two Adams/Bashford 
+    ' and Adams/Moulton steps of increasing accuracy.
+    ' The Hamming method is used from step 4 on.
+    ' Remarks:
+    ' > All steps compensate the truncation errors.
+    ' > The gravity field is implicitly taken into account and initialized as (0.0, 0.0, -g).
+    ' How to use:
+    ' 1) Instantiate the class and initialize the inertial properties.
+    '    The X, Y and Z axis are the main intertial axes and the
+    '    origin is at the CG.
+    ' 2) Provide the initial external forces.
+    ' 3) Enter the time iteration loop:
+    '    > "Predict" with the current forces
+    '    > Enter the refinement loop:
+    '       > Adapt system and calculate the external forces using the 
+    '         predicted or already corrected state variables.
+    '       > "Correct" with the new forces.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class MotionIntegrator
 
-        ''' <summary>
-        ''' Initializes the integrator using stored data.
-        ''' </summary>
-        ''' <param name="Path"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Initializes the integrator using stored data.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New(Path As String)
 
             ReadBinary(Path)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Creates a new integrator for N time steps and the given initial conditions.
-        ''' </summary>
-        ''' <param name="Size">Number of time steps</param>
-        ''' <param name="InitialVelocity"></param>
-        ''' <param name="InitialRotation"></param>
-        ''' <param name="Gravity"></param>
-        ''' <param name="Basis"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Creates a new integrator for N time steps and the given initial conditions.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New(Size As Integer,
                        Interval As Double,
                        InitialVelocity As Vector3,
@@ -381,22 +376,21 @@ Namespace MathTools.Integration
             Epsilon = E
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' The current velocity
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The current velocity
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property Velocity As Vector3
 
-        ''' <summary>
-        ''' The current angular velocity
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The current angular velocity
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property Rotation As Vector3
 
-        ''' <summary>
-        ''' Stores the current state in the output variables
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Stores the current state in the output variables
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CacheState()
 
             _Velocity.X = X(S).Vx
@@ -408,10 +402,11 @@ Namespace MathTools.Integration
             _Rotation.Z = X(S).Oz
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Stores the current state in the output variables
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Stores the current state in the output variables
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Sub CacheDerivatives(J As Integer, F As Vector3, ByRef M As Vector3)
 
             ' Gravity
@@ -454,80 +449,86 @@ Namespace MathTools.Integration
             DX(J).Oz = (M.Z + (Ixx - Iyy) * X(J).Ox * X(J).Oy) / Iyy
 
         End Sub
-
+        '------------------------------------------------------------------------------------------
+       
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The current state
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private S As Integer
 
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The correction step
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private I As Integer
 
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The time step
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private Dt As Double
 
-        ''' <summary>
-        ''' The truncation error
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The truncation error
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private TE() As Variable
 
-        ''' <summary>
-        ''' The state variables
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The state variables
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private X() As Variable
 
-        ''' <summary>
-        ''' The Hamming predicted variable
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The Hamming predicted variable
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private XP As Variable
 
-        ''' <summary>
-        ''' The derivative of the state variables
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The derivative of the state variables
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private DX() As Variable
 
-        ''' <summary>
-        ''' The maximum absolute step change allowed
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The maximum absolute step change allowed
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Epsilon As Variable
 
-        ''' <summary>
-        ''' The total mass of the system
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total mass of the system
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Mass As Double
 
-        ''' <summary>
-        ''' The second moment of inertia about the X axis
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The second moment of inertia about the X axis
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Ixx As Double
 
-        ''' <summary>
-        ''' The second moment of inertia about the Y axis
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The second moment of inertia about the Y axis
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Iyy As Double
 
-        ''' <summary>
-        ''' The second moment of inertia about the Z axis
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The second moment of inertia about the Z axis
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Izz As Double
 
-        ''' <summary>
-        ''' Sets the startup forces
-        ''' </summary>
-        ''' <param name="F"></param>
-        ''' <param name="M"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Sets the startup forces
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub SetInitialForces(F As Vector3, ByRef M As Vector3)
 
             CacheDerivatives(0, F, M)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Advances one time step and produces a tentative predicted solution.
-        ''' </summary>
-        ''' <param name="F"></param>
-        ''' <param name="M"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Advances one time step and produces a tentative predicted solution.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub Predict()
+
+            If S >= UBound(X) Then
+                Return
+            End If
 
             S += 1
             I = 0
@@ -572,17 +573,17 @@ Namespace MathTools.Integration
             CacheState()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Refines the current step by advancing one implicit iteration.
-        ''' If the function returns False, use the state to recalculate the 
-        ''' external forces and call the function again. Repeat the loop
-        ''' until the function returns True, or until a maximum amount of
-        ''' corrective steps is reached.
-        ''' </summary>
-        ''' <param name="F">The force predicted with at the last state</param>
-        ''' <param name="M">The moment predicted with at the last state</param>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Refines the current step by advancing one implicit iteration.
+        ' If the function returns False, use the state to recalculate the 
+        ' external forces and call the function again. Repeat the loop
+        ' until the function returns True, or until a maximum amount of
+        ' corrective steps is reached.
+        ' F: the force compatible with the last predicted state</param>
+        ' M: the moment compatible with the last predicted state</param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function Correct(F As Vector3, ByRef M As Vector3) As Boolean
 
             I += 1
@@ -654,12 +655,11 @@ Namespace MathTools.Integration
             Return E <= Epsilon
 
         End Function
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Sets the startup forces
-        ''' </summary>
-        ''' <param name="F"></param>
-        ''' <param name="M"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns the state at the given step
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Function State(I As Integer) As Variable
 
             If I >= LBound(X) And I <= UBound(X) Then
@@ -670,12 +670,11 @@ Namespace MathTools.Integration
             End If
 
         End Function
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the response to a binary file.
-        ''' </summary>
-        ''' <param name="Path"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the response to a binary file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub WriteBinary(ByVal Path As String)
 
             Dim W As BinaryWriter = New BinaryWriter(File.Open(Path, FileMode.Create))
@@ -713,12 +712,11 @@ Namespace MathTools.Integration
             W.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the integrator from a binary file.
-        ''' </summary>
-        ''' <param name="Path"></param>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the integrator from a binary file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub ReadBinary(ByVal Path As String)
 
             Dim R As BinaryReader = New BinaryReader(File.Open(Path, FileMode.Open))
@@ -762,11 +760,11 @@ Namespace MathTools.Integration
             R.Close()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the content of the integrator in plain text
-        ''' </summary>
-        ''' <param name="FilePath"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes the content of the integrator in plain text
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub WriteAscii(FilePath As String)
 
             Dim Time As Double = 0.0#
@@ -822,7 +820,10 @@ Namespace MathTools.Integration
             FileClose(FileId)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
     End Class
+    '------------------------------------------------------------------------------------------
 
 End Namespace
+'------------------------------------------------------------------------------------------

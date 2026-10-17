@@ -1,7 +1,7 @@
 ﻿'#############################################################################
 'VGL
 'Open source aeromechanics in dotnet
-'Copyright (C) 2023 Guillermo Hazebrouck (gahazebrouck@gmail.com)
+'Copyright (C) 2026 Guillermo Hazebrouck (gahazebrouck@gmail.com)
 
 'This program Is free software: you can redistribute it And/Or modify
 'it under the terms Of the GNU General Public License As published by
@@ -41,16 +41,16 @@ Imports VGL.DesignTools.DataStore
 '#############################################################################
 Namespace DesignTools.Models.Components
 
-    ''' <summary>
-    ''' Represents a spanwise region on a wing.
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents a spanwise region on a wing.
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class WingRegion
 
 #Region " Geometry "
 
-        ''' <summary>
-        ''' All posible kind of panel spacement along the wingspan.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' All posible kind of panel spacement along the wingspan.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Enum Spacements As Integer
 
             Constant = 1
@@ -58,19 +58,19 @@ Namespace DesignTools.Models.Components
 
         End Enum
 
-        ''' <summary>
-        ''' Number of panels along the wingspan.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of panels along the wingspan.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private _SpanPanels As Integer
 
-        ''' <summary>
-        ''' Number of nodes along the wingspan.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of nodes along the wingspan.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private _SpanNodes As Integer
 
-        ''' <summary>
-        ''' Generates a new wing region object with minimal default values.
-        ''' </summary>
+        '==========================================================================================
+        ' Generates a new wing region object with minimal default values.
+        '==========================================================================================
         Public Sub New()
 
             FlapChord = 0.3
@@ -78,12 +78,13 @@ Namespace DesignTools.Models.Components
             SpacementType = Spacements.Constant
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Gets all the constent from an existing wing region.
-        ''' </summary>
-        ''' <param name="PanelExt"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Gets all the constent from an existing wing region.
+        '==========================================================================================
         Public Sub Assign(ByVal PanelExt As WingRegion)
 
             _SpanPanels = PanelExt.SpanPanelsCount
@@ -97,13 +98,13 @@ Namespace DesignTools.Models.Components
             _CenterOfShear = PanelExt.CenterOfShear
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of panels in spanwise direction.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of panels in spanwise direction.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SpanPanelsCount As Integer
             Get
                 Return _SpanPanels
@@ -112,13 +113,13 @@ Namespace DesignTools.Models.Components
                 _SpanPanels = value
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of nodes in chordwise direction.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of nodes in chordwise direction.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property ChordNodesCount As Integer
             Get
                 Return _SpanPanels + 1
@@ -127,125 +128,94 @@ Namespace DesignTools.Models.Components
                 _SpanPanels = value - 1
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Tip chord length.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Tip chord length.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property TipChord As Double
 
-        ''' <summary>
-        ''' Spanwise length.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Spanwise length.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Length As Double
 
-        ''' <summary>
-        ''' Sweep angle.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Sweep angle.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Sweepback As Double
 
-        ''' <summary>
-        ''' Dihedral angle.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Dihedral angle.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Dihedral As Double
 
-        ''' <summary>
-        ''' Twist angle along the span.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Twist angle along the span.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Twist As Double
 
-        ''' <summary>
-        ''' Chordwise position of the twisting axis as fraction of the local chord.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Chordwise position of the twisting axis as fraction of the local chord.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property TwistAxis As Double
 
-        ''' <summary>
-        ''' Describes the form of the cord.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Describes the form of the cord.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CamberLineId As Guid
 
-        ''' <summary>
-        ''' Indicates if this region is flapped.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if this region is flapped.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property Flapped As Boolean
 
-        ''' <summary>
-        ''' Lenght of the flap in chordwise direction.
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Lenght of the flap in chordwise direction.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FlapChord As Double
 
-        ''' <summary>
-        ''' Deflection of the flap (in rad).
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Deflection of the flap (in rad).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FlapDeflection As Double
 
-        ''' <summary>
-        ''' Type of spanwise spacing between the stations.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Type of spanwise spacing between the stations.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property SpacementType As Spacements
 
-        ''' <summary>
-        ''' Index of polar curve to be loaded.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Index of polar curve to be loaded.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property PolarId As Guid
 
 #End Region
 
 #Region " Structure "
 
-        ''' <summary>
-        ''' Represents the section at the tip of the panel
-        ''' </summary>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Represents the section at the tip of the panel
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property TipSection As Section = New Section
 
-        ''' <summary>
-        ''' The relative position of the center of shear for this region.
-        ''' The center of shear is materialized by the position of the structural beam.
-        ''' </summary>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The relative position of the center of shear for this region.
+        ' The center of shear is materialized by the position of the structural beam.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Private _CenterOfShear As Double = 0.25
 
-        ''' <summary>
-        ''' The length of the leading edge as computed during the meshing
-        ''' </summary>
-        ''' <returns></returns>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' The length of the leading edge as computed during the meshing
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property LeadingEdgeLength As Double
 
-        ''' <summary>
-        ''' Stablishes the position of the center of shear in relation to the local chord (flap not included)
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Stablishes the position of the center of shear in relation to the local chord 
+        ' (flap not included)
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CenterOfShear
             Set(ByVal value)
                 _CenterOfShear = value
@@ -254,143 +224,134 @@ Namespace DesignTools.Models.Components
                 Return _CenterOfShear
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Polars "
 
-        ''' <summary>
-        ''' Local polar curve.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Local polar curve.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property PolarFamiliy As PolarFamily
 
 #End Region
 
 #Region " IO "
 
-        ''' <summary>
-        ''' Writes the content to an XML file.
-        ''' </summary>
-        ''' <param name="writer"></param>
-        ''' <remarks></remarks>
-        Public Sub WriteToXML(ByRef writer As XmlWriter)
+        '==========================================================================================
+        ' Writes the content to an XML file.
+        '==========================================================================================
+        Public Sub WriteToXML(ByRef Stream As XmlWriter)
 
-            writer.WriteAttributeString("SpanVortexRings", String.Format("{0}", SpanPanelsCount))
-            writer.WriteAttributeString("ExternalChord", String.Format("{0}", TipChord))
-            writer.WriteAttributeString("Length", String.Format("{0}", Length))
-            writer.WriteAttributeString("SweepBack", String.Format("{0}", Sweepback))
-            writer.WriteAttributeString("Diedral", String.Format("{0}", Dihedral))
-            writer.WriteAttributeString("Torsion", String.Format("{0}", Twist))
-            writer.WriteAttributeString("TorsionAxis", String.Format("{0}", TwistAxis))
-            writer.WriteAttributeString("SpacingType", String.Format("{0}", SpacementType))
+            Stream.WriteAttributeString("SpanVortexRings", String.Format("{0}", SpanPanelsCount))
+            Stream.WriteAttributeString("ExternalChord", String.Format("{0}", TipChord))
+            Stream.WriteAttributeString("Length", String.Format("{0}", Length))
+            Stream.WriteAttributeString("SweepBack", String.Format("{0}", Sweepback))
+            Stream.WriteAttributeString("Diedral", String.Format("{0}", Dihedral))
+            Stream.WriteAttributeString("Torsion", String.Format("{0}", Twist))
+            Stream.WriteAttributeString("TorsionAxis", String.Format("{0}", TwistAxis))
+            Stream.WriteAttributeString("SpacingType", String.Format("{0}", SpacementType))
 
-            writer.WriteAttributeString("Flapped", Flapped)
-            writer.WriteAttributeString("FlapChord", FlapChord)
-            writer.WriteAttributeString("FlapDeflection", FlapDeflection)
+            Stream.WriteAttributeString("Flapped", Flapped)
+            Stream.WriteAttributeString("FlapChord", FlapChord)
+            Stream.WriteAttributeString("FlapDeflection", FlapDeflection)
 
-            writer.WriteAttributeString("Area", String.Format("{0}", TipSection.AE))
-            writer.WriteAttributeString("Iu", String.Format("{0}", TipSection.GJ))
-            writer.WriteAttributeString("Iv", String.Format("{0}", TipSection.EIy))
-            writer.WriteAttributeString("Iw", String.Format("{0}", TipSection.EIz))
-            writer.WriteAttributeString("Sv", String.Format("{0}", TipSection.Cmy))
-            writer.WriteAttributeString("Sw", String.Format("{0}", TipSection.Cmz))
-            writer.WriteAttributeString("J", String.Format("{0}", TipSection.Ip))
-            writer.WriteAttributeString("m", String.Format("{0}", TipSection.M))
+            Stream.WriteAttributeString("Area", String.Format("{0}", TipSection.AE))
+            Stream.WriteAttributeString("Iu", String.Format("{0}", TipSection.GJ))
+            Stream.WriteAttributeString("Iv", String.Format("{0}", TipSection.EIy))
+            Stream.WriteAttributeString("Iw", String.Format("{0}", TipSection.EIz))
+            Stream.WriteAttributeString("Sv", String.Format("{0}", TipSection.Cmy))
+            Stream.WriteAttributeString("Sw", String.Format("{0}", TipSection.Cmz))
+            Stream.WriteAttributeString("J", String.Format("{0}", TipSection.Ip))
+            Stream.WriteAttributeString("m", String.Format("{0}", TipSection.M))
 
-            writer.WriteAttributeString("CenterOfShear", String.Format("{0}", CenterOfShear))
-            writer.WriteAttributeString("PolarID", String.Format("{0}", PolarId))
-            writer.WriteAttributeString("CamberLineID", String.Format("{0}", CamberLineId))
+            Stream.WriteAttributeString("CenterOfShear", String.Format("{0}", CenterOfShear))
+            Stream.WriteAttributeString("PolarID", String.Format("{0}", PolarId))
+            Stream.WriteAttributeString("CamberLineID", String.Format("{0}", CamberLineId))
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Reads the content from an XML file.
-        ''' </summary>
-        ''' <param name="reader"></param>
-        ''' <remarks></remarks>
-        Public Sub ReadFromXML(ByRef reader As XmlReader)
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Reads the content from an XML file.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        Public Sub ReadFromXML(ByRef Stream As XmlReader)
 
-            SpanPanelsCount = IOXML.ReadInteger(reader, "SpanVortexRings", 4)
-            TipChord = IOXML.ReadDouble(reader, "ExternalChord", 1.0)
-            Length = IOXML.ReadDouble(reader, "Length", 1.0)
-            Sweepback = IOXML.ReadDouble(reader, "SweepBack", 0.0)
-            Dihedral = IOXML.ReadDouble(reader, "Diedral", 0.0)
-            Twist = IOXML.ReadDouble(reader, "Torsion", 0.0)
-            TwistAxis = IOXML.ReadDouble(reader, "TorsionAxis", 0.0)
-            SpacementType = [Enum].Parse(GetType(Spacements), IOXML.ReadString(reader, "SpacingType", String.Format("{0}", Spacements.Constant)))
+            SpanPanelsCount = IOXML.ReadInteger(Stream, "SpanVortexRings", 4)
+            TipChord = IOXML.ReadDouble(Stream, "ExternalChord", 1.0)
+            Length = IOXML.ReadDouble(Stream, "Length", 1.0)
+            Sweepback = IOXML.ReadDouble(Stream, "SweepBack", 0.0)
+            Dihedral = IOXML.ReadDouble(Stream, "Diedral", 0.0)
+            Twist = IOXML.ReadDouble(Stream, "Torsion", 0.0)
+            TwistAxis = IOXML.ReadDouble(Stream, "TorsionAxis", 0.0)
+            SpacementType = [Enum].Parse(GetType(Spacements), IOXML.ReadString(Stream, "SpacingType", String.Format("{0}", Spacements.Constant)))
 
-            Flapped = IOXML.ReadBoolean(reader, "Flapped", False)
-            FlapChord = IOXML.ReadDouble(reader, "FlapChord", 0.2)
-            FlapDeflection = IOXML.ReadDouble(reader, "FlapDeflection", 0.0#)
+            Flapped = IOXML.ReadBoolean(Stream, "Flapped", False)
+            FlapChord = IOXML.ReadDouble(Stream, "FlapChord", 0.2)
+            FlapDeflection = IOXML.ReadDouble(Stream, "FlapDeflection", 0.0#)
 
-            TipSection.AE = IOXML.ReadDouble(reader, "Area", 1000)
-            TipSection.GJ = IOXML.ReadDouble(reader, "Iu", 1000)
-            TipSection.EIy = IOXML.ReadDouble(reader, "Iv", 1000)
-            TipSection.EIz = IOXML.ReadDouble(reader, "Iw", 1000)
-            TipSection.Ip = IOXML.ReadDouble(reader, "J", 1000)
-            TipSection.Cmy = IOXML.ReadDouble(reader, "Sv", 1000)
-            TipSection.Cmz = IOXML.ReadDouble(reader, "Sw", 1000)
-            TipSection.M = IOXML.ReadDouble(reader, "m", 10)
+            TipSection.AE = IOXML.ReadDouble(Stream, "Area", 1000)
+            TipSection.GJ = IOXML.ReadDouble(Stream, "Iu", 1000)
+            TipSection.EIy = IOXML.ReadDouble(Stream, "Iv", 1000)
+            TipSection.EIz = IOXML.ReadDouble(Stream, "Iw", 1000)
+            TipSection.Ip = IOXML.ReadDouble(Stream, "J", 1000)
+            TipSection.Cmy = IOXML.ReadDouble(Stream, "Sv", 1000)
+            TipSection.Cmz = IOXML.ReadDouble(Stream, "Sw", 1000)
+            TipSection.M = IOXML.ReadDouble(Stream, "m", 10)
 
-            CenterOfShear = IOXML.ReadDouble(reader, "CenterOfShear", 0.0)
-            PolarId = New Guid(IOXML.ReadString(reader, "PolarID", Guid.Empty.ToString))
-            CamberLineId = New Guid(IOXML.ReadString(reader, "CamberLineID", Guid.Empty.ToString))
+            CenterOfShear = IOXML.ReadDouble(Stream, "CenterOfShear", 0.0)
+            PolarId = New Guid(IOXML.ReadString(Stream, "PolarID", Guid.Empty.ToString))
+            CamberLineId = New Guid(IOXML.ReadString(Stream, "CamberLineID", Guid.Empty.ToString))
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
     End Class
 
-    ''' <summary>
-    ''' Represents wings
-    ''' </summary>
+    '//////////////////////////////////////////////////////////////////////////////////////////
+    ' Represents wings
+    '//////////////////////////////////////////////////////////////////////////////////////////
     Public Class LiftingSurface
 
         Inherits Surface
 
-        ''' <summary>
-        ''' Permite bloquear la edicion del contenido
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Permite bloquear la edicion del contenido
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property Lock As Boolean = False
 
-        ''' <summary>
-        ''' Position of the local origin in global coordinates.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Position of the local origin in global coordinates.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property LocalOrigin As New Vector3
 
-        ''' <summary>
-        ''' Cached points used to represent the directions of the local axes.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Cached points used to represent the directions of the local axes.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property MainDirections As New Base3
 
-        ''' <summary>
-        ''' Indicates if the mesh has to be symmetric about the plane y = 0.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the mesh has to be symmetric about the plane y = 0.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <value></value>
+        ' <returns></returns>
         Public Property Symmetric As Boolean = False
 
-        ''' <summary>
-        ''' Indicates if the wake has to be convected.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the wake has to be convected.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <value></value>
+        ' <returns></returns>
         Public Property ConvectWake As Boolean = True
 
-        ''' <summary>
-        ''' Indicates if the wake should be convected by the trailing edge only.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates if the wake should be convected by the trailing edge only.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <value></value>
+        ' <returns></returns>
         Public Property TrailingEdgeConvection As Boolean
             Set(ByVal value As Boolean)
                 _TrailingEdgeConvection = value
@@ -401,129 +362,128 @@ Namespace DesignTools.Models.Components
             End Get
         End Property
 
-        ''' <summary>
-        ''' The index of the first panel in the current region
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The index of the first panel in the current region
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property CurrentRegionStartPanel As Integer
 
-        ''' <summary>
-        ''' The index of the first panel in the current region
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The index of the first panel in the current region
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public ReadOnly Property CurrentRegionEndPanel As Integer
 
-        ''' <summary>
-        ''' Indicates at which time-step the wake has to be trimmed.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Indicates at which time-step the wake has to be trimmed.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <value></value>
+        ' <returns></returns>
         Public Property CuttingStep As Integer = 50
 
-        ''' <summary>
-        ''' The number of panels in the chorwise direction
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The number of panels in the chorwise direction
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _ChordPanelsCount As Integer = 5
 
-        ''' <summary>
-        ''' The total number of panels in the spanwise direction
-        ''' This is obtained while generating the mesh by summing the span panels in all of the regions.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total number of panels in the spanwise direction
+        ' This is obtained while generating the mesh by summing the span panels in all of the regions.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _SpanPanelsCount As Integer
 
-        ''' <summary>
-        ''' The number of panels along the chord.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The number of panels along the chord.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _ChordNodesCount As Integer
 
-        ''' <summary>
-        ''' The total number of nodes in the spanwise direction.
-        ''' This is obtained while generating the mesh by summing the span panels in all of the regions.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total number of nodes in the spanwise direction.
+        ' This is obtained while generating the mesh by summing the span panels in all of the regions.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _SpanNodesCount As Integer
 
-        ''' <summary>
-        ''' The total number of nodes along the boundary.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total number of nodes along the boundary.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _BoundaryNodesCount As Integer
 
-        ''' <summary>
-        ''' The total number of segments along the boundary.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total number of segments along the boundary.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _BoundarySegmentsCount As Integer
 
-        ''' <summary>
-        ''' The total number of primitive segments along the convection edge.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The total number of primitive segments along the convection edge.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _PrimitivePanelsCount As Integer
 
-        ''' <summary>
-        ''' Te total number of primitive nodes along the convection edge.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Te total number of primitive nodes along the convection edge.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _PrimitiveNodesCount As Integer
 
-        ''' <summary>
-        ''' When set, it will setup the convection along the primitive edge.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' When set, it will setup the convection along the primitive edge.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _TrailingEdgeConvection As Boolean = True
 
-        ''' <summary>
-        ''' Contains the wing regions.
-        ''' </summary>
-        ''' <returns></returns>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Contains the wing regions.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Property WingRegions As New List(Of WingRegion)
 
-        ''' <summary>
-        ''' The index of the active region
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The index of the active region
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _CurrentWingRegion As Integer = 0
 
-        ''' <summary>
-        ''' The wing root chord [m]
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The wing root chord [m]
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _RootChord As Double
 
-        ''' <summary>
-        ''' The relative length of the flap relative to the wing chord
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The relative length of the flap relative to the wing chord
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _RootFlapChord As Double
 
-        ''' <summary>
-        ''' The number of flapped panels in chordwise direction
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The number of flapped panels in chordwise direction
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _FlapPanels As Integer
 
-        ''' <summary>
-        ''' This dynamic array contains the boundary nodes, which for a lifting surface are
-        ''' all adjacent along the edge.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' This dynamic array contains the boundary nodes, which for a lifting surface are
+        ' all adjacent along the edge.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _BoundaryNodes(1)
 
-        ''' <summary>
-        ''' This dynamic array contains the boundary panels, which for a lifting surface are
-        ''' all adjacent along the edge.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' This dynamic array contains the boundary panels, which for a lifting surface are
+        ' all adjacent along the edge.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _BoundaryPanels(1)
 
-        ''' <summary>
-        ''' This static array stores the indices of the panels and nodes being the limits of the convection edge.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' This static array stores the indices of the panels and nodes being the limits of the convection edge.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _PrimitiveData(2, 2) As Integer ' Comienzo y fin del borde de conveccion (paneles y nodos)
 
-        ''' <summary>
-        ''' The index of the first primirive panel
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The index of the first primirive panel
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _PrimitivePanel1 As Integer
 
-        ''' <summary>
-        ''' The index of the last primitive panel
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' The index of the last primitive panel
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _PrimitivePanel2 As Integer
 
-        ''' <summary>
-        ''' Geerates a new lfting surface object with default values.
-        ''' </summary>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Geerates a new lfting surface object with default values.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Sub New()
 
             Mesh = New Mesh()
@@ -553,15 +513,13 @@ Namespace DesignTools.Models.Components
             VisualProperties = New VisualProperties(ComponentTypes.etLiftingSurface)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #Region " Geometry and mesh properties "
 
-        ''' <summary>
-        ''' Number of chordwise panels
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of chordwise panels
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property NumberOfChordPanels As Integer
             Get
                 Return _ChordPanelsCount
@@ -570,25 +528,25 @@ Namespace DesignTools.Models.Components
                 _ChordPanelsCount = value
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of spanwise panels.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of spanwise panels.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property NumberOfSpanPanels As Integer
             Get
                 Return _SpanPanelsCount
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Length of the root chord.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Length of the root chord.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property RootChord As Double
             Get
                 Return _RootChord
@@ -597,13 +555,13 @@ Namespace DesignTools.Models.Components
                 _RootChord = value
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Length of the root flap (as fraction of the root chord).
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Length of the root flap (as fraction of the root chord).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property RootFlap As Double
             Set(ByVal value As Double)
                 _RootFlapChord = value
@@ -612,13 +570,13 @@ Namespace DesignTools.Models.Components
                 Return _RootFlapChord
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of chordwise flap panels.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of chordwise flap panels.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FlapPanels As Integer
             Set(ByVal value As Integer)
                 If value < NumberOfChordPanels Then
@@ -631,13 +589,13 @@ Namespace DesignTools.Models.Components
                 Return _FlapPanels
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates which regions is currently selected or selects an existing region.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates which regions is currently selected or selects an existing region.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property CurrentRegionId As Integer
             Get
                 Return _CurrentWingRegion + 1
@@ -649,12 +607,13 @@ Namespace DesignTools.Models.Components
                 UpdateLimitPanels()
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Indicates if the panel index is contained in the current region
-        ''' </summary>
-        ''' <param name="PanelIndex"></param>
-        ''' <returns></returns>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Indicates if the panel index is contained in the current region
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property OnCurrentRegion(PanelIndex) As Boolean
             Get
                 Return PanelIndex >= CurrentRegionStartPanel And PanelIndex <= CurrentRegionEndPanel
@@ -666,62 +625,59 @@ Namespace DesignTools.Models.Components
 
 #Region " Convective border and primitive segements "
 
-        ''' <summary>
-        ''' Number of segments around the perimeter.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of segments around the perimeter.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property NumBoundarySegments
             Get
                 Return _BoundarySegmentsCount
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of boundary nodes.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of boundary nodes.
+        '------------------------------------------------------------------------------------------
         Public ReadOnly Property NumBoundaryNodes
             Get
                 Return _BoundaryNodesCount
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of primitive segments.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of primitive segments.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property NumPrimitiveSegments
             Get
                 RefreshPrimitives()
                 Return _PrimitivePanelsCount
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Number of primitive nodes.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Number of primitive nodes.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property NumPrimitiveNodes
             Get
                 RefreshPrimitives()
                 Return _PrimitiveNodesCount
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Position of the segment defined as firt primitive.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Position of the segment defined as firt primitive.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property FirstPrimitiveSegment As Integer
             Get
                 Return _PrimitiveData(1, 1)
@@ -731,13 +687,13 @@ Namespace DesignTools.Models.Components
                 RefreshPrimitives()
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Position of the segment defined as last primitive.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Position of the segment defined as last primitive.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public Property LastPrimitiveSegment As Integer
             Get
                 Return _PrimitiveData(1, 2)
@@ -747,38 +703,37 @@ Namespace DesignTools.Models.Components
                 Me.RefreshPrimitives()
             End Set
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Position of the node defined as first primitive (depends on the first primitive segment).
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Position of the node defined as first primitive (depends on the first primitive segment).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property FirstPrimitiveNode As Integer
             Get
                 Return Me._PrimitiveData(2, 1)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Position of the node defined as last primitive (depends on the last primitive segment).
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Position of the node defined as last primitive (depends on the last primitive segment).
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property LastPrimitiveNode As Integer
             Get
                 Return Me._PrimitiveData(2, 2)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the index of a given primitive node.
-        ''' </summary>
-        ''' <param name="Node"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the index of a given primitive node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property GetPrimitiveNodeIndex(ByVal Node As Integer) As Integer
             Get
                 If Node >= 1 And Node <= Me._BoundaryNodesCount Then
@@ -788,14 +743,13 @@ Namespace DesignTools.Models.Components
                 End If
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the location of a given primitive node.
-        ''' </summary>
-        ''' <param name="Nodo"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the location of a given primitive node.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property GetPrimitiveNodePosition(ByVal Nodo As Integer) As Vector3
             Get
                 If Nodo >= 1 And Nodo <= Me._BoundaryNodesCount Then
@@ -805,14 +759,13 @@ Namespace DesignTools.Models.Components
                 End If
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the index of a given primitive segment.
-        ''' </summary>
-        ''' <param name="Segment"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the index of a given primitive segment.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property GetPrimitivePanelIndex(ByVal Segment As Integer) As Integer
             Get
                 If Segment >= 1 And Segment <= Me._BoundarySegmentsCount Then
@@ -822,14 +775,13 @@ Namespace DesignTools.Models.Components
                 End If
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns the panel associated to a given primitive segment.
-        ''' </summary>
-        ''' <param name="Segmento"></param>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+        
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Returns the panel associated to a given primitive segment.
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property GetPrimitivePanel(ByVal Segmento As Integer) As Panel
             Get
                 If Segmento >= 1 And Segmento <= Me._BoundarySegmentsCount Then
@@ -839,14 +791,15 @@ Namespace DesignTools.Models.Components
                 End If
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Wing regions management "
 
-        ''' <summary>
-        ''' Recalculates the limits of the current region
-        ''' </summary>
+        '==========================================================================================
+        ' Recalculates the limits of the current region
+        '==========================================================================================
         Private Sub UpdateLimitPanels()
 
             _CurrentRegionStartPanel = 0
@@ -871,11 +824,13 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Loads a simple wing region.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Loads a simple wing region.
+        '==========================================================================================
         Public Sub InitializeRegions()
 
             Dim NewRegion As New WingRegion
@@ -886,11 +841,13 @@ Namespace DesignTools.Models.Components
             WingRegions.Add(NewRegion)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Adds a new region at the end.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Adds a new region at the end.
+        '==========================================================================================
         Public Sub AddRegion()
 
             Dim NewRegion As New WingRegion
@@ -901,12 +858,13 @@ Namespace DesignTools.Models.Components
             WingRegions.Add(NewRegion)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Insets a new wing region at a given position.
-        ''' </summary>
-        ''' <param name="Position"></param>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Insets a new wing region at a given position.
+        '==========================================================================================
         Public Overloads Sub InsertRegion(ByVal Position As Integer)
 
             If Position >= 1 And Position <= WingRegions.Count Then
@@ -921,11 +879,13 @@ Namespace DesignTools.Models.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Inserts a new wing region after the current one.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Inserts a new wing region after the current one.
+        '==========================================================================================
         Public Overloads Sub InsertRegion()
 
             Dim NewRegion As New WingRegion
@@ -936,11 +896,13 @@ Namespace DesignTools.Models.Components
             WingRegions.Insert(_CurrentWingRegion, NewRegion)
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Removes the current wing region.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Removes the current wing region.
+        '==========================================================================================
         Public Sub RemoveCurrentRegion()
 
             If WingRegions.Count > 1 Then
@@ -951,26 +913,27 @@ Namespace DesignTools.Models.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Currently active region
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+
+
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        ' Currently active region
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Public ReadOnly Property CurrentRegion As WingRegion
             Get
                 Return WingRegions.Item(_CurrentWingRegion)
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " 3D model and vortices generation "
 
-        ''' <summary>
-        ''' Generates the lifting surface mesh based on the geometrical parameters.
-        ''' </summary>
+        '==========================================================================================
+        ' Generates the lifting surface mesh based on the geometrical parameters.
+        '==========================================================================================
         Public Overrides Sub GenerateMesh()
 
             Dim X As Double
@@ -1484,10 +1447,13 @@ Namespace DesignTools.Models.Components
             MyBase.GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Refreshes the primitive node and panel indices.
-        ''' </summary>
+
+
+        '==========================================================================================
+        ' Refreshes the primitive node and panel indices.
+        '==========================================================================================
         Private Sub RefreshPrimitives()
 
             If TrailingEdgeConvection Then
@@ -1506,43 +1472,42 @@ Namespace DesignTools.Models.Components
             _PrimitivePanelsCount = _PrimitiveData(1, 2) - _PrimitiveData(1, 1) + 1
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Structure "
 
-        ''' <summary>
-        ''' Determines whether or not the structure will be included on the calculation.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Determines whether or not the structure will be included on the calculation.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property IncludeStructure As Boolean = True
 
-        ''' <summary>
-        ''' Wing root section.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Wing root section.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public Property RootSection As Section = New Section
 
-        ''' <summary>
-        ''' Contains all nodes and segments representing the structure.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Contains all nodes and segments representing the structure.
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Private _StructuralPartition As New List(Of StructuralPartition)
 
-        ''' <summary>
-        ''' Represents the structural nodal points
-        ''' </summary>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Represents the structural nodal points
+        '//////////////////////////////////////////////////////////////////////////////////////////
         Public ReadOnly Property StructuralPartition As List(Of StructuralPartition)
             Get
                 Return _StructuralPartition
             End Get
         End Property
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Generates the nodal partition and the section partition.
-        ''' </summary>
-        ''' <remarks></remarks>
+
+
+        '==========================================================================================
+        ' Generates the nodal partition and the section partition.
+        '==========================================================================================
         Private Sub GenerateStructure()
 
             _StructuralPartition.Clear()
@@ -1657,15 +1622,15 @@ Namespace DesignTools.Models.Components
             Next
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " UVLM method "
 
-        ''' <summary>
-        ''' Calculates the normal vectors and the control points.
-        ''' </summary>
-        ''' <remarks></remarks>
+        '==========================================================================================
+        ' Calculates the normal vectors and the control points.
+        '==========================================================================================
         Public Sub CalculateControlPointsAndNormals()
 
             Try
@@ -1719,16 +1684,15 @@ Namespace DesignTools.Models.Components
             End Try
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Other methods "
 
-        ''' <summary>
-        ''' Generates a copy of the instance.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '==========================================================================================
+        ' Generates a copy of the instance.
+        '==========================================================================================
         Public Overrides Function Clone() As Surface
 
             Dim Surface As New LiftingSurface
@@ -1763,19 +1727,15 @@ Namespace DesignTools.Models.Components
             Return Surface
 
         End Function
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " Geometrical opperations "
 
-        ''' <summary>
-        ''' Aligns the surface by means of four reference points (it is not working well).
-        ''' </summary>
-        ''' <param name="Point1"></param>
-        ''' <param name="Point2"></param>
-        ''' <param name="Point3"></param>
-        ''' <param name="Point4"></param>
-        ''' <remarks></remarks>
+        '==========================================================================================
+        ' Aligns the surface by means of four reference points (it is not working well).
+        '==========================================================================================
         Public Overrides Sub Align(ByVal Point1 As Vector3, ByVal Point2 As Vector3, ByVal Point3 As Vector3, ByVal Point4 As Vector3)
 
             ' Rotate arround P1 in order to align segments:
@@ -1820,98 +1780,97 @@ Namespace DesignTools.Models.Components
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
 #End Region
 
 #Region " IO "
 
-        ''' <summary>
-        ''' Reads the wing from an XML file.
-        ''' </summary>
-        ''' <param name="reader"></param>
-        ''' <remarks></remarks>
-        Public Overrides Sub ReadFromXML(ByRef reader As XmlReader)
+        '==========================================================================================
+        ' Reads the wing from an XML file.
+        '==========================================================================================
+        Public Overrides Sub ReadFromXML(ByRef Stream As XmlReader)
 
             Dim count As Integer = 1
 
-            While reader.Read
+            While Stream.Read
 
-                If Not reader.NodeType = XmlNodeType.Element Then Continue While
+                If Not Stream.NodeType = XmlNodeType.Element Then Continue While
 
-                Select Case reader.Name
+                Select Case Stream.Name
 
                     Case "Identity"
 
-                        Name = reader.GetAttribute("Name")
-                        Id = New Guid(IOXML.ReadString(reader, "ID", Guid.NewGuid.ToString))
-                        IncludeInCalculation = IOXML.ReadBoolean(reader, "Include", True)
+                        Name = Stream.GetAttribute("Name")
+                        Id = New Guid(IOXML.ReadString(Stream, "ID", Guid.NewGuid.ToString))
+                        IncludeInCalculation = IOXML.ReadBoolean(Stream, "Include", True)
 
                     Case "SurfaceProperties"
 
-                        RootChord = IOXML.ReadDouble(reader, "RootChord", 0.0)
-                        RootFlap = IOXML.ReadDouble(reader, "RootFlap", 0.2)
-                        FlapPanels = IOXML.ReadInteger(reader, "FlapPanels", 3)
+                        RootChord = IOXML.ReadDouble(Stream, "RootChord", 0.0)
+                        RootFlap = IOXML.ReadDouble(Stream, "RootFlap", 0.2)
+                        FlapPanels = IOXML.ReadInteger(Stream, "FlapPanels", 3)
 
-                        Position.X = IOXML.ReadDouble(reader, "X", 0.0)
-                        Position.Y = IOXML.ReadDouble(reader, "Y", 0.0)
-                        Position.Z = IOXML.ReadDouble(reader, "Z", 0.0)
+                        Position.X = IOXML.ReadDouble(Stream, "X", 0.0)
+                        Position.Y = IOXML.ReadDouble(Stream, "Y", 0.0)
+                        Position.Z = IOXML.ReadDouble(Stream, "Z", 0.0)
 
-                        Orientation.Angle1 = IOXML.ReadDouble(reader, "Psi", 0.0)
-                        Orientation.Angle2 = IOXML.ReadDouble(reader, "Tita", 0.0)
-                        Orientation.Angle3 = IOXML.ReadDouble(reader, "Fi", 0.0)
-                        Orientation.Sequence = IOXML.ReadInteger(reader, "Sequence", CInt(RotationSequence.ZYX))
+                        Orientation.Angle1 = IOXML.ReadDouble(Stream, "Psi", 0.0)
+                        Orientation.Angle2 = IOXML.ReadDouble(Stream, "Tita", 0.0)
+                        Orientation.Angle3 = IOXML.ReadDouble(Stream, "Fi", 0.0)
+                        Orientation.Sequence = IOXML.ReadInteger(Stream, "Sequence", CInt(RotationSequence.ZYX))
 
-                        CenterOfRotation.X = IOXML.ReadDouble(reader, "Xcr", 0.0)
-                        CenterOfRotation.Y = IOXML.ReadDouble(reader, "Ycr", 0.0)
-                        CenterOfRotation.Z = IOXML.ReadDouble(reader, "Zcr", 0.0)
+                        CenterOfRotation.X = IOXML.ReadDouble(Stream, "Xcr", 0.0)
+                        CenterOfRotation.Y = IOXML.ReadDouble(Stream, "Ycr", 0.0)
+                        CenterOfRotation.Z = IOXML.ReadDouble(Stream, "Zcr", 0.0)
 
-                        FirstPrimitiveSegment = IOXML.ReadInteger(reader, "Primitive1", 1)
-                        LastPrimitiveSegment = IOXML.ReadInteger(reader, "Primitive2", 2)
-                        TrailingEdgeConvection = IOXML.ReadBoolean(reader, "TrailingConvection", False)
+                        FirstPrimitiveSegment = IOXML.ReadInteger(Stream, "Primitive1", 1)
+                        LastPrimitiveSegment = IOXML.ReadInteger(Stream, "Primitive2", 2)
+                        TrailingEdgeConvection = IOXML.ReadBoolean(Stream, "TrailingConvection", False)
 
-                        ConvectWake = IOXML.ReadBoolean(reader, "ConvectWake", True)
-                        CuttingStep = IOXML.ReadInteger(reader, "CuttingStep", 1)
-                        Symmetric = IOXML.ReadBoolean(reader, "Symmetric", True)
+                        ConvectWake = IOXML.ReadBoolean(Stream, "ConvectWake", True)
+                        CuttingStep = IOXML.ReadInteger(Stream, "CuttingStep", 1)
+                        Symmetric = IOXML.ReadBoolean(Stream, "Symmetric", True)
 
-                        RootSection.AE = IOXML.ReadDouble(reader, "RootA", 0.0)
-                        RootSection.GJ = IOXML.ReadDouble(reader, "RootIu", 0.0)
-                        RootSection.EIy = IOXML.ReadDouble(reader, "RootIv", 0.0)
-                        RootSection.EIz = IOXML.ReadDouble(reader, "RootIw", 0.0)
-                        RootSection.Cmy = IOXML.ReadDouble(reader, "RootSv", 0.0)
-                        RootSection.Cmz = IOXML.ReadDouble(reader, "RootSw", 0.0)
-                        RootSection.Ip = IOXML.ReadDouble(reader, "RootJ", 0.0)
-                        RootSection.M = IOXML.ReadDouble(reader, "Rootm", 0.0)
+                        RootSection.AE = IOXML.ReadDouble(Stream, "RootA", 0.0)
+                        RootSection.GJ = IOXML.ReadDouble(Stream, "RootIu", 0.0)
+                        RootSection.EIy = IOXML.ReadDouble(Stream, "RootIv", 0.0)
+                        RootSection.EIz = IOXML.ReadDouble(Stream, "RootIw", 0.0)
+                        RootSection.Cmy = IOXML.ReadDouble(Stream, "RootSv", 0.0)
+                        RootSection.Cmz = IOXML.ReadDouble(Stream, "RootSw", 0.0)
+                        RootSection.Ip = IOXML.ReadDouble(Stream, "RootJ", 0.0)
+                        RootSection.M = IOXML.ReadDouble(Stream, "Rootm", 0.0)
 
-                        NumberOfChordPanels = IOXML.ReadInteger(reader, "NumberChordRings", 6)
+                        NumberOfChordPanels = IOXML.ReadInteger(Stream, "NumberChordRings", 6)
 
                     Case "MacroPanel", String.Format("MacroPanel{0}", count)
 
                         If count > 1 Then AddRegion()
                         CurrentRegionId = count
-                        CurrentRegion.ReadFromXML(reader)
+                        CurrentRegion.ReadFromXML(Stream)
                         count += 1
 
                     Case "VisualProperties"
 
-                        VisualProperties.ReadFromXML(reader.ReadSubtree)
+                        VisualProperties.ReadFromXML(Stream.ReadSubtree)
 
                     Case "Inertia"
 
                         Dim I As InertialProperties
 
-                        I.Mass = IOXML.ReadDouble(reader, "Mass", 0.0)
+                        I.Mass = IOXML.ReadDouble(Stream, "Mass", 0.0)
 
-                        I.Xcg = IOXML.ReadDouble(reader, "Xcg", 0.0)
-                        I.Ycg = IOXML.ReadDouble(reader, "Ycg", 0.0)
-                        I.Zcg = IOXML.ReadDouble(reader, "Zcg", 0.0)
+                        I.Xcg = IOXML.ReadDouble(Stream, "Xcg", 0.0)
+                        I.Ycg = IOXML.ReadDouble(Stream, "Ycg", 0.0)
+                        I.Zcg = IOXML.ReadDouble(Stream, "Zcg", 0.0)
 
-                        I.Ixx = IOXML.ReadDouble(reader, "Ixx", 0.0)
-                        I.Iyy = IOXML.ReadDouble(reader, "Iyy", 0.0)
-                        I.Izz = IOXML.ReadDouble(reader, "Izz", 0.0)
+                        I.Ixx = IOXML.ReadDouble(Stream, "Ixx", 0.0)
+                        I.Iyy = IOXML.ReadDouble(Stream, "Iyy", 0.0)
+                        I.Izz = IOXML.ReadDouble(Stream, "Izz", 0.0)
 
-                        I.Ixy = IOXML.ReadDouble(reader, "Ixy", 0.0)
-                        I.Ixz = IOXML.ReadDouble(reader, "Ixz", 0.0)
-                        I.Iyz = IOXML.ReadDouble(reader, "Iyz", 0.0)
+                        I.Ixy = IOXML.ReadDouble(Stream, "Ixy", 0.0)
+                        I.Ixz = IOXML.ReadDouble(Stream, "Ixz", 0.0)
+                        I.Iyz = IOXML.ReadDouble(Stream, "Iyz", 0.0)
 
                         Inertia = I
 
@@ -1924,67 +1883,68 @@ Namespace DesignTools.Models.Components
             GenerateMesh()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes the wing to an XML file.
-        ''' </summary>
-        ''' <param name="writer"></param>
-        ''' <remarks></remarks>
-        Public Overrides Sub WriteToXML(ByRef writer As XmlWriter)
+
+
+        '==========================================================================================
+        ' Writes the wing to an XML file.
+        '==========================================================================================
+        Public Overrides Sub WriteToXML(ByRef Stream As XmlWriter)
 
             ' Identity
             '-----------------------------------------------------
 
-            writer.WriteStartElement("Identity")
+            Stream.WriteStartElement("Identity")
 
-            writer.WriteAttributeString("Name", Name)
-            writer.WriteAttributeString("ID", Id.ToString)
-            writer.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
+            Stream.WriteAttributeString("Name", Name)
+            Stream.WriteAttributeString("ID", Id.ToString)
+            Stream.WriteAttributeString("Include", String.Format("{0}", IncludeInCalculation))
 
-            writer.WriteEndElement()
+            Stream.WriteEndElement()
 
             ' Surface properties
             '-----------------------------------------------------
 
-            writer.WriteStartElement("SurfaceProperties")
+            Stream.WriteStartElement("SurfaceProperties")
 
-            writer.WriteAttributeString("RootChord", String.Format("{0}", RootChord))
-            writer.WriteAttributeString("RootFlap", String.Format("{0}", RootFlap))
-            writer.WriteAttributeString("FlapPanels", String.Format("{0}", FlapPanels))
+            Stream.WriteAttributeString("RootChord", String.Format("{0}", RootChord))
+            Stream.WriteAttributeString("RootFlap", String.Format("{0}", RootFlap))
+            Stream.WriteAttributeString("FlapPanels", String.Format("{0}", FlapPanels))
 
-            writer.WriteAttributeString("X", String.Format("{0}", Position.X))
-            writer.WriteAttributeString("Y", String.Format("{0}", Position.Y))
-            writer.WriteAttributeString("Z", String.Format("{0}", Position.Z))
+            Stream.WriteAttributeString("X", String.Format("{0}", Position.X))
+            Stream.WriteAttributeString("Y", String.Format("{0}", Position.Y))
+            Stream.WriteAttributeString("Z", String.Format("{0}", Position.Z))
 
-            writer.WriteAttributeString("Psi", String.Format("{0}", Orientation.Angle1))
-            writer.WriteAttributeString("Tita", String.Format("{0}", Orientation.Angle2))
-            writer.WriteAttributeString("Fi", String.Format("{0}", Orientation.Angle3))
-            writer.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
+            Stream.WriteAttributeString("Psi", String.Format("{0}", Orientation.Angle1))
+            Stream.WriteAttributeString("Tita", String.Format("{0}", Orientation.Angle2))
+            Stream.WriteAttributeString("Fi", String.Format("{0}", Orientation.Angle3))
+            Stream.WriteAttributeString("Sequence", String.Format("{0}", CInt(Orientation.Sequence)))
 
-            writer.WriteAttributeString("Xcr", String.Format("{0}", CenterOfRotation.X))
-            writer.WriteAttributeString("Ycr", String.Format("{0}", CenterOfRotation.Y))
-            writer.WriteAttributeString("Zcr", String.Format("{0}", CenterOfRotation.Z))
+            Stream.WriteAttributeString("Xcr", String.Format("{0}", CenterOfRotation.X))
+            Stream.WriteAttributeString("Ycr", String.Format("{0}", CenterOfRotation.Y))
+            Stream.WriteAttributeString("Zcr", String.Format("{0}", CenterOfRotation.Z))
 
-            writer.WriteAttributeString("Primitive1", String.Format("{0}", FirstPrimitiveSegment))
-            writer.WriteAttributeString("Primitive2", String.Format("{0}", LastPrimitiveSegment))
-            writer.WriteAttributeString("ConvectWake", String.Format("{0}", CInt(ConvectWake)))
-            writer.WriteAttributeString("CuttingStep", String.Format("{0}", CuttingStep))
-            writer.WriteAttributeString("Symmetric", String.Format("{0}", CInt(Symmetric)))
-            writer.WriteAttributeString("TrailingConvection", String.Format("{0}", CInt(TrailingEdgeConvection)))
+            Stream.WriteAttributeString("Primitive1", String.Format("{0}", FirstPrimitiveSegment))
+            Stream.WriteAttributeString("Primitive2", String.Format("{0}", LastPrimitiveSegment))
+            Stream.WriteAttributeString("ConvectWake", String.Format("{0}", CInt(ConvectWake)))
+            Stream.WriteAttributeString("CuttingStep", String.Format("{0}", CuttingStep))
+            Stream.WriteAttributeString("Symmetric", String.Format("{0}", CInt(Symmetric)))
+            Stream.WriteAttributeString("TrailingConvection", String.Format("{0}", CInt(TrailingEdgeConvection)))
 
-            writer.WriteAttributeString("RootA", String.Format("{0}", RootSection.AE))
-            writer.WriteAttributeString("RootIu", String.Format("{0}", RootSection.GJ))
-            writer.WriteAttributeString("RootIv", String.Format("{0}", RootSection.EIy))
-            writer.WriteAttributeString("RootIw", String.Format("{0}", RootSection.EIz))
-            writer.WriteAttributeString("RootSv", String.Format("{0}", RootSection.Cmy))
-            writer.WriteAttributeString("RootSw", String.Format("{0}", RootSection.Cmz))
-            writer.WriteAttributeString("RootJ", String.Format("{0}", RootSection.Ip))
-            writer.WriteAttributeString("Rootm", String.Format("{0}", RootSection.M))
+            Stream.WriteAttributeString("RootA", String.Format("{0}", RootSection.AE))
+            Stream.WriteAttributeString("RootIu", String.Format("{0}", RootSection.GJ))
+            Stream.WriteAttributeString("RootIv", String.Format("{0}", RootSection.EIy))
+            Stream.WriteAttributeString("RootIw", String.Format("{0}", RootSection.EIz))
+            Stream.WriteAttributeString("RootSv", String.Format("{0}", RootSection.Cmy))
+            Stream.WriteAttributeString("RootSw", String.Format("{0}", RootSection.Cmz))
+            Stream.WriteAttributeString("RootJ", String.Format("{0}", RootSection.Ip))
+            Stream.WriteAttributeString("Rootm", String.Format("{0}", RootSection.M))
 
-            writer.WriteAttributeString("NumberChordRings", String.Format("{0}", NumberOfChordPanels))
-            writer.WriteAttributeString("NumberMacroPanels", String.Format("{0}", WingRegions.Count))
+            Stream.WriteAttributeString("NumberChordRings", String.Format("{0}", NumberOfChordPanels))
+            Stream.WriteAttributeString("NumberMacroPanels", String.Format("{0}", WingRegions.Count))
 
-            writer.WriteEndElement()
+            Stream.WriteEndElement()
 
             ' Macro panels
             '-----------------------------------------------------
@@ -1993,46 +1953,47 @@ Namespace DesignTools.Models.Components
 
                 CurrentRegionId = i
 
-                writer.WriteStartElement("MacroPanel")
-                WingRegions(i).WriteToXML(writer)
-                writer.WriteEndElement()
+                Stream.WriteStartElement("MacroPanel")
+                WingRegions(i).WriteToXML(Stream)
+                Stream.WriteEndElement()
 
             Next
 
             ' Visual properties
             '-----------------------------------------------------
 
-            writer.WriteStartElement("VisualProperties")
-            VisualProperties.WriteToXML(writer)
-            writer.WriteEndElement()
+            Stream.WriteStartElement("VisualProperties")
+            VisualProperties.WriteToXML(Stream)
+            Stream.WriteEndElement()
 
             ' Inertia
             '-----------------------------------------------------
 
-            writer.WriteStartElement("Inertia")
+            Stream.WriteStartElement("Inertia")
 
-            writer.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
+            Stream.WriteAttributeString("Mass", String.Format("{0,14:E6}", Inertia.Mass))
 
-            writer.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
-            writer.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
-            writer.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
+            Stream.WriteAttributeString("Xcg", String.Format("{0,14:E6}", Inertia.Xcg))
+            Stream.WriteAttributeString("Ycg", String.Format("{0,14:E6}", Inertia.Ycg))
+            Stream.WriteAttributeString("Zcg", String.Format("{0,14:E6}", Inertia.Zcg))
 
-            writer.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
-            writer.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
-            writer.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
+            Stream.WriteAttributeString("Ixx", String.Format("{0,14:E6}", Inertia.Ixx))
+            Stream.WriteAttributeString("Iyy", String.Format("{0,14:E6}", Inertia.Iyy))
+            Stream.WriteAttributeString("Izz", String.Format("{0,14:E6}", Inertia.Izz))
 
-            writer.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
-            writer.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
-            writer.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
+            Stream.WriteAttributeString("Ixy", String.Format("{0,14:E6}", Inertia.Ixy))
+            Stream.WriteAttributeString("Ixz", String.Format("{0,14:E6}", Inertia.Ixz))
+            Stream.WriteAttributeString("Iyz", String.Format("{0,14:E6}", Inertia.Iyz))
 
-            writer.WriteEndElement()
+            Stream.WriteEndElement()
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Writes a ASCII STL file containing the model mesh
-        ''' </summary>
-        ''' <param name="FilePath"></param>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Writes a ASCII STL file containing the model mesh
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <param name="FilePath"></param>
         Public Overrides Sub ExportStlFile(FilePath As String, Optional Append As Boolean = False, Optional Transformation As Matrix3x3 = Nothing)
 
             ' Export the normal side
@@ -2053,12 +2014,12 @@ Namespace DesignTools.Models.Components
             End If
 
         End Sub
+        '------------------------------------------------------------------------------------------
 
-        ''' <summary>
-        ''' Returns a string with information about this wing.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' Returns a string with information about this wing.
+        '//////////////////////////////////////////////////////////////////////////////////////////
+        ' <returns></returns>
         Public Function RetriveStringData() As String
 
             Dim Data As String = ""
